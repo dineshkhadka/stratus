@@ -1,0 +1,38 @@
+.spotlight {
+}
+
+.current-date {
+  &__day,
+  &__month {
+    font-family: var(--primary-family);
+    font-weight: 300;
+    font-size: 4.5rem;
+    line-height: 1.12;
+    color: var(--font-color);
+    margin-bottom: 0;
+    sup {
+      font-size: 1.5rem;
+    }
+  }
+
+  &__month {
+    font-weight: 700;
+  }
+
+  &__time {
+    text-align: right;
+  }
+
+  &__top {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    align-items: end;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+  }
+  &__bottom {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    padding: 15px 0;
+  }
+}

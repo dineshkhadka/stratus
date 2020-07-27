@@ -1,0 +1,25 @@
+:root {
+  --primary-light: #cfd7f3;
+  --primary-dark: #1f2136;
+}
+:root {
+  --primary-color: #cfd7f3;
+  --secondary-color: #1f2136;
+  --border-color: rgba(31, 33, 54, 0.6);
+  --border-color--lighter: rgba(31, 33, 54, 0.6);
+  --background-color: rgba(207, 215, 243, 0.45);
+  --background-color--light: rgba(207, 215, 243, 0.45);
+  --font-color: #1f2136;
+  --font-color-dark: #cfd7f3;
+}
+
+[data-theme="dark"] {
+  --primary-color: #1f2136;
+  --secondary-color: #cfd7f3;
+  --border-color: rgba(207, 215, 243, 0.6);
+  --border-color--lighter: rgba(207, 215, 243, 0.45);
+  --background-color: rgba(31, 33, 54, 0.6);
+  --background-color--light: rgba(31, 33, 54, 0.45);
+  --font-color: #cfd7f3;
+  --font-color-dark: #4a5568;
+}

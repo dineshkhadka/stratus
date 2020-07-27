@@ -1,0 +1,52 @@
+.weather {
+  &__current {
+    font-family: var(--primary-family);
+    font-weight: 300;
+    font-size: 3.5rem;
+    color: var(--font-color);
+    margin-bottom: -10px; //
+    line-height: 1.22;
+  }
+
+  &__primary {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    align-items: end;
+    margin-top: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+  }
+  &__location {
+    line-height: 1.22;
+    vertical-align: baseline;
+  }
+
+  &__forcast {
+    padding: 20px 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+
+    &-item {
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 15px 20px;
+    }
+
+    &-title {
+      font-weight: 300;
+      font-size: 1.5rem;
+      line-height: 1.15;
+      color: var(--font-color);
+      margin: 0 0 6px 0;
+    }
+
+    &-day {
+      font-family: var(--secondary-family);
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 1.375;
+      color: var(--font-color);
+    }
+  }
+}
