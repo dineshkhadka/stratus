@@ -1,0 +1,126 @@
+.todo {
+  &__list {
+    margin-top: 30px;
+    &,
+    input[type="text"] {
+      font-family: Rubik;
+      font-family: var(--primary-family);
+      font-size: 1.15rem;
+      line-height: 1.2;
+      color: var(--font-color);
+    }
+  }
+
+  &__item {
+    padding-bottom: 15px;
+    padding-left: 45px;
+    position: relative;
+    &:not(:first-child) {
+      padding-top: 15px;
+    }
+    &:after {
+      content: "";
+      display: block;
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 1px;
+      background-color: var(--border-color);
+    }
+    svg {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      left: 4px;
+      pointer-events: none;
+      opacity: 0;
+    }
+  }
+  &__title {
+    position: relative;
+    transition: var(--transition);
+    &:after {
+      content: "";
+      display: block;
+      width: 0;
+      height: 1px;
+      background-color: var(--font-color);
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: all 0.3s var(--transition);
+    }
+  }
+
+  input[type="text"] {
+    appearance: none;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    outline: none;
+  }
+  &__toggle {
+    appearance: none;
+    vertical-align: middle;
+    z-index: 1;
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    &,
+    svg {
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    ~ svg.unchecked {
+      opacity: 1;
+    }
+    &:checked {
+      ~ svg.checked {
+        opacity: 1;
+      }
+      ~ label {
+        opacity: 0.4;
+        &:after {
+          width: 100%;
+        }
+      }
+    }
+    &:checked ~ svg.unchecked {
+      opacity: 0;
+    }
+  }
+
+  &__new {
+    position: relative;
+    padding-left: 45px;
+    padding-top: 30px;
+    svg {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      left: 4px;
+      pointer-events: none;
+      opacity: 0.5;
+      transition: var(--transition);
+    }
+    input[text] {
+      &::placeholder {
+        font-style: italic;
+      }
+      &:focus {
+        ~ svg {
+          transform: rotate(-90deg);
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  &__footer {
+  }
+}
