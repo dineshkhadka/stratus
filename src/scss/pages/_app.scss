@@ -1,14 +1,27 @@
-.app-container {
+.app-shell {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
+  height: 100vh;
 }
 
 .app-primary {
   padding: 30px 60px 30px 100px;
-  display: grid;
-  grid-template-rows: repeat(2, 1fr);
+  &__wrap {
+    display: grid;
+    grid-template-rows: repeat(2, auto);
+    max-width: 720px;
+    height: 100%;
+    margin: 0 auto;
+  }
 }
 .app-secondary {
   padding: 30px 50px;
   background-color: var(--background-color--light);
+  &__wrap {
+    display: grid;
+    grid-template-rows: repeat(2, auto);
+    max-width: 600px;
+    height: 100%;
+    margin: 0 auto;
+  }
 }

@@ -1,23 +1,20 @@
 .todo {
+  overflow: hidden;
   &__list {
     margin-top: 30px;
     &,
     input[type="text"] {
       font-family: Rubik;
       font-family: var(--primary-family);
-      font-size: 1.15rem;
+      font-size: 1rem;
       line-height: 1.2;
       color: var(--font-color);
     }
   }
 
   &__item {
-    padding-bottom: 15px;
-    padding-left: 45px;
+    padding: 15px 0 15px 45px;
     position: relative;
-    &:not(:first-child) {
-      padding-top: 15px;
-    }
     &:after {
       content: "";
       display: block;
@@ -39,19 +36,6 @@
   }
   &__title {
     position: relative;
-    transition: var(--transition);
-    &:after {
-      content: "";
-      display: block;
-      width: 0;
-      height: 1px;
-      background-color: var(--font-color);
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      transition: all 0.3s var(--transition);
-    }
   }
 
   input[type="text"] {
@@ -68,13 +52,12 @@
     position: absolute;
     left: 0;
     opacity: 0;
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     cursor: pointer;
     &,
-    svg {
-      top: 50%;
-      transform: translateY(-50%);
+    ~ svg {
+      top: 16px;
     }
     ~ svg.unchecked {
       opacity: 1;
@@ -83,15 +66,13 @@
       ~ svg.checked {
         opacity: 1;
       }
+      ~ svg.unchecked {
+        opacity: 0;
+      }
       ~ label {
         opacity: 0.4;
-        &:after {
-          width: 100%;
-        }
+        text-decoration: line-through;
       }
-    }
-    &:checked ~ svg.unchecked {
-      opacity: 0;
     }
   }
 
@@ -99,22 +80,25 @@
     position: relative;
     padding-left: 45px;
     padding-top: 30px;
-    svg {
+    .btn {
       position: absolute;
       width: 20px;
       height: 20px;
       left: 4px;
       pointer-events: none;
       opacity: 0.5;
-      transition: var(--transition);
+      transition: all 0.5s var(--transition);
+      padding: 0;
+      border: 0;
+      background-color: transparent;
     }
-    input[text] {
+    input[type="text"] {
       &::placeholder {
         font-style: italic;
       }
       &:focus {
-        ~ svg {
-          transform: rotate(-90deg);
+        ~ .btn {
+          transform: rotate(-45deg);
           opacity: 1;
         }
       }
