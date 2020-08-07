@@ -1,14 +1,24 @@
 .todo {
   overflow: hidden;
+  align-self: end;
   &__list {
-    margin-top: 30px;
+    // margin-top: 30px;
+    // overflow-y: scroll;
+    // height: 204px;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    &::-webkit-scrollbar {
+      display: none;
+    }
     &,
     input[type="text"] {
-      font-family: Rubik;
       font-family: var(--primary-family);
       font-size: 1rem;
       line-height: 1.2;
       color: var(--font-color);
+      @media screen and (max-height: 600px), (max-width: 1280px) {
+        font-size: 0.875rem;
+      }
     }
   }
 
@@ -91,15 +101,19 @@
       padding: 0;
       border: 0;
       background-color: transparent;
+      color: var(--border-color--lighter);
     }
     input[type="text"] {
+      color: var(--font-color);
       &::placeholder {
+        color: var(--border-color--lighter);
         font-style: italic;
       }
       &:focus {
         ~ .btn {
           transform: rotate(-45deg);
           opacity: 1;
+          color: var(--font-color);
         }
       }
     }

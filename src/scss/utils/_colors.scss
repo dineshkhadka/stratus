@@ -18,8 +18,19 @@
   --secondary-color: #cfd7f3;
   --border-color: rgba(207, 215, 243, 0.6);
   --border-color--lighter: rgba(207, 215, 243, 0.45);
-  --background-color: rgba(31, 33, 54, 0.6);
-  --background-color--light: rgba(31, 33, 54, 0.45);
+  --background-color: rgba(31, 33, 54, 1);
+  --background-color--light: rgba(41, 43, 70, 0.53);
   --font-color: #cfd7f3;
   --font-color-dark: #4a5568;
+}
+
+[data-theme="background"] {
+  --primary-color: #cfd7f3;
+  --secondary-color: #1f2136;
+  --border-color: rgba(207, 215, 243, 0.6);
+  --border-color--lighter: rgba(207, 215, 243, 0.45);
+  --background-color: rgba(207, 215, 243, 0.45);
+  --background-color--light: rgba(0, 0, 0, 0.03);
+  --font-color: #ffffff;
+  --font-color-dark: #cfd7f3;
 }

@@ -13,6 +13,9 @@
     sup {
       font-size: 1.5rem;
     }
+    @media screen and (max-height: 600px), (max-width: 1280px) {
+      font-size: 3.475rem;
+    }
   }
 
   &__month {

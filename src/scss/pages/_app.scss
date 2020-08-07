@@ -2,10 +2,18 @@
   display: grid;
   grid-template-columns: 1.5fr 1fr;
   height: 100vh;
+  overflow: hidden;
+  [data-theme="background"] & {
+    background-size: cover;
+    background-position: center;
+  }
 }
 
 .app-primary {
   padding: 30px 60px 30px 100px;
+  @media #{$mq-1400-up} {
+    padding: 6vw 30px;
+  }
   &__wrap {
     display: grid;
     grid-template-rows: repeat(2, auto);
@@ -16,7 +24,13 @@
 }
 .app-secondary {
   padding: 30px 50px;
+  @media #{$mq-1400-up} {
+    padding: 6vw 30px;
+  }
   background-color: var(--background-color--light);
+  [data-theme="background"] & {
+    backdrop-filter: blur(60px);
+  }
   &__wrap {
     display: grid;
     grid-template-rows: repeat(2, auto);

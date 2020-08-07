@@ -6,6 +6,9 @@
     color: var(--font-color);
     margin-bottom: -10px; //
     line-height: 1.22;
+    @media screen and (max-height: 600px), (max-width: 1280px) {
+      font-size: 2.475rem;
+    }
   }
 
   &__primary {
@@ -26,6 +29,9 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
+    @media screen and (max-height: 560px), (max-width: 1280px) {
+      display: none;
+    }
 
     &-item {
       border: 1px solid var(--border-color);

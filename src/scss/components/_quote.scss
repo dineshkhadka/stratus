@@ -8,12 +8,18 @@
   font-size: 1.15rem;
   line-height: 1.875;
   color: var(--color-primary);
+  @media screen and (max-height: 600px) {
+    font-size: 0.95rem;
+  }
   p:last-child {
     margin: 0;
   }
 
   &__content {
     margin-bottom: 32px;
+    @media screen and (max-height: 600px) {
+      margin-bottom: 15px;
+    }
   }
   &__author {
     font-weight: 500;
