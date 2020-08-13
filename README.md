@@ -11,6 +11,8 @@
 
 > A simple and minimal new tab page that diplays dates, times, weather, quote and an optional image background
 
+![image](https://user-images.githubusercontent.com/4678264/90087128-bd7b3a00-dd3b-11ea-89dc-0b80fbe48e41.png)
+
 ### 🏠 [Homepage](https://lakai.dev)
 
 ## Install
@@ -29,13 +31,10 @@ yarn run start
 
 👤 **Dinesh Lakai Khadka**
 
-* Website: https://lakai.dev
-* Twitter: [@dineshlakai](https://twitter.com/dineshlakai)
-* Github: [@dineshkhadka](https://github.com/dineshkhadka)
+- Website: https://lakai.dev
+- Twitter: [@dineshlakai](https://twitter.com/dineshlakai)
+- Github: [@dineshkhadka](https://github.com/dineshkhadka)
 
 ## Show your support
 
 Give a ⭐️ if this project helped you!
-
-***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
