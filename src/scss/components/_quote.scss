@@ -8,7 +8,7 @@
   font-size: 1.15rem;
   line-height: 1.875;
   color: var(--color-primary);
-  @media screen and (max-height: 600px) {
+  @media screen and (max-height: 550px) {
     font-size: 0.95rem;
   }
   p:last-child {
@@ -17,7 +17,7 @@
 
   &__content {
     margin-bottom: 32px;
-    @media screen and (max-height: 600px) {
+    @media screen and (max-height: 550px) {
       margin-bottom: 15px;
     }
   }

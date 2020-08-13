@@ -5,6 +5,8 @@
     // margin-top: 30px;
     // overflow-y: scroll;
     // height: 204px;
+    max-height: 200px;
+    overflow-y: scroll;
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
     &::-webkit-scrollbar {
