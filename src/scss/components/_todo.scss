@@ -2,10 +2,7 @@
   overflow: hidden;
   align-self: end;
   &__list {
-    // margin-top: 30px;
-    // overflow-y: scroll;
-    // height: 204px;
-    max-height: 200px;
+    height: 200px;
     overflow-y: scroll;
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
@@ -24,8 +21,24 @@
     }
   }
 
+  &__header {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  &__actions {
+    text-align: right;
+    > *:not(:last-child) {
+      margin-right: 8px;
+      &::after {
+        padding-left: 8px;
+        content: "/";
+      }
+    }
+  }
+
   &__item {
-    padding: 15px 0 15px 45px;
+    padding: 15px 45px 15px 45px;
     position: relative;
     &:after {
       content: "";
@@ -37,7 +50,13 @@
       height: 1px;
       background-color: var(--border-color);
     }
-    svg {
+
+    &:hover {
+      .btn--remove {
+        opacity: 1;
+      }
+    }
+    .custom-radio {
       position: absolute;
       width: 20px;
       height: 20px;
@@ -68,7 +87,7 @@
     height: 30px;
     cursor: pointer;
     &,
-    ~ svg {
+    ~ custom-radio {
       top: 16px;
     }
     ~ svg.unchecked {
@@ -88,6 +107,29 @@
     }
   }
 
+  .btn--remove {
+    position: absolute;
+    right: 0;
+    top: 14px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    opacity: 0;
+    &:hover {
+      svg {
+        opacity: 0.9;
+      }
+    }
+    svg {
+      opacity: 0.2;
+      width: 20px;
+      height: 20px;
+    }
+  }
+
   &__new {
     position: relative;
     padding-left: 45px;
@@ -97,7 +139,6 @@
       width: 20px;
       height: 20px;
       left: 4px;
-      pointer-events: none;
       opacity: 0.5;
       transition: all 0.5s var(--transition);
       padding: 0;

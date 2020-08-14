@@ -1,0 +1,15 @@
+.btn {
+  all: unset;
+  cursor: pointer;
+  transition: all 1s var(--transition);
+  svg {
+    transition: all 0.3s var(--transition);
+  }
+  &--link {
+    &:hover,
+    &:focus,
+    &:active {
+      opacity: 0.7;
+    }
+  }
+}

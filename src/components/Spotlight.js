@@ -24,7 +24,7 @@ function Spotlight() {
                 <sup>{suffix(nepaliDate.nepaliDay)}</sup>
               </h1>
               <h2 className="current-date__month">
-                {calendar.month.en.long[nepaliDate.nepaliMonth]}
+                {calendar.month.en.long[nepaliDate.nepaliMonth - 1]}
               </h2>
             </div>
             <div className="current-date__secondary">
