@@ -13,7 +13,7 @@
 
 ![image](https://user-images.githubusercontent.com/4678264/90087128-bd7b3a00-dd3b-11ea-89dc-0b80fbe48e41.png)
 
-### 🏠 [Homepage](https://lakai.dev)
+### 🏠 [Live Demo](https://stratus.vercel.app/)
 
 ## Install
 
