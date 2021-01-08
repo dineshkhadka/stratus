@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import useLocalStorage from "../hooks/useLocalStorage";
+import usePosition from "../hooks/usePosition";
 
 function Weather() {
+  const { latitude, longitude } = usePosition();
   return (
     <>
       <div className="weather">
@@ -9,7 +12,9 @@ function Weather() {
           <h3 className="weather__current">
             26<sup>°</sup>c
           </h3>
-          <span className="weather__location">Budhanilkantha</span>
+          <span className="weather__location">
+            Budhanilkantha {latitude} - {longitude}
+          </span>
         </div>
         <div className="weather__forcast">
           <div className="weather__forcast-item">

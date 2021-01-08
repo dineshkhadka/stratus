@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import useLocalStorage from "../hooks/useLocalStorage";
 const TodoItem = ({ todo, index, toggleCompleted, removeTodo }) => {
   return (
     <li className="todo__item">
@@ -63,10 +63,9 @@ const TodoItem = ({ todo, index, toggleCompleted, removeTodo }) => {
 };
 
 const TodoForm = ({ addTodo }) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useLocalStorage("");
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(value);
     if (!value) return;
     addTodo(value);
     setValue("");
@@ -105,21 +104,7 @@ const TodoForm = ({ addTodo }) => {
 };
 
 function Todo() {
-  const [todo, setTodo] = useState([
-    {
-      text:
-        "Convert the declaration new type of data to the tuple and the structure to the integrity",
-      completed: true,
-    },
-    {
-      text: "Reconfigure the booster rockets",
-      completed: false,
-    },
-    {
-      text: "Prepare for the test flight",
-      completed: true,
-    },
-  ]);
+  const [todo, setTodo] = useLocalStorage("stratus-todo", []);
 
   const toggleCompleted = (index) => {
     const newTodos = [...todo];
@@ -132,8 +117,7 @@ function Todo() {
     setTodo(newTodos);
   };
   const addTodo = (text) => {
-    console.log(addTodo);
-    const newTodos = [...todo, { text }];
+    const newTodos = [...todo, { text, completed: false }];
     setTodo(newTodos);
   };
 
@@ -142,15 +126,6 @@ function Todo() {
       <div className="todo">
         <div className="todo__header">
           <h2 className="primary-text">Stuff that needs to be done</h2>
-          {todo.length > 0 ? (
-            <div className="todo__actions">
-              <button className="btn btn--link">All</button>
-              <button className="btn btn--link">Done</button>
-              <button className="btn btn--link">Incomplete</button>
-            </div>
-          ) : (
-            ""
-          )}
         </div>
 
         <ul className="todo__list">

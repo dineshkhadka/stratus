@@ -14,7 +14,11 @@ function Spotlight() {
   }, []);
   return (
     <div className="spotlight">
-      <h2 className="primary-text">Good Day Dinesh Khadka, Today is</h2>
+      <h2 className="primary-text">
+        Good{" "}
+        {time.getHours() < 12 ? "Morning" : time < 18 ? "Afternoon" : "Evening"}
+        , Today is
+      </h2>
       <div className="spotlight__date">
         <div className="current-date">
           <div className="current-date__top">
