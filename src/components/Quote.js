@@ -13,6 +13,7 @@ function Quote() {
         setcurrentQuote({
           quote: json.contents.quotes[0].quote,
           author: json.contents.quotes[0].author,
+          lastUpdated: getUID(),
         });
       })
       .catch((error) => {});
