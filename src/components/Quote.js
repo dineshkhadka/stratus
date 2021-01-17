@@ -25,10 +25,7 @@ function Quote() {
       currentQuote.lastUpdated == null ||
       currentQuote.lastUpdated !== getUID()
     ) {
-      console.log("it was a new day: " + getUID());
       fetchQuote();
-    } else {
-      console.log("it was a an old day" + getUID());
     }
   }, []);
   return (

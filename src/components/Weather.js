@@ -3,17 +3,6 @@ import useLocalStorage from "../hooks/useLocalStorage";
 import { getUID, getDayFromEpoch } from "../utils/helpers.js";
 import wretch from "wretch";
 
-const fetchLocation = () => {
-  wretch("https://geolocation-db.com/json/")
-    .get()
-    .json((json) => {
-      console.log(json);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
-
 const API_KEY = "c1b928b71dc25eee21fde1cead132ae8";
 function Weather() {
   const [weatherDetails, setWeatherDetails] = useLocalStorage(
@@ -23,6 +12,16 @@ function Weather() {
   const [placeName, setPlaceName] = useLocalStorage("stratus-place", []);
   const [geoLocation, setGeoLocation] = useLocalStorage("stratus-location", []);
 
+  const fetchLocation = () => {
+    wretch("https://geolocation-db.com/json/")
+      .get()
+      .json((json) => {
+        console.log(json);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const fetchWeatherData = (lat, long) => {
     const location = `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${long}&appid=${API_KEY}`;
     const current_api = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&exclude=minutely,hourly,alerts&appid=${API_KEY}&units=metric`;
@@ -81,12 +80,8 @@ function Weather() {
       geoLocation.lastUpdated == null ||
       geoLocation.lastUpdated !== getUID()
     ) {
-      console.log("it was a new day: " + getUID());
       updateWeather();
-    } else {
-      console.log("it was a an old day" + getUID());
     }
-    console.log(weatherDetails);
     return () => {};
   }, []);
   return (
