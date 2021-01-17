@@ -1,5 +1,5 @@
 // Hook
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 const useLocalStorage = (key, initialValue) => {
   // State to store our value
   // Pass initial state function to useState so logic is only executed once

@@ -5,7 +5,7 @@ import calendar from "../utils/getNepaliName";
 import suffix from "../utils/getSuffix";
 function Spotlight() {
   const [time, setTime] = useState(new Date());
-  const [nepaliDate, setNepaliDate] = useState(NepaliDate.today());
+  const [nepaliDate] = useState(NepaliDate.today());
   useEffect(() => {
     const id = setInterval(() => setTime(new Date()), 100);
     return () => {

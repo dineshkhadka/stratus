@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 const TodoItem = ({ todo, index, toggleCompleted, removeTodo }) => {
   return (
@@ -7,6 +7,7 @@ const TodoItem = ({ todo, index, toggleCompleted, removeTodo }) => {
         type="checkbox"
         className="todo__toggle"
         checked={todo.completed}
+        onChange={() => {}}
       />
 
       <svg
