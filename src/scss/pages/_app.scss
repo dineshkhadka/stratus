@@ -4,28 +4,34 @@
   height: 100vh;
   overflow: hidden;
   position: relative;
+}
 
-  [data-theme="background"] & {
-    background-size: cover;
-    background-position: center;
-    // background: #fff;
-    z-index: 1;
-    &:after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      z-index: -1;
-      opacity: 0.7;
-      background: radial-gradient(
-          37% 63% at 17% 27%,
-          rgba(85, 89, 89, 0.57) 0%,
-          rgba(243, 182, 201, 0) 100%
-        )
-        no-repeat 50% 50% / 100% 100%;
-    }
+.app-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    opacity: 0.7;
+    background: radial-gradient(
+        37% 63% at 17% 27%,
+        rgba(85, 89, 89, 0.57) 0%,
+        rgba(243, 182, 201, 0) 100%
+      )
+      no-repeat 50% 50% / 100% 100%;
+  }
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
   }
 }
 

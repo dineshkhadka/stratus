@@ -33,7 +33,12 @@ function Weather() {
     wretch(current_api)
       .get()
       .json((json) => {
-        setWeatherDetails(json);
+        setWeatherDetails(
+          {
+            data: json,
+            lastUpdated: getUID()
+          }
+        );
       })
       .catch((error) => {
         console.log(error);
@@ -87,8 +92,8 @@ function Weather() {
       );
     };
     if (
-      geoLocation.lastUpdated == null ||
-      geoLocation.lastUpdated !== getUID()
+      weatherDetails.lastUpdated == null ||
+      weatherDetails.lastUpdated !== getUID()
     ) {
       updateWeather();
     }
@@ -101,7 +106,7 @@ function Weather() {
           <h2 className="primary-text">Today the weather is</h2>
           <div className="weather__primary">
             <h3 className="weather__current">
-              {Math.round(parseInt(weatherDetails.current.temp))}
+              {Math.round(parseInt(weatherDetails.data.current.temp))}
               <sup>°</sup>c
             </h3>
             <span className="weather__location">{placeName.name}</span>
@@ -109,18 +114,18 @@ function Weather() {
           <div className="weather__forcast">
             <div className="weather__forcast-item">
               <h4 className="weather__forcast-title">
-                {Math.round(parseInt(weatherDetails.daily[1].temp.day))}
+                {Math.round(parseInt(weatherDetails.data.daily[1].temp.day))}
                 <sup>°</sup>c
               </h4>
               <span className="weather__forcast-day">Tommorrow</span>
             </div>
             <div className="weather__forcast-item">
               <h4 className="weather__forcast-title">
-                {Math.round(parseInt(weatherDetails.daily[2].temp.day))}
+                {Math.round(parseInt(weatherDetails.data.daily[2].temp.day))}
                 <sup>°</sup>c
               </h4>
               <span className="weather__forcast-day">
-                {getDayFromEpoch(weatherDetails.daily[2].dt)}
+                {getDayFromEpoch(weatherDetails.data.daily[2].dt)}
               </span>
             </div>
           </div>

@@ -24,6 +24,22 @@
 
   &__time {
     text-align: right;
+    span {
+      position: relative;
+      z-index: 1;
+      &:after {
+        content: '';
+        background-color: rgba(0,0,0,0.10);
+        width: calc(100% + 20px);
+        height: calc(100% + 20px);
+        display: block;
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        right: 0;
+        filter: blur(39px);
+      }
+    }
   }
 
   &__top {
