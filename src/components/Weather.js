@@ -13,18 +13,22 @@ function Weather() {
   const [geoLocation, setGeoLocation] = useLocalStorage("stratus-location", []);
 
   const fetchLocation = () => {
-    wretch("https://geolocation-db.com/json/")
+    console.log("Failed to get Geolocation, attempting to fetch from api...");
+    const location = `http://api.openweathermap.org/geo/1.0/direct?q=kathmandu&appid=${API_KEY}`;
+    wretch(location)
       .get()
       .json((json) => {
-        console.log(json);
+        console.log(json[0])
+        fetchWeatherData({ lat: json[0].lat, long: json[0].lon });
       })
       .catch((error) => {
         console.log(error);
       });
   };
-  const fetchWeatherData = (lat, long) => {
-    const location = `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${long}&appid=${API_KEY}`;
-    const current_api = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&exclude=minutely,hourly,alerts&appid=${API_KEY}&units=metric`;
+  const fetchWeatherData = (args) => {
+    var {lat, long} = args;
+    const location = `http://api.openweathermap.org/geo/1.0/reverse?$&lat=${lat}&lon=${long}&appid=${API_KEY}`;
+    const current_api = `https://api.openweathermap.org/data/2.5/onecall?&lat=${lat}&lon=${long}&exclude=minutely,hourly,alerts&appid=${API_KEY}&units=metric`;
 
     wretch(current_api)
       .get()
@@ -41,6 +45,7 @@ function Weather() {
         console.log(json[0]);
         setPlaceName({
           name: json[0].name,
+          lastUpdated: getUID(),
         });
       })
       .catch((error) => {
@@ -49,8 +54,8 @@ function Weather() {
   };
   useEffect(() => {
     const options = {
-      enableHighAccuracy: true,
-      timeout: 5000,
+      enableHighAccuracy: false,
+      timeout: 6000,
       maximumAge: 0,
     };
     const handleLocation = async (location) => {
@@ -60,16 +65,21 @@ function Weather() {
           long: location.coords.longitude,
           lastUpdated: getUID(),
         });
-        fetchWeatherData(location.coords.latitude, location.coords.longitude);
+        fetchWeatherData({
+          lat: location.coords.latitude,
+          long: location.coords.longitude,
+        });
       } catch (error) {
         console.error(error);
       }
     };
-    const handleError = () => {
-      fetchLocation();
+    const handleError = (err) => {
+      fetchLocation()
+      console.warn(`ERROR(${err.code}): ${err.message}`);
     };
 
     const updateWeather = () => {
+      console.log("Attempting to fetch location...");
       navigator.geolocation.getCurrentPosition(
         handleLocation,
         handleError,
