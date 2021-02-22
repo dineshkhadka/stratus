@@ -53,9 +53,9 @@
   @media #{$mq-1400-up} {
     padding: 6vw 30px;
   }
-  background-color: var(--background-color--light);
+  background-color: rgba(0, 0, 0, 0.30);
   [data-theme="background"] & {
-    backdrop-filter: blur(60px);
+    // backdrop-filter: blur(60px);
   }
   &__wrap {
     display: grid;
