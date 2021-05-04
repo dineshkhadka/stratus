@@ -14,7 +14,7 @@ function Weather() {
 
   const fetchLocation = () => {
     console.log("Failed to get Geolocation, attempting to fetch from api...");
-    const location = `http://api.openweathermap.org/geo/1.0/direct?q=kathmandu&appid=${API_KEY}`;
+    const location = `https://api.openweathermap.org/geo/1.0/direct?q=kathmandu&appid=${API_KEY}`;
     wretch(location)
       .get()
       .json((json) => {
@@ -27,7 +27,7 @@ function Weather() {
   };
   const fetchWeatherData = (args) => {
     var {lat, long} = args;
-    const location = `http://api.openweathermap.org/geo/1.0/reverse?$&lat=${lat}&lon=${long}&appid=${API_KEY}`;
+    const location = `https://api.openweathermap.org/geo/1.0/reverse?$&lat=${lat}&lon=${long}&appid=${API_KEY}`;
     const current_api = `https://api.openweathermap.org/data/2.5/onecall?&lat=${lat}&lon=${long}&exclude=minutely,hourly,alerts&appid=${API_KEY}&units=metric`;
 
     wretch(current_api)
