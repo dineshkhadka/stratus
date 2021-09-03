@@ -9,6 +9,9 @@
   line-height: 1.875;
   color: var(--color-primary);
   background-color: rgba(black, 0.1);
+  @media #{$mq-1400-down} {
+    font-size: 0.95rem;
+  }
   @media screen and (max-height: 550px) {
     font-size: 0.95rem;
   }

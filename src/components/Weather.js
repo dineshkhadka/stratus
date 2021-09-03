@@ -3,7 +3,7 @@ import useLocalStorage from "../hooks/useLocalStorage";
 import { getUID, getDayFromEpoch } from "../utils/helpers.js";
 import wretch from "wretch";
 
-const API_KEY = "c1b928b71dc25eee21fde1cead132ae8";
+const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
 function Weather() {
   const [weatherDetails, setWeatherDetails] = useLocalStorage(
     "stratus-weather",
