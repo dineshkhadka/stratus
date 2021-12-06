@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { getUID, getDayFromEpoch } from "../utils/helpers.js";
 import wretch from "wretch";
@@ -10,22 +10,9 @@ function Weather() {
     []
   );
   const [placeName, setPlaceName] = useLocalStorage("stratus-place", []);
-  const [geoLocation, setGeoLocation] = useLocalStorage("stratus-location", []);
+  const [, setGeoLocation] = useLocalStorage("stratus-location", []);
 
-  const fetchLocation = () => {
-    console.log("Failed to get Geolocation, attempting to fetch from api...");
-    const location = `https://api.openweathermap.org/geo/1.0/direct?q=kathmandu&appid=${API_KEY}`;
-    wretch(location)
-      .get()
-      .json((json) => {
-        console.log(json[0])
-        fetchWeatherData({ lat: json[0].lat, long: json[0].lon });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  const fetchWeatherData = (args) => {
+  const fetchWeatherData = useCallback((args) => {
     var {lat, long} = args;
     const location = `https://api.openweathermap.org/geo/1.0/reverse?$&lat=${lat}&lon=${long}&appid=${API_KEY}`;
     const current_api = `https://api.openweathermap.org/data/2.5/onecall?&lat=${lat}&lon=${long}&exclude=minutely,hourly,alerts&appid=${API_KEY}&units=metric`;
@@ -56,7 +43,21 @@ function Weather() {
       .catch((error) => {
         console.log(error);
       });
-  };
+  }, [setPlaceName, setWeatherDetails]);
+
+  const fetchLocation = useCallback(() => {
+    console.log("Failed to get Geolocation, attempting to fetch from api...");
+    const location = `https://api.openweathermap.org/geo/1.0/direct?q=kathmandu&appid=${API_KEY}`;
+    wretch(location)
+      .get()
+      .json((json) => {
+        console.log(json[0])
+        fetchWeatherData({ lat: json[0].lat, long: json[0].lon });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [fetchWeatherData]);
   useEffect(() => {
     const options = {
       enableHighAccuracy: false,
@@ -98,7 +99,7 @@ function Weather() {
       updateWeather();
     }
     return () => {};
-  }, []);
+  }, [fetchLocation, fetchWeatherData, setGeoLocation, weatherDetails.lastUpdated]);
   return (
     <>
       {Object.keys(weatherDetails).length > 0 && (
