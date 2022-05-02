@@ -20,8 +20,6 @@ function Image() {
         .json((json) => {
           var item = json[Math.floor(Math.random() * json.length)];
 
-          console.log(item.urls.full);
-
           setBackgroundImage({
             image: item,
             lastUpdated: getUID(),

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { getUID, getDayFromEpoch } from "../utils/helpers.js";
 import wretch from "wretch";
@@ -12,53 +12,6 @@ function Weather() {
   );
   const [placeName, setPlaceName] = useLocalStorage("stratus-place", []);
   const [, setGeoLocation] = useLocalStorage("stratus-location", []);
-
-  const fetchWeatherData = useCallback((args) => {
-    var { lat, long } = args;
-    const location = `https://api.openweathermap.org/geo/1.0/reverse?$&lat=${lat}&lon=${long}&appid=${API_KEY}`;
-    const current_api = `https://api.openweathermap.org/data/2.5/onecall?&lat=${lat}&lon=${long}&exclude=minutely,hourly,alerts&appid=${API_KEY}&units=metric`;
-
-    wretch(current_api)
-      .get()
-      .json((json) => {
-        setWeatherDetails(
-          {
-            data: json,
-            lastUpdated: getUID()
-          }
-        );
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    wretch(location)
-      .get()
-      .json((json) => {
-        console.log(json[0]);
-        setPlaceName({
-          name: json[0].name,
-          lastUpdated: getUID(),
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [setPlaceName, setWeatherDetails]);
-
-  const fetchLocation = useCallback(() => {
-    console.log("Failed to get Geolocation, attempting to fetch from api...");
-    const location = `https://api.openweathermap.org/geo/1.0/direct?q=kathmandu&appid=${API_KEY}`;
-    wretch(location)
-      .get()
-      .json((json) => {
-        console.log(json[0])
-        fetchWeatherData({ lat: json[0].lat, long: json[0].lon });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [fetchWeatherData]);
 
   useEffect(() => {
     const options = {
@@ -82,7 +35,7 @@ function Weather() {
       }
     };
     const handleError = (err) => {
-      fetchLocation()
+      fetchLocation();
       console.warn(`ERROR(${err.code}): ${err.message}`);
     };
 
@@ -95,8 +48,50 @@ function Weather() {
       );
     };
 
-    if (API_KEY !== undefined) {
+    const fetchWeatherData = async (args) => {
+      var { lat, long } = args;
+      const location = `https://api.openweathermap.org/geo/1.0/reverse?$&lat=${lat}&lon=${long}&appid=${API_KEY}`;
+      const current_api = `https://api.openweathermap.org/data/2.5/onecall?&lat=${lat}&lon=${long}&exclude=minutely,hourly,alerts&appid=${API_KEY}&units=metric`;
 
+      wretch(current_api)
+        .get()
+        .json((json) => {
+          setWeatherDetails({
+            data: json,
+            lastUpdated: getUID(),
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      wretch(location)
+        .get()
+        .json((json) => {
+          setPlaceName({
+            name: json[0].name,
+            lastUpdated: getUID(),
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    const fetchLocation = async () => {
+      console.log("Failed to get Geolocation, attempting to fetch from api...");
+      const location = `https://api.openweathermap.org/geo/1.0/direct?q=kathmandu&appid=${API_KEY}`;
+      wretch(location)
+        .get()
+        .json((json) => {
+          fetchWeatherData({ lat: json[0].lat, long: json[0].lon });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    if (API_KEY !== undefined) {
       if (
         weatherDetails.lastUpdated == null ||
         weatherDetails.lastUpdated !== getUID()
@@ -104,8 +99,9 @@ function Weather() {
         updateWeather();
       }
     }
-    return () => { };
-  }, [fetchLocation, fetchWeatherData, setGeoLocation, weatherDetails.lastUpdated]);
+    return () => {};
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <>
       {Object.keys(weatherDetails).length > 0 && (

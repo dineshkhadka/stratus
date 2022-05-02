@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import Weather from "./components/Weather.js";
 import Todo from "./components/Todo.js";
 import Spotlight from "./components/Spotlight.js";
@@ -6,7 +6,6 @@ import Footer from "./components/Footer.js";
 import Image from "./components/Image.js";
 import { isFreshDay } from "./utils/helpers.js";
 import "./scss/style.scss";
-
 
 
 
