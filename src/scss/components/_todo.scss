@@ -139,20 +139,20 @@
       width: 20px;
       height: 20px;
       left: 4px;
-      opacity: 0.5;
       transition: all 0.5s var(--transition);
       padding: 0;
       border: 0;
+      opacity: 0.8;
       background-color: transparent;
       color: var(--border-color--lighter);
     }
     input[type="text"] {
       color: var(--font-color);
       &::placeholder {
-        color: var(--border-color--lighter);
-        font-style: italic;
+        color: var(--border-color);
       }
       &:focus {
+        opacity: 1;
         ~ .btn {
           transform: rotate(-45deg);
           opacity: 1;

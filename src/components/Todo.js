@@ -125,9 +125,10 @@ function Todo() {
   return (
     <>
       <div className="todo">
+        {todo.length > 0 &&
         <div className="todo__header">
           <h2 className="primary-text">Stuff that needs to be done</h2>
-        </div>
+        </div> }
 
         <ul className="todo__list">
           {todo.map((todo, index) => (

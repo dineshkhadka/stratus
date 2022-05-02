@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from "react";
+import React, { useEffect } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { getUID } from "../utils/helpers.js";
 import wretch from "wretch";
@@ -13,21 +13,24 @@ function Image() {
     var API_KEY = process.env.REACT_APP_IMAGE_API_KEY;
     var API_URL = `https://api.unsplash.com`;
     var collection = `${API_URL}/collections/26321157/photos?client_id=${API_KEY}`;
-    wretch(collection)
-      .get()
-      .json((json) => {
-        var item = json[Math.floor(Math.random() * json.length)];
+    if (API_KEY) {
 
-        console.log(item.urls.full);
+      wretch(collection)
+        .get()
+        .json((json) => {
+          var item = json[Math.floor(Math.random() * json.length)];
 
-        setBackgroundImage({
-          image: item,
-          lastUpdated: getUID(),
+          console.log(item.urls.full);
+
+          setBackgroundImage({
+            image: item,
+            lastUpdated: getUID(),
+          });
+        })
+        .catch((error) => {
+          console.log(error);
         });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    }
   }
 
   useEffect(() => {
@@ -40,11 +43,11 @@ function Image() {
   });
   return (
     <>
-    {Object.keys(backgroundImage).length > 0 && (
-     <figure className="app-background">
-         <img src={backgroundImage.image.urls.full} />
-     </figure>
-    )}
+      {Object.keys(backgroundImage).length > 0 && (
+        <figure className="app-background">
+          <img src={backgroundImage.image.urls.full} alt=""/>
+        </figure>
+      )}
     </>
   );
 }

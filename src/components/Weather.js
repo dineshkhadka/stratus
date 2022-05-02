@@ -4,6 +4,7 @@ import { getUID, getDayFromEpoch } from "../utils/helpers.js";
 import wretch from "wretch";
 
 const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
+
 function Weather() {
   const [weatherDetails, setWeatherDetails] = useLocalStorage(
     "stratus-weather",
@@ -13,7 +14,7 @@ function Weather() {
   const [, setGeoLocation] = useLocalStorage("stratus-location", []);
 
   const fetchWeatherData = useCallback((args) => {
-    var {lat, long} = args;
+    var { lat, long } = args;
     const location = `https://api.openweathermap.org/geo/1.0/reverse?$&lat=${lat}&lon=${long}&appid=${API_KEY}`;
     const current_api = `https://api.openweathermap.org/data/2.5/onecall?&lat=${lat}&lon=${long}&exclude=minutely,hourly,alerts&appid=${API_KEY}&units=metric`;
 
@@ -58,6 +59,7 @@ function Weather() {
         console.log(error);
       });
   }, [fetchWeatherData]);
+
   useEffect(() => {
     const options = {
       enableHighAccuracy: false,
@@ -92,19 +94,23 @@ function Weather() {
         options
       );
     };
-    if (
-      weatherDetails.lastUpdated == null ||
-      weatherDetails.lastUpdated !== getUID()
-    ) {
-      updateWeather();
+
+    if (API_KEY !== undefined) {
+
+      if (
+        weatherDetails.lastUpdated == null ||
+        weatherDetails.lastUpdated !== getUID()
+      ) {
+        updateWeather();
+      }
     }
-    return () => {};
+    return () => { };
   }, [fetchLocation, fetchWeatherData, setGeoLocation, weatherDetails.lastUpdated]);
   return (
     <>
       {Object.keys(weatherDetails).length > 0 && (
         <div className="weather">
-          <h2 className="primary-text">Today the weather is</h2>
+          <h2 className="primary-text">The weather today is</h2>
           <div className="weather__primary">
             <h3 className="weather__current">
               {Math.round(parseInt(weatherDetails.data.current.temp))}
