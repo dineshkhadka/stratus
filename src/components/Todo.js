@@ -8,6 +8,7 @@ const TodoItem = ({ todo, index, toggleCompleted, removeTodo }) => {
         className="todo__toggle"
         checked={todo.completed}
         onChange={() => {}}
+        onClick={() => toggleCompleted(index)}
       />
 
       <svg
