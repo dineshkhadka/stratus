@@ -67,6 +67,12 @@
   }
   &__title {
     position: relative;
+    cursor: pointer;
+    /* Make the Task title non-selectable when click multiple times (supporting Chrome, Safari, Firefox and IE) */
+    -webkit-user-select: none; /* Chrome and Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE >9 */
+    user-select: none;
   }
 
   input[type="text"] {
