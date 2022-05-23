@@ -12,7 +12,7 @@ function Image() {
   function getImage() {
     var API_KEY = process.env.REACT_APP_IMAGE_API_KEY;
     var API_URL = `https://api.unsplash.com`;
-    var collection = `${API_URL}/collections/26321157/photos?client_id=${API_KEY}`;
+    var collection = `https://stratus-server.onrender.com/api/background`;
     if (API_KEY) {
 
       wretch(collection)

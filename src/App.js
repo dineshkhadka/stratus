@@ -1,5 +1,6 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect  } from "react";
 import Weather from "./components/Weather.js";
+import Quote from "./components/Quote.js";
 import Todo from "./components/Todo.js";
 import Spotlight from "./components/Spotlight.js";
 import Footer from "./components/Footer.js";
@@ -14,12 +15,13 @@ function App() {
     isFreshDay();
   }, []);
   return (
-    <>
+    <div className="App" data-theme="background">
     <Image />
       <main className="app-shell">
         <div className="app-primary">
           <div className="app-primary__wrap">
             <Spotlight />
+            <Quote />
             <Footer />
           </div>
         </div>
@@ -30,7 +32,7 @@ function App() {
           </div>
         </div>
       </main>
-    </>
+    </div>
   );
 }
 

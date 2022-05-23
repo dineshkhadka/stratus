@@ -4,7 +4,7 @@ import { getUID, getDayFromEpoch } from "../utils/helpers.js";
 import wretch from "wretch";
 
 const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
-
+const API_URL = 'https://stratus-server.onrender.com';
 function Weather() {
   const [weatherDetails, setWeatherDetails] = useLocalStorage(
     "stratus-weather",
@@ -51,7 +51,7 @@ function Weather() {
     const fetchWeatherData = async (args) => {
       var { lat, long } = args;
       const location = `https://api.openweathermap.org/geo/1.0/reverse?$&lat=${lat}&lon=${long}&appid=${API_KEY}`;
-      const current_api = `https://api.openweathermap.org/data/2.5/onecall?&lat=${lat}&lon=${long}&exclude=minutely,hourly,alerts&appid=${API_KEY}&units=metric`;
+      const current_api = `${API_URL}/api/weather?lat=${lat}&long=${long}`;
 
       wretch(current_api)
         .get()
@@ -80,11 +80,11 @@ function Weather() {
 
     const fetchLocation = async () => {
       console.log("Failed to get Geolocation, attempting to fetch from api...");
-      const location = `https://api.openweathermap.org/geo/1.0/direct?q=kathmandu&appid=${API_KEY}`;
+      const location = `https://geocoding-api.open-meteo.com/v1/search?name=kathmandu`;
       wretch(location)
         .get()
         .json((json) => {
-          fetchWeatherData({ lat: json[0].lat, long: json[0].lon });
+          fetchWeatherData({ lat:json.results[0].latitude, long:  json.results[0].longitude });
         })
         .catch((error) => {
           console.log(error);
@@ -109,7 +109,7 @@ function Weather() {
           <h2 className="primary-text">The weather today is</h2>
           <div className="weather__primary">
             <h3 className="weather__current">
-              {Math.round(parseInt(weatherDetails.data.current.temp))}
+              {Math.round(parseInt(weatherDetails.data.current_weather.temperature))}
               <sup>°</sup>c
             </h3>
             <span className="weather__location">{placeName.name}</span>
@@ -117,18 +117,18 @@ function Weather() {
           <div className="weather__forcast">
             <div className="weather__forcast-item">
               <h4 className="weather__forcast-title">
-                {Math.round(parseInt(weatherDetails.data.daily[1].temp.day))}
+                {Math.round(parseInt(weatherDetails.data.days.temperature_2m_max[1]))}
                 <sup>°</sup>c
               </h4>
               <span className="weather__forcast-day">Tommorrow</span>
             </div>
             <div className="weather__forcast-item">
               <h4 className="weather__forcast-title">
-                {Math.round(parseInt(weatherDetails.data.daily[2].temp.day))}
+                {Math.round(parseInt(weatherDetails.data.days.temperature_2m_max[2]))}
                 <sup>°</sup>c
               </h4>
               <span className="weather__forcast-day">
-                {getDayFromEpoch(weatherDetails.data.daily[2].dt)}
+                {getDayFromEpoch(weatherDetails.data.days.time[2])}
               </span>
             </div>
           </div>

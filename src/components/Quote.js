@@ -4,15 +4,16 @@ import useLocalStorage from "../hooks/useLocalStorage";
 import { getUID } from "../utils/helpers.js";
 import wretch from "wretch";
 
+const QUOTE_API = `https://stratus-server.onrender.com/api/quote`;
+
 function Quote() {
-  const QUOTE_API = `https://quotes.rest/qod?language=en`;
   const fetchQuote = () => {
     wretch(QUOTE_API)
       .get()
       .json((json) => {
         setcurrentQuote({
-          quote: json.contents.quotes[0].quote,
-          author: json.contents.quotes[0].author,
+          quote: json.quote,
+          author: json.author,
           lastUpdated: getUID(),
         });
       })

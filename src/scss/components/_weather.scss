@@ -30,7 +30,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
-    @media screen and (max-height: 560px), (max-width: 1280px) {
+    @media screen and (max-height: 400px), (max-width: 1280px) {
       display: none;
     }
 
