@@ -90,14 +90,11 @@ function Weather() {
           console.log(error);
         });
     };
-
-    if (API_KEY !== undefined) {
-      if (
-        weatherDetails.lastUpdated == null ||
-        weatherDetails.lastUpdated !== getUID()
-      ) {
-        updateWeather();
-      }
+    if (
+      weatherDetails.lastUpdated == null ||
+      weatherDetails.lastUpdated !== getUID()
+    ) {
+      updateWeather();
     }
     return () => {};
     //eslint-disable-next-line react-hooks/exhaustive-deps
