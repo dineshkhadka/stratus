@@ -3,7 +3,7 @@ import useLocalStorage from "../hooks/useLocalStorage";
 import { getUID, getDayFromEpoch } from "../utils/helpers.js";
 import wretch from "wretch";
 
-const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
+// const API_URL = 'http://localhost:5000';
 const API_URL = 'https://stratus-server.onrender.com';
 function Weather() {
   const [weatherDetails, setWeatherDetails] = useLocalStorage(
@@ -50,7 +50,7 @@ function Weather() {
 
     const fetchWeatherData = async (args) => {
       var { lat, long } = args;
-      const location = `https://api.openweathermap.org/geo/1.0/reverse?$&lat=${lat}&lon=${long}&appid=${API_KEY}`;
+      const location = `${API_URL}/api/reverse?$&lat=${lat}&long=${long}`;
       const current_api = `${API_URL}/api/weather?lat=${lat}&long=${long}`;
 
       wretch(current_api)
@@ -69,7 +69,7 @@ function Weather() {
         .get()
         .json((json) => {
           setPlaceName({
-            name: json[0].name,
+            name: json.name,
             lastUpdated: getUID(),
           });
         })
@@ -80,11 +80,11 @@ function Weather() {
 
     const fetchLocation = async () => {
       console.log("Failed to get Geolocation, attempting to fetch from api...");
-      const location = `https://geocoding-api.open-meteo.com/v1/search?name=kathmandu`;
+      const location = `${API_URL}/api/geo?place=kathmandu`;
       wretch(location)
         .get()
         .json((json) => {
-          fetchWeatherData({ lat:json.results[0].latitude, long:  json.results[0].longitude });
+          fetchWeatherData({ lat:json.lat, long:  json.lon });
         })
         .catch((error) => {
           console.log(error);

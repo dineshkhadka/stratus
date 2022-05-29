@@ -1,6 +1,6 @@
 .quote {
   align-self: end;
-  padding: 30px;
+  padding: 15px;
   border: 1px solid var(--border-color--lighter);
   border-radius: 4px;
   font-family: var(--secondary-family);
@@ -20,21 +20,18 @@
   }
 
   &__content {
-    margin-bottom: 32px;
-    @media screen and (max-height: 550px) {
-      margin-bottom: 15px;
-    }
+    margin-bottom: 10px;
   }
   &__author {
     font-weight: 500;
     position: relative;
-    padding-left: 105px;
+    padding-left: 64px;
     &:before {
       content: "";
       height: 1px;
       background-color: var(--border-color--lighter);
       display: block;
-      width: 80px;
+      width: 40px;
       position: absolute;
       top: 50%;
       transform: translateY(-50%);

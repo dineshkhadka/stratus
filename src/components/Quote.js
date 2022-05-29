@@ -28,6 +28,7 @@ function Quote() {
     ) {
       fetchQuote();
     }
+    // eslint-disable-next-line
   }, []);
   return (
     <>

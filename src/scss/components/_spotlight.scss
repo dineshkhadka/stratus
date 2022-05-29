@@ -29,15 +29,15 @@
       z-index: 1;
       &:after {
         content: '';
-        background-color: rgba(0,0,0,0.10);
+        background-color: rgba(0,0,0,0.30);
         width: calc(100% + 20px);
         height: calc(100% + 20px);
         display: block;
         position: absolute;
         z-index: -1;
-        top: 0;
+        top: -5px;
         right: 0;
-        filter: blur(40px);
+        filter: blur(20px);
       }
     }
   }
