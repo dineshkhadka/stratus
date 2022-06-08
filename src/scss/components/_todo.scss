@@ -1,6 +1,5 @@
 .todo {
   overflow: hidden;
-  align-self: end;
   &__list {
     height: 200px;
     overflow-y: scroll;
@@ -165,8 +164,5 @@
         }
       }
     }
-  }
-
-  &__footer {
   }
 }

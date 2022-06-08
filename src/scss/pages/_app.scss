@@ -12,6 +12,7 @@
   left: 0;
   width: 100%;
   height: 100%;
+
   &:after {
     content: "";
     position: absolute;
@@ -19,14 +20,13 @@
     left: 0;
     bottom: 0;
     right: 0;
-    opacity: 0.7;
-    background: radial-gradient(
-        37% 63% at 17% 27%,
-        rgba(85, 89, 89, 0.57) 0%,
-        rgba(243, 182, 201, 0) 100%
-      )
-      no-repeat 50% 50% / 100% 100%;
+    background-image:
+      radial-gradient(at 91% 87%, hsla(108, 0%, 0%, 0.2) 0px, transparent 50%),
+      radial-gradient(at 86% 30%, hsla(289, 0%, 0%, 0.41) 0px, transparent 50%),
+      radial-gradient(at 11% 23%, hsla(289, 0%, 0%, 0.49) 0px, transparent 50%),
+      radial-gradient(at 20% 84%, hsla(289, 0%, 0%, 0.46) 0px, transparent 50%);
   }
+
   img {
     width: 100%;
     height: 100%;
@@ -37,31 +37,51 @@
 
 .app-primary {
   padding: 30px 60px 30px 100px;
+  height: inherit;
+
   @media #{$mq-1400-up} {
     padding: 6vw 30px;
   }
+
   &__wrap {
     display: grid;
     grid-template-rows: repeat(2, auto);
     max-width: 720px;
     height: 100%;
     margin: 0 auto;
+    &--no-spotlight {
+      align-items: end;
+      grid-template-rows: auto;
+    }
   }
 }
+
 .app-secondary {
+  height: inherit;
   padding: 30px 50px;
+
   @media #{$mq-1400-up} {
     padding: 6vw 30px;
   }
-  background-color: rgba(0, 0, 0, 0.30);
+
+  background-color: rgba(0, 0, 0, 0.05);
+
   [data-theme="background"] & {
-    // backdrop-filter: blur(60px);
+    // background-color: rgba(0, 0, 0, 0.40);
+    backdrop-filter: blur(40px);
   }
+
+
+  [data-theme="dark"] & {
+    background-color: rgba(0, 0, 0, 0.35);
+  }
+
   &__wrap {
     display: grid;
     grid-template-rows: repeat(2, auto);
     max-width: 600px;
     height: 100%;
     margin: 0 auto;
+    align-items: start;
   }
 }

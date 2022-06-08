@@ -2,6 +2,7 @@
   --primary-light: #cfd7f3;
   --primary-dark: #1f2136;
 }
+
 :root {
   --primary-color: #cfd7f3;
   --secondary-color: #1f2136;
@@ -9,19 +10,32 @@
   --border-color--lighter: rgba(31, 33, 54, 0.6);
   --background-color: rgba(207, 215, 243, 0.45);
   --background-color--light: rgba(207, 215, 243, 0.45);
+  --background-gradient:
+    radial-gradient(at 78% 92%, rgba(242, 245, 148, 0.753) 0px, transparent 50%),
+    radial-gradient(at 11% 34%, hsla(266, 100%, 85%, 0.34) 0px, transparent 50%),
+    radial-gradient(at 97% 93%, hsla(289, 36%, 20%, 0.45) 0px, transparent 50%),
+    radial-gradient(at 0% 0%, hsla(226, 59%, 88%, 0.45) 0px, transparent 50%);
   --font-color: #1f2136;
   --font-color-dark: #cfd7f3;
 }
 
-[data-theme="dark"] {
+
+@mixin dark-scheme {
   --primary-color: #1f2136;
   --secondary-color: #cfd7f3;
   --border-color: rgba(207, 215, 243, 0.6);
   --border-color--lighter: rgba(207, 215, 243, 0.45);
   --background-color: rgba(31, 33, 54, 1);
   --background-color--light: rgba(41, 43, 70, 0.53);
+  --background-gradient:
+    radial-gradient(at 6% 10%, hsla(209, 62%, 42%, 0.2) 0px, transparent 50%),
+    radial-gradient(at 92% 87%, hsla(289, 35%, 20%, 0.44) 0px, transparent 50%);
   --font-color: #cfd7f3;
   --font-color-dark: #4a5568;
+}
+
+[data-theme="dark"] {
+  @include dark-scheme();
 }
 
 [data-theme="background"] {
@@ -33,4 +47,11 @@
   --background-color--light: rgba(41, 43, 70, 0.40);
   --font-color: #FFF;
   --font-color-dark: #4a5568;
+}
+
+[data-theme="auto"] {
+
+  @media (prefers-color-scheme: dark) {
+    @include dark-scheme();
+  }
 }

@@ -13,6 +13,9 @@ body,
 .App {
   padding: 0;
   margin: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
   font-family: var(--primary-family);
   background-color: var(--background-color);
   color: var(--font-color);
@@ -21,6 +24,8 @@ body,
   text-rendering: optimizeLegibility;
   background-size: cover;
   background-position: center;
+  background-color:var(--background-color);
+  background-image: var(--background-gradient);
 }
 figure {
   padding: 0;
@@ -48,3 +53,4 @@ blockquote {
   padding: 0;
   margin: 0;
 }
+

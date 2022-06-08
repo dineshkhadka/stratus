@@ -1,5 +1,5 @@
 {
-  "name": "drizzy-dash",
+  "name": "stratus",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -12,7 +12,14 @@
     "react-image": "^4.0.3",
     "react-scripts": "3.4.1",
     "sass": "^1.51.0",
-    "wretch": "^1.7.4"
+    "wretch": "^1.7.4",
+    "react-error-overlay": "6.0.9"
+  },
+  "devDependencies": {
+    "react-error-overlay": "6.0.9"
+  },
+  "resolutions": {
+    "react-error-overlay": "6.0.9"
   },
   "scripts": {
     "start": "react-scripts start",

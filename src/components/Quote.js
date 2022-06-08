@@ -7,6 +7,8 @@ import wretch from "wretch";
 const QUOTE_API = `https://stratus-server.onrender.com/api/quote`;
 
 function Quote() {
+  const [currentQuote, setcurrentQuote] = useLocalStorage("stratus-quote", []);
+  console.log('component mounted')
   const fetchQuote = () => {
     wretch(QUOTE_API)
       .get()
@@ -17,10 +19,11 @@ function Quote() {
           lastUpdated: getUID(),
         });
       })
-      .catch((error) => {});
+      .catch((error) => {
+        console.error(error)
+      });
   };
 
-  const [currentQuote, setcurrentQuote] = useLocalStorage("stratus-quote", []);
   useEffect(() => {
     if (
       currentQuote.lastUpdated == null ||
