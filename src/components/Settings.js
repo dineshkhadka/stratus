@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { SettingsContext } from "../context/settingsContext.js";
 import "../scss/style.scss";
-import Tab from "./Tab.js";
 
 function SettingsModal({ closeModal }) {
   const { settings, setDateType, setTheme, toggleComponent } =

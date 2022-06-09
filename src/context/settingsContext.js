@@ -7,25 +7,29 @@ const intialSettings = {
   setTheme: () => {},
   setDateType: () => {},
   components: {
-    'date' : true,
-    'time': true,
-    'quote' : true,
-    'weather' : true,
-    'weather_future' : true,
-    'todo' : true,
-    'credit' : true
-  }
+    date: true,
+    time: true,
+    quote: true,
+    weather: true,
+    weather_future: true,
+    todo: true,
+    credit: true,
+  },
 };
 
 const SettingsContext = React.createContext(intialSettings);
 
 function SettingsProvider({ children }) {
-  const [settings, setSettings] = useLocalStorage("stratus-settings", intialSettings);
+  const [settings, setSettings] = useLocalStorage(
+    "stratus-settings",
+    intialSettings
+  );
   const setTheme = (themeType) => {
     const newSettings = { ...settings };
     newSettings.theme = themeType;
     setSettings(newSettings);
   };
+  
   const setDateType = (dateType) => {
     const newSettings = { ...settings };
     newSettings.date_type = dateType;
@@ -38,7 +42,9 @@ function SettingsProvider({ children }) {
     setSettings(newSettings);
   };
   return (
-    <SettingsContext.Provider value={{ settings, setTheme, setDateType, toggleComponent }}>
+    <SettingsContext.Provider
+      value={{ settings, setTheme, setDateType, toggleComponent }}
+    >
       {children}
     </SettingsContext.Provider>
   );

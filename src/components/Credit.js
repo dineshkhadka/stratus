@@ -1,6 +1,5 @@
 import React from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
-import Quote from "./Quote.js";
 
 function Credit() {
   const [backgroundImage] = useLocalStorage("stratus-background", []);

@@ -26,8 +26,6 @@
 }
 
 .settings-menu {
-  background-color: #25242c;
-  opacity: 0.9;
   padding: 15px 15px 30px;
   border-radius: 18px;
   width: 95vw;
@@ -36,10 +34,11 @@
   z-index: 15;
   display: flex;
   flex-direction: column;
+  background-color: rgba(#25242c, 0.9);
   animation: modalShow 0.2s ease-in-out;
 
   [data-theme="dark"] & {
-    background-color: #040206;
+    background-color: rgba(#040206, 0.9);
   }
 
   box-shadow: 2.8px 2.8px 2.2px rgba(0, 0, 0, 0.037),
