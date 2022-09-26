@@ -4,8 +4,10 @@ import useLocalStorage from "../hooks/useLocalStorage";
 const intialSettings = {
   date_type: "nepali",
   theme: "dark",
+  timezones: [],
   setTheme: () => {},
   setDateType: () => {},
+  setTimezone: () => {},
   components: {
     date: true,
     time: true,
@@ -14,6 +16,7 @@ const intialSettings = {
     weather_future: true,
     todo: true,
     credit: true,
+    timezone: true,
   },
 };
 
@@ -35,6 +38,11 @@ function SettingsProvider({ children }) {
     newSettings.date_type = dateType;
     setSettings(newSettings);
   };
+  const setTimezone = (timezoneList) => {
+    const newSettings = { ...settings };
+    newSettings.time_zones = timezoneList;
+    setSettings(newSettings);
+  };
 
   const toggleComponent = (component) => {
     const newSettings = { ...settings };
@@ -43,7 +51,7 @@ function SettingsProvider({ children }) {
   };
   return (
     <SettingsContext.Provider
-      value={{ settings, setTheme, setDateType, toggleComponent }}
+      value={{ settings, setTheme, setDateType, setTimezone, toggleComponent }}
     >
       {children}
     </SettingsContext.Provider>

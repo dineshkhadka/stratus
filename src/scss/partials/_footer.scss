@@ -1,7 +1,7 @@
 .footer {
     display: flex;
     align-items: flex-end;
-    align-content: end;
+    align-content: flex-end;
     &__inner {
         width: 100%;
         > * + * {

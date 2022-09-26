@@ -34,11 +34,11 @@
   z-index: 15;
   display: flex;
   flex-direction: column;
-  background-color: rgba(#25242c, 0.9);
+  background-color: rgba(#25242c, 0.95);
   animation: modalShow 0.2s ease-in-out;
 
   [data-theme="dark"] & {
-    background-color: rgba(#040206, 0.9);
+    background-color: rgba(#040206, 0.95);
   }
 
   box-shadow: 2.8px 2.8px 2.2px rgba(0, 0, 0, 0.037),
@@ -72,6 +72,7 @@
   &__main {
     padding-left: 30px;
     flex-grow: 1;
+    position: relative;
   }
 
   &__list {
@@ -212,18 +213,184 @@
 
   &--background {
     #{$self}__label {
-      background-color: var(--primary-dark);
-      background-image: radial-gradient(at 40% 20%,
-          hsla(28, 100%, 74%, 1) 0px,
-          transparent 50%),
-        radial-gradient(at 80% 0%, hsla(189, 87%, 43%, 1) 0px, transparent 50%),
-        radial-gradient(at 0% 50%, hsla(355, 100%, 93%, 1) 0px, transparent 50%);
+      background-size: cover;
+      background-position: center;
+      background-color: white;
+      background-image: url("data:image/svg+xml,%3Csvg width='120' height='68' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23a)'%3E%3Cpath fill='url(%23b)' d='M0 0h120v67.5H0z'/%3E%3Cpath d='M28 19.5c0 5.247-5.149 9.5-11.5 9.5S5 24.747 5 19.5 10.149 10 16.5 10 28 14.253 28 19.5Z' fill='url(%23c)'/%3E%3Cpath d='M2 74c49.597-18.355 73-43 127-47s0 47 0 47H2Z' fill='url(%23d)'/%3E%3Cpath d='M-33 70.224 147 79.5c-46.546-18.68-88.809-43.51-126.5-54-8.751-2.435-18.806-3.757-28-4.183-10.923-.506-20.632.251-25.5 1.907-26.616 9.05 0 47 0 47Z' fill='url(%23e)'/%3E%3C/g%3E%3Cdefs%3E%3ClinearGradient id='b' x1='60' y1='0' x2='60' y2='67.5' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%23CFD7F3'/%3E%3Cstop offset='1' stop-color='%23E6CFF3'/%3E%3C/linearGradient%3E%3ClinearGradient id='d' x1='65.5' y1='27' x2='109' y2='71' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%238FB5FF'/%3E%3Cstop offset='.521' stop-color='%2392A7F1' stop-opacity='.479'/%3E%3Cstop offset='1' stop-color='%23CCB5FF' stop-opacity='.58'/%3E%3C/linearGradient%3E%3ClinearGradient id='e' x1='30.5' y1='23.224' x2='-13' y2='67.224' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%23A8C3F9'/%3E%3Cstop offset='.12' stop-color='%2390B2FC'/%3E%3Cstop offset='.521' stop-color='%2392A7F1'/%3E%3Cstop offset='1' stop-color='%23CCB5FF'/%3E%3C/linearGradient%3E%3CradialGradient id='c' cx='0' cy='0' r='1' gradientUnits='userSpaceOnUse' gradientTransform='rotate(63.234 -8.183 17.078) scale(9.12002 10.329)'%3E%3Cstop stop-color='%23FFFDF8'/%3E%3Cstop offset='.458' stop-color='%23FFFEFB' stop-opacity='.542'/%3E%3Cstop offset='.661' stop-color='%23FFFEFC' stop-opacity='.339'/%3E%3Cstop offset='1' stop-color='%23fff' stop-opacity='0'/%3E%3C/radialGradient%3E%3CclipPath id='a'%3E%3Cpath fill='%23fff' d='M0 0h120v67.5H0z'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E");
+    }
+  }
+}
+
+.timezone-input {
+  &__input {
+    width: 100%;
+    appearance: none;
+    background-color: transparent;
+    padding: 8px 15px 8px 0;
+    border: 0;
+    border-bottom: 1px solid rgba(#FFF, 0.4);
+    box-shadow: none;
+    color: var(--primary-light);
+    &::placeholder {
+      color: rgba(#fff, 0.4)
+    }
+
+    &:focus,
+    &:active,
+    &:focus-visible {
+      outline: none;
+      border: 0;
+      border-bottom: 1px solid var(--primary-light);
+    }
+  }
+
+  &__reset {
+    all: unset;
+    position: absolute;
+    right: 0;
+    top: 4px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    opacity: 0.4;
+    cursor: pointer;
+    svg {
+      opacity: 1;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.timezone-wrap {
+  position: relative;
+}
+
+.timezone-results {
+  max-height: 250px;
+  overflow: auto;
+  position: absolute;
+  top: calc(100% + 1px);
+  left: 0;
+  width: 100%;
+  background-color: rgb(30 29 30);
+  z-index: 2;
+  /* total width */
+  &::-webkit-scrollbar {
+    background-color: transparent;
+    width: 8px;
+  }
+
+  /* background of the scrollbar except button or resizer */
+  &::-webkit-scrollbar-track {
+    background-color: rgba(#040206, 0.2);
+  }
+
+  /* scrollbar itself */
+  &::-webkit-scrollbar-thumb {
+    background-color: black;
+    border-radius: 8px;
+  }
+
+  /* set button(top and bottom of the scrollbar) */
+  &::-webkit-scrollbar-button {
+    display:none;
+  }
+  li {
+    padding: 8px;
+    border-radius: 8px;
+
+    &:hover {
+      background-color: rgba(#040206, 0.2);
     }
   }
 }
 
 
+.timezone-list {
+  margin: 20px 0 0;
+  padding: 0;
+  max-height: 300px;
+  overflow: auto;
+  /* total width */
+  &::-webkit-scrollbar {
+    background-color: transparent;
+    width: 8px;
+  }
 
+  /* background of the scrollbar except button or resizer */
+  &::-webkit-scrollbar-track {
+    background-color: rgba(#040206, 0.2);
+  }
+
+  /* scrollbar itself */
+  &::-webkit-scrollbar-thumb {
+    background-color: black;
+    border-radius: 8px;
+  }
+
+  /* set button(top and bottom of the scrollbar) */
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+  li {
+    list-style: none;
+    padding: 12px;
+    position: relative;
+    padding-right: 60px;
+    color: var(--primary-light);
+    line-height: 1.75;
+    border: 2px solid rgba(#ccc, 0.2);
+    border-radius: 4px;
+    cursor: default;
+    &:not(:last-child) {
+      margin-bottom: 20px;
+    }
+    .btn-icon {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 30px;
+      height: 30px;
+      svg {
+        width: 12px;
+        height: 12px;
+      }
+    }
+  }
+}
+
+.error-message {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--secondary-color);
+  padding: 14px 40px;
+  background-color: var(--primary-color);
+  border-radius: 24px;
+  position: fixed;
+  width: auto;
+  transform: translateX(-50%) translateZ(0);
+  left: 50%;
+  bottom: 50px;
+  box-shadow:
+  2.8px 2.8px 2.2px rgba(0, 0, 0, 0.02),
+  6.7px 6.7px 5.3px rgba(0, 0, 0, 0.028),
+  12.5px 12.5px 10px rgba(0, 0, 0, 0.035),
+  22.3px 22.3px 17.9px rgba(0, 0, 0, 0.042),
+  41.8px 41.8px 33.4px rgba(0, 0, 0, 0.05),
+  100px 100px 80px rgba(0, 0, 0, 0.07);
+  transition: all 0.3s ease-in-out;
+  bottom: -300px;
+  opacity: 0;
+  &.shown {
+    bottom: 50px;
+    opacity: 1;
+  }
+}
 @keyframes modalShow {
   from {
     opacity: 0;

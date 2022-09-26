@@ -1,11 +1,20 @@
 import React, { useState } from "react";
 import { SettingsContext } from "../context/settingsContext.js";
 import "../scss/style.scss";
+import countries from "../utils/countries.js";
+const fuzzysort = require("fuzzysort");
 
 function SettingsModal({ closeModal }) {
-  const { settings, setDateType, setTheme, toggleComponent } =
+  const { settings, setDateType, setTheme, toggleComponent, setTimezone } =
     React.useContext(SettingsContext);
   const [currentTab, setCurrentTab] = useState(1);
+  const [search, setSearch] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
+  const [errorMessage, setErrorMessage] = useState({
+    displayed: false,
+    message: "",
+    type: "alert",
+  });
 
   const isActive = (index) => {
     return currentTab === index;
@@ -14,12 +23,75 @@ function SettingsModal({ closeModal }) {
   const displayTab = (index) => {
     if (!isNaN(index)) setCurrentTab(index);
   };
+  const searchItem = (query) => {
+    if (!query) {
+      clearSearch();
+      return;
+    }
+    setSearchValue(query);
+    const result = fuzzysort.go(searchValue, countries, {
+      keys: ["name", "timezone"],
+    });
+    if (result.length) {
+      setSearch(result);
+    } else {
+      setSearch([]);
+    }
+  };
+  const displayMessage = (message) => {
+    setErrorMessage({ ...errorMessage, displayed: true, message: message });
+    var timer = null;
+    if (timer) {
+      clearTimeout(timer); //cancel the previous timer.
+      timer = null;
+    }
+    timer = setTimeout(() => {
+      setErrorMessage({ ...errorMessage, displayed: false, message: message });
+    }, 3000);
+  };
+  const handleTimezone = (item) => {
+    const timezoneList = settings.time_zones || [];
+    if (
+      timezoneList.findIndex((o) => o.timezone === item.obj.timezone) !== -1
+    ) {
+      displayMessage("The timezone already exists in the list!");
+      clearSearch();
+      return false;
+    }
+    if (timezoneList.length > 3) {
+      displayMessage("A maximum of 4 timezones allowed!");
+      clearSearch();
+    } else {
+      timezoneList.push({
+        timezone: item.obj.timezone,
+        location: item.obj.timezone
+          .split("/")
+          .slice(-1)[0]
+          .split("_")
+          .join(" "),
+        city: item.obj.name.split("_").join(" ").replace('\\\\', ''),
+      });
+      setTimezone(timezoneList);
+      clearSearch();
+    }
+  };
+
+  const removeTimezone = (index) => {
+    const timezonesData = [...settings.time_zones];
+    timezonesData.splice(index, 1);
+    setTimezone(timezonesData);
+  };
+
+  const clearSearch = () => {
+    setSearch([]);
+    setSearchValue("");
+  };
   return (
     <>
       <div className="settings-container">
         <div className="settings-menu">
           <header className="settings-menu__header">
-            <button className="btn-icon btn-icon--light" onClick={closeModal}>
+            <button className="btn-close btn-close--light" onClick={closeModal}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -56,11 +128,26 @@ function SettingsModal({ closeModal }) {
                     Components
                   </button>
                 </li>
+                <li className="settings-menu__item">
+                  <button
+                    className={`settings-menu__button ${
+                      isActive(3) ? "active" : ""
+                    }`}
+                    onClick={() => displayTab(3)}
+                  >
+                    World Clock
+                  </button>
+                </li>
               </ul>
             </aside>
 
             <div className="settings-menu__main">
-              <div className={`settings-screen ${isActive(1) ? "active" : ""}`}>
+              <aside
+                className={`error-message ${errorMessage.displayed && "shown"}`}
+              >
+                <span>{errorMessage.message}</span>
+              </aside>
+              <div className={`settings-screen ${isActive(1) && "active"}`}>
                 <div className="settings-screen__group">
                   <div className="settings-screen__label">
                     <h3 className="settings-screen__title">Date Type</h3>
@@ -184,7 +271,7 @@ function SettingsModal({ closeModal }) {
                   </div>
                 </div>
               </div>
-              <div className={`settings-screen ${isActive(2) ? "active" : ""}`}>
+              <div className={`settings-screen ${isActive(2) && "active"}`}>
                 <div className="settings-screen__group">
                   <div className="settings-screen__label">
                     <h3 className="settings-screen__title">
@@ -265,7 +352,109 @@ function SettingsModal({ closeModal }) {
                           </label>
                         </div>
                       </div>
+                      <div className="component-toggle__item">
+                        <div className="form-check form-switch">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            role="switch"
+                            id="timezone-toggle"
+                            onChange={() => toggleComponent("timezone")}
+                            defaultChecked={settings.components["timezone"]}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="timezone-toggle"
+                          >
+                            World-clock
+                          </label>
+                        </div>
+                      </div>
                     </div>
+                  </div>
+                </div>
+              </div>
+              <div className={`settings-screen ${isActive(3) && "active"}`}>
+                <div className="settings-screen__group">
+                  <div className="settings-screen__label">
+                    <h3 className="settings-screen__title">Edit Timezones</h3>
+                  </div>
+                  <div className="settings-screen__input">
+                    <div className="timezone-wrap">
+                      <div className="timezone-input">
+                        <input
+                          type="text"
+                          id="timezone"
+                          className="timezone-input__input"
+                          name="timezone-switcher"
+                          placeholder="Search a city..."
+                          value={searchValue}
+                          onChange={(e) => searchItem(e.target.value)}
+                        />
+                        <label
+                          className="timezone-input__label"
+                          htmlFor="timezone"
+                        >
+                          <span className="sr-only">Add new timezone</span>
+                        </label>
+                        <button
+                          className="timezone-input__reset"
+                          onClick={clearSearch}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="M18 6 6 18M6 6l12 12" />
+                          </svg>
+                        </button>
+                      </div>
+                      <ul className="timezone-results">
+                        {search.map((item, index) => {
+                          return (
+                            <li
+                              key={index}
+                              onClick={() => handleTimezone(item)}
+                            >
+                              {item.obj.timezone} - ({item.obj.name})
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                    {settings.time_zones && (
+                      <ul className="timezone-list">
+                        {settings.time_zones.map((item, index) => {
+                          return (
+                            <li key={index}>
+                              {item.timezone} -{" "}
+                              {item.city.length > 0 && item.city}
+                              <button
+                                className="btn-icon"
+                                onClick={() => removeTimezone(index)}
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                >
+                                  <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                                </svg>
+                              </button>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    )}
                   </div>
                 </div>
               </div>
@@ -280,14 +469,13 @@ function SettingsModal({ closeModal }) {
 function Settings() {
   const [diplayModal, setDisplayModal] = useState(false);
   const toggleModal = () => setDisplayModal(!diplayModal);
-
   const closeModal = () => setDisplayModal(false);
 
   return (
     <>
       <aside className="settings" role="dialog" aria-modal="true">
         <div className="settings__inner">
-          <button className="settings__button btn-icon" onClick={toggleModal}>
+          <button className="settings__button btn-close" onClick={toggleModal}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

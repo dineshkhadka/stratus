@@ -45,13 +45,33 @@
   &__top {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    align-items: end;
+    align-items: flex-end;
     padding-bottom: 15px;
   }
   &__bottom {
     border-top: 1px solid var(--border-color);
-    display: grid;
-    grid-template-columns: 2fr 1fr;
     padding: 15px 0;
+  }
+  &__intl {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+  }
+}
+
+
+.world-clock {
+  text-align: center;
+  &__location,
+  &__date {
+    font-size: 12px;
+    font-weight: 400;
+    margin: 0;
+  }
+
+  &__location {
+  }
+  &__time {
+    font-size: 20px;
   }
 }
