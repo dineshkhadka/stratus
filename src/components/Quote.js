@@ -2,24 +2,31 @@
 import React, { useEffect } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { getUID } from "../utils/helpers.js";
-import wretch from "wretch";
-
-const QUOTE_API = `https://stratus-server.onrender.com/api/quote`;
+import api from "../utils/api";
 
 function Quote() {
   const [currentQuote, setcurrentQuote] = useLocalStorage("stratus-quote", []);
   const fetchQuote = () => {
-    wretch(QUOTE_API)
-      .get()
-      .json((json) => {
+    fetch(api.QUOTES_API)
+      .then((response) => response.json())
+      .then((data) => {
         setcurrentQuote({
-          quote: json.quote,
-          author: json.author,
+          quote: data.quote,
+          author: data.author,
           lastUpdated: getUID(),
         });
       })
       .catch((error) => {
-        console.error(error)
+        fetch("../data/quotes.json")
+          .then((response) => response.json())
+          .then((data) => {
+            var item = data[Math.floor(Math.random() * data.length)];
+            setcurrentQuote({
+              quote: item.quote,
+              author: item.author,
+              lastUpdated: getUID(),
+            });
+          });
       });
   };
 

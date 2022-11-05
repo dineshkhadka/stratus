@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { getUID } from "../utils/helpers.js";
-import wretch from "wretch";
+import api from "../utils/api";
 
 function Image() {
   const [backgroundImage, setBackgroundImage] = useLocalStorage(
     "stratus-background",
     []
   );
+  const [image, setImage] = useLocalStorage("stratus-image", false);
 
   function getImage() {
-    var collection = `https://stratus-server.onrender.com/api/background`;
-    wretch(collection)
-      .get()
-      .json((json) => {
-        var item = json[Math.floor(Math.random() * json.length)];
+    fetch(api.BACKGROUND_API)
+      .then((response) => response.json())
+      .then((data) => {
+        var item = data[Math.floor(Math.random() * data.length)];
 
         setBackgroundImage({
           image: item,
@@ -22,9 +22,34 @@ function Image() {
         });
       })
       .catch((error) => {
-        console.log(error);
+        fetch("../data/images.json")
+          .then((response) => response.json())
+          .then((data) => {
+            var item = data[Math.floor(Math.random() * data.length)];
+            setBackgroundImage({
+              image: item,
+              lastUpdated: getUID(),
+            });
+          });
       });
   }
+
+  const fetchImage = async (imageUrl) => {
+    if (!image) {
+      fetch(imageUrl)
+        .then((response) => response.blob())
+        .then(
+          (blob) =>
+            new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onloadend = () => resolve(reader.result);
+              reader.onerror = reject;
+              reader.readAsDataURL(blob);
+            })
+        )
+        .then((data) => setImage(data));
+    }
+  };
 
   useEffect(() => {
     if (
@@ -32,13 +57,17 @@ function Image() {
       backgroundImage.lastUpdated !== getUID()
     ) {
       getImage();
+    } else {
+      if (Object.keys(backgroundImage).length > 0) {
+        fetchImage(backgroundImage.image.urls.full);
+      }
     }
   });
   return (
     <>
-      {Object.keys(backgroundImage).length > 0 && (
-        <figure className="app-background">
-          <img src={backgroundImage.image.urls.full} alt="" />
+      {image && (
+        <figure className="app-background fade-in">
+          <img src={image} alt="" />
         </figure>
       )}
     </>

@@ -52,12 +52,17 @@
     display: grid;
     grid-template-columns: 0.75fr 3fr;
     flex-grow: 1;
+    overflow: auto;
+    @media screen and (max-width: 620px) {
+      grid-template-columns: 1fr;
+      flex-grow: unset;
+    }
   }
 
   &__header {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-end;
+    justify-content: space-between;
     padding-bottom: 30px;
     position: relative;
     flex-grow: 0;
@@ -73,11 +78,24 @@
     padding-left: 30px;
     flex-grow: 1;
     position: relative;
+    @media screen and (max-width: 620px) {
+      padding-left: 0;
+      flex-grow: unset;
+      margin-top: 50px;
+    }
   }
 
   &__list {
+    @media screen and (max-width: 620px) {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
     >li:not(:last-child) {
       margin-bottom: 10px;
+      @media screen and (max-width: 620px) {
+        margin-bottom: 0;
+      }
     }
   }
 
@@ -117,6 +135,9 @@
   &__group {
     display: flex;
     justify-content: space-between;
+    @media #{$mq-760-down} {
+      flex-wrap: wrap;
+    }
 
     &:not(:last-child) {
       margin-bottom: 40px;
@@ -133,6 +154,11 @@
     width: 100%;
     max-width: 450px;
     padding-left: 30px;
+    @media #{$mq-760-down} {
+      max-width: 100%;
+      padding-left: 0;
+      margin-top: 15px;
+    }
   }
 }
 .component-toggle {
@@ -279,26 +305,8 @@
   background-color: rgb(30 29 30);
   z-index: 2;
   /* total width */
-  &::-webkit-scrollbar {
-    background-color: transparent;
-    width: 8px;
-  }
-
-  /* background of the scrollbar except button or resizer */
-  &::-webkit-scrollbar-track {
-    background-color: rgba(#040206, 0.2);
-  }
-
-  /* scrollbar itself */
-  &::-webkit-scrollbar-thumb {
-    background-color: black;
-    border-radius: 8px;
-  }
-
-  /* set button(top and bottom of the scrollbar) */
-  &::-webkit-scrollbar-button {
-    display:none;
-  }
+  color: var(--primary-light);
+  
   li {
     padding: 8px;
     border-radius: 8px;
@@ -314,28 +322,6 @@
   margin: 20px 0 0;
   padding: 0;
   max-height: 300px;
-  overflow: auto;
-  /* total width */
-  &::-webkit-scrollbar {
-    background-color: transparent;
-    width: 8px;
-  }
-
-  /* background of the scrollbar except button or resizer */
-  &::-webkit-scrollbar-track {
-    background-color: rgba(#040206, 0.2);
-  }
-
-  /* scrollbar itself */
-  &::-webkit-scrollbar-thumb {
-    background-color: black;
-    border-radius: 8px;
-  }
-
-  /* set button(top and bottom of the scrollbar) */
-  &::-webkit-scrollbar-button {
-    display: none;
-  }
   li {
     list-style: none;
     padding: 12px;
@@ -402,5 +388,29 @@
     opacity: 1;
     -webkit-transform: scale(1);
     transform: scale(1)
+  }
+}
+
+
+.has-scroll {
+  &::-webkit-scrollbar {
+    background-color: transparent;
+    width: 8px;
+  }
+
+  /* background of the scrollbar except button or resizer */
+  &::-webkit-scrollbar-track {
+    background-color: rgba(#040206, 0.2);
+  }
+
+  /* scrollbar itself */
+  &::-webkit-scrollbar-thumb {
+    background-color: black;
+    border-radius: 8px;
+  }
+
+  /* set button(top and bottom of the scrollbar) */
+  &::-webkit-scrollbar-button {
+    display:none;
   }
 }

@@ -1,27 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import useLocalStorage from "../hooks/useLocalStorage";
 import { SettingsContext } from "../context/settingsContext.js";
+import WeatherSearch from "./weatherSearch";
 import "../scss/style.scss";
-import countries from "../utils/countries.js";
+
 const fuzzysort = require("fuzzysort");
+
+const TABS = {
+  APPEARANCE: "APPEARANCE",
+  WIDGETS: "WIDGETS",
+  WORLD_CLOCK: "WORLD_CLOCK",
+  WEATHER: "WEATHER",
+};
 
 function SettingsModal({ closeModal }) {
   const { settings, setDateType, setTheme, toggleComponent, setTimezone } =
-    React.useContext(SettingsContext);
-  const [currentTab, setCurrentTab] = useState(1);
+    useContext(SettingsContext);
+  const [placeName, setPlaceName] = useLocalStorage("stratus-place", []);
+  const [, setGeoLocation] = useLocalStorage("stratus-location", []);
+  const [countries, setCountries] = useState([]);
+  const [currentTab, setCurrentTab] = useState(Object.keys(TABS)[0]);
   const [search, setSearch] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+  const [placeValue, setPlaceValue] = useState(placeName?.name);
   const [errorMessage, setErrorMessage] = useState({
     displayed: false,
     message: "",
     type: "alert",
   });
 
+  const [preview, setPreview] = useState(0);
+
   const isActive = (index) => {
     return currentTab === index;
   };
 
   const displayTab = (index) => {
-    if (!isNaN(index)) setCurrentTab(index);
+    if (index) setCurrentTab(index);
   };
   const searchItem = (query) => {
     if (!query) {
@@ -69,7 +84,7 @@ function SettingsModal({ closeModal }) {
           .slice(-1)[0]
           .split("_")
           .join(" "),
-        city: item.obj.name.split("_").join(" ").replace('\\\\', ''),
+        city: item.obj.name.split("_").join(" ").replace("\\\\", ""),
       });
       setTimezone(timezoneList);
       clearSearch();
@@ -86,11 +101,48 @@ function SettingsModal({ closeModal }) {
     setSearch([]);
     setSearchValue("");
   };
+  const handleLocationSubmit = () => {
+    // fetchLocation(placeValue)
+  }
+  useEffect(() => {
+    fetch("../data/countries.json")
+      .then((response) => response.json())
+      .then((data) => {
+        setCountries(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    return () => {};
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <>
-      <div className="settings-container">
+      <div className="settings-container" style={{ opacity: preview ? 0 : 1 }}>
         <div className="settings-menu">
           <header className="settings-menu__header">
+            <button
+              className="btn-close btn-close--light"
+              onMouseEnter={() => {
+                setPreview(true);
+              }}
+              onMouseLeave={() => {
+                setPreview(false);
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </button>
             <button className="btn-close btn-close--light" onClick={closeModal}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -105,15 +157,15 @@ function SettingsModal({ closeModal }) {
               </svg>
             </button>
           </header>
-          <div className="settings-menu__inner">
+          <div className="settings-menu__inner has-scroll">
             <aside className="settings-menu__sidebar">
               <ul className="settings-menu__list">
                 <li className="settings-menu__item">
                   <button
                     className={`settings-menu__button ${
-                      isActive(1) ? "active" : ""
+                      isActive(TABS.APPEARANCE) ? "active" : ""
                     }`}
-                    onClick={() => displayTab(1)}
+                    onClick={() => displayTab(TABS.APPEARANCE)}
                   >
                     Appearance
                   </button>
@@ -121,21 +173,31 @@ function SettingsModal({ closeModal }) {
                 <li className="settings-menu__item">
                   <button
                     className={`settings-menu__button ${
-                      isActive(2) ? "active" : ""
+                      isActive(TABS.WIDGETS) ? "active" : ""
                     }`}
-                    onClick={() => displayTab(2)}
+                    onClick={() => displayTab(TABS.WIDGETS)}
                   >
-                    Components
+                    Widgets
                   </button>
                 </li>
                 <li className="settings-menu__item">
                   <button
                     className={`settings-menu__button ${
-                      isActive(3) ? "active" : ""
+                      isActive(TABS.WORLD_CLOCK) ? "active" : ""
                     }`}
-                    onClick={() => displayTab(3)}
+                    onClick={() => displayTab(TABS.WORLD_CLOCK)}
                   >
                     World Clock
+                  </button>
+                </li>
+                <li className="settings-menu__item">
+                  <button
+                    className={`settings-menu__button ${
+                      isActive(TABS.WEATHER) ? "active" : ""
+                    }`}
+                    onClick={() => displayTab(TABS.WEATHER)}
+                  >
+                    Location
                   </button>
                 </li>
               </ul>
@@ -147,7 +209,7 @@ function SettingsModal({ closeModal }) {
               >
                 <span>{errorMessage.message}</span>
               </aside>
-              <div className={`settings-screen ${isActive(1) && "active"}`}>
+              <div className={`settings-screen ${isActive(TABS.APPEARANCE) && "active"}`}>
                 <div className="settings-screen__group">
                   <div className="settings-screen__label">
                     <h3 className="settings-screen__title">Date Type</h3>
@@ -271,12 +333,10 @@ function SettingsModal({ closeModal }) {
                   </div>
                 </div>
               </div>
-              <div className={`settings-screen ${isActive(2) && "active"}`}>
+              <div className={`settings-screen ${isActive(TABS.WIDGETS) && "active"}`}>
                 <div className="settings-screen__group">
                   <div className="settings-screen__label">
-                    <h3 className="settings-screen__title">
-                      Toggle Components
-                    </h3>
+                    <h3 className="settings-screen__title">Toggle Widgets</h3>
                   </div>
                   <div className="settings-screen__input">
                     <div className="component-toggle">
@@ -374,10 +434,10 @@ function SettingsModal({ closeModal }) {
                   </div>
                 </div>
               </div>
-              <div className={`settings-screen ${isActive(3) && "active"}`}>
+              <div className={`settings-screen ${isActive(TABS.WORLD_CLOCK) && "active"}`}>
                 <div className="settings-screen__group">
                   <div className="settings-screen__label">
-                    <h3 className="settings-screen__title">Edit Timezones</h3>
+                    <h3 className="settings-screen__title">Timezones</h3>
                   </div>
                   <div className="settings-screen__input">
                     <div className="timezone-wrap">
@@ -414,7 +474,7 @@ function SettingsModal({ closeModal }) {
                           </svg>
                         </button>
                       </div>
-                      <ul className="timezone-results">
+                      <ul className="timezone-results has-scroll">
                         {search.map((item, index) => {
                           return (
                             <li
@@ -428,7 +488,7 @@ function SettingsModal({ closeModal }) {
                       </ul>
                     </div>
                     {settings.time_zones && (
-                      <ul className="timezone-list">
+                      <ul className="timezone-list has-scroll">
                         {settings.time_zones.map((item, index) => {
                           return (
                             <li key={index}>
@@ -455,6 +515,16 @@ function SettingsModal({ closeModal }) {
                         })}
                       </ul>
                     )}
+                  </div>
+                </div>
+              </div>
+              <div className={`settings-screen ${isActive(TABS.WEATHER) && "active"}`}>
+                <div className="settings-screen__group">
+                  <div className="settings-screen__label">
+                    <h3 className="settings-screen__title">Weather</h3>
+                  </div>
+                  <div className="settings-screen__input">
+                      <WeatherSearch />
                   </div>
                 </div>
               </div>

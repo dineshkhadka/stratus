@@ -1,95 +1,27 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { getUID, getDayFromEpoch } from "../utils/helpers.js";
-import wretch from "wretch";
-
-// const API_URL = 'http://localhost:5000';
-const API_URL = 'https://stratus-server.onrender.com';
+import { boundStore } from '../stores/useBoundStore'
+import {
+  getPlaceNamefromCoordinates,
+  getWeatherData,
+} from "../utils/getCurrentCoordinates";
+import WeatherSearch from "./weatherSearch";
 function Weather() {
-  const [weatherDetails, setWeatherDetails] = useLocalStorage(
-    "stratus-weather",
-    []
-  );
-  const [placeName, setPlaceName] = useLocalStorage("stratus-place", []);
-  const [, setGeoLocation] = useLocalStorage("stratus-location", []);
+  // const [weatherDetails, setWeatherDetails] = useLocalStorage(
+  //   "stratus-weather",
+  //   []
+  // );
 
+  const weatherDetails = boundStore((state) => state.weatherDetails)
+  const setWeatherDetails = boundStore((state) => state.setWeatherDetails)
+
+
+  const placeName = boundStore((state) => state.placeName)
+  const setPlaceName = boundStore((state) => state.setPlaceName)
+
+  
   useEffect(() => {
-    const options = {
-      enableHighAccuracy: false,
-      timeout: 6000,
-      maximumAge: 0,
-    };
-    const handleLocation = async (location) => {
-      try {
-        setGeoLocation({
-          lat: location.coords.latitude,
-          long: location.coords.longitude,
-          lastUpdated: getUID(),
-        });
-        fetchWeatherData({
-          lat: location.coords.latitude,
-          long: location.coords.longitude,
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    const handleError = (err) => {
-      fetchLocation();
-      console.warn(`ERROR(${err.code}): ${err.message}`);
-    };
-
-    const updateWeather = () => {
-      console.log("Attempting to fetch location...");
-      navigator.geolocation.getCurrentPosition(
-        handleLocation,
-        handleError,
-        options
-      );
-    };
-
-    const fetchWeatherData = async (args) => {
-      var { lat, long } = args;
-      const location = `${API_URL}/api/reverse?$&lat=${lat}&long=${long}`;
-      const current_api = `${API_URL}/api/weather?lat=${lat}&long=${long}`;
-
-      wretch(current_api)
-        .get()
-        .json((json) => {
-          setWeatherDetails({
-            data: json,
-            lastUpdated: getUID(),
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-
-      wretch(location)
-        .get()
-        .json((json) => {
-          setPlaceName({
-            name: json.name,
-            lastUpdated: getUID(),
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
-
-    const fetchLocation = async () => {
-      console.log("Failed to get Geolocation, attempting to fetch from api...");
-      const location = `${API_URL}/api/geo?place=kathmandu`;
-      wretch(location)
-        .get()
-        .json((json) => {
-          fetchWeatherData({ lat:json.lat, long:  json.lon });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
     if (
       weatherDetails.lastUpdated == null ||
       weatherDetails.lastUpdated !== getUID()
@@ -99,6 +31,48 @@ function Weather() {
     return () => {};
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const updateWeather = () => {
+    console.log(weatherDetails.data)
+    if (weatherDetails.lat && weatherDetails.long) {
+      fetchWeatherData({
+        lat: weatherDetails.lat,
+        long: weatherDetails.long,
+      });
+    }
+  };
+
+  const fetchWeatherData = async (args) => {
+    var { lat, long } = args;
+    const weatherData = getWeatherData(args);
+
+    weatherData
+      .then((data) => {
+        console.log(data);
+        setWeatherDetails({
+          data: data,
+          lat,
+          long,
+          lastUpdated: getUID(),
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    const placeNamefromCoordinates = getPlaceNamefromCoordinates(args);
+    placeNamefromCoordinates
+      .then((data) => {
+        console.log(data);
+        setPlaceName({
+          name: data.name,
+          lastUpdated: getUID(),
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <>
       {Object.keys(weatherDetails).length > 0 && (
@@ -106,7 +80,9 @@ function Weather() {
           <h2 className="primary-text">The weather today is</h2>
           <div className="weather__primary">
             <h3 className="weather__current">
-              {Math.round(parseInt(weatherDetails.data.current_weather.temperature))}
+              {Math.round(
+                parseInt(weatherDetails.data.current_weather.temperature)
+              )}
               <sup>°</sup>c
             </h3>
             <span className="weather__location">{placeName.name}</span>
@@ -114,14 +90,18 @@ function Weather() {
           <div className="weather__forcast">
             <div className="weather__forcast-item">
               <h4 className="weather__forcast-title">
-                {Math.round(parseInt(weatherDetails.data.days.temperature_2m_max[1]))}
+                {Math.round(
+                  parseInt(weatherDetails.data.days.temperature_2m_max[1])
+                )}
                 <sup>°</sup>c
               </h4>
               <span className="weather__forcast-day">Tommorrow</span>
             </div>
             <div className="weather__forcast-item">
               <h4 className="weather__forcast-title">
-                {Math.round(parseInt(weatherDetails.data.days.temperature_2m_max[2]))}
+                {Math.round(
+                  parseInt(weatherDetails.data.days.temperature_2m_max[2])
+                )}
                 <sup>°</sup>c
               </h4>
               <span className="weather__forcast-day">
@@ -130,6 +110,9 @@ function Weather() {
             </div>
           </div>
         </div>
+      )}
+      {weatherDetails.length === 0 && (
+        <WeatherSearch />
       )}
     </>
   );

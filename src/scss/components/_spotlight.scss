@@ -11,8 +11,11 @@
     sup {
       font-size: 1.5rem;
     }
-    @media screen and (max-height: 600px), (max-width: 1280px) {
+    @media screen and (max-height: 600px), (max-width: 1400px) {
       font-size: 3.475rem;
+    }
+    @media screen and (max-height: 600px), (max-width: 1200px) {
+      font-size: 2.475rem;
     }
   }
 
@@ -22,6 +25,13 @@
 
   &__time {
     text-align: right;
+    @media #{$mq-760-down} {
+      text-align: left;
+      margin-top: 10px;
+    }
+    > * + * {
+      margin-top: 10px;
+    }
     span {
       position: relative;
       z-index: 1;
@@ -47,6 +57,9 @@
     grid-template-columns: 2fr 1fr;
     align-items: flex-end;
     padding-bottom: 15px;
+    @media #{$mq-760-down} {
+      grid-template-columns: 1fr;
+    }
   }
   &__bottom {
     border-top: 1px solid var(--border-color);
@@ -73,5 +86,8 @@
   }
   &__time {
     font-size: 20px;
+    @media #{$mq-1000-down} {
+      font-size: 1rem;
+    }
   }
 }

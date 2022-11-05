@@ -10,13 +10,12 @@
     "dayjs": "^1.11.5",
     "fuzzysort": "^2.0.1",
     "react": "^16.13.1",
-    "react-autowhatever": "^10.2.1",
     "react-dom": "^16.13.1",
     "react-error-overlay": "6.0.9",
-    "react-image": "^4.0.3",
     "react-scripts": "3.4.1",
+    "react-tiny-dnd": "^1.2.3",
     "sass": "^1.51.0",
-    "wretch": "^1.7.4"
+    "zustand": "^4.1.4"
   },
   "devDependencies": {
     "react-error-overlay": "6.0.9"

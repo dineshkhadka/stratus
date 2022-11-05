@@ -1,6 +1,6 @@
-export default [
+[
   {
-    "name": "Côte d\'Ivoire",
+    "name": "Côte d'Ivoire",
     "phone_prefix": "225",
     "timezone": "Africa/Abidjan",
     "code": "CI"
@@ -1602,7 +1602,7 @@ export default [
     "code": "ID"
   },
   {
-    "name": "Democratic People\'s Republic of Korea",
+    "name": "Democratic People's Republic of Korea",
     "phone_prefix": "850",
     "timezone": "Asia/Pyongyang",
     "code": "KP"
@@ -1728,7 +1728,7 @@ export default [
     "code": "RU"
   },
   {
-    "name": "Lao People\'s Democratic Republic",
+    "name": "Lao People's Democratic Republic",
     "phone_prefix": "856",
     "timezone": "Asia/Vientiane",
     "code": "LA"
