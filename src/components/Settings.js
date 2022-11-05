@@ -1,7 +1,7 @@
-import React, { useState, useContext, useEffect } from "react";
-import useLocalStorage from "../hooks/useLocalStorage";
-import { SettingsContext } from "../context/settingsContext.js";
+import React, { useState, useEffect } from "react";
 import WeatherSearch from "./weatherSearch";
+import { useStore } from "../stores/useStore";
+import { useSettings } from "../stores/useSettings";
 import "../scss/style.scss";
 
 const fuzzysort = require("fuzzysort");
@@ -14,15 +14,21 @@ const TABS = {
 };
 
 function SettingsModal({ closeModal }) {
-  const { settings, setDateType, setTheme, toggleComponent, setTimezone } =
-    useContext(SettingsContext);
-  const [placeName, setPlaceName] = useLocalStorage("stratus-place", []);
-  const [, setGeoLocation] = useLocalStorage("stratus-location", []);
+  // Settings
+  const settings = useSettings((state) => state.config);
+  const setDateType = useSettings((state) => state.setDateType);
+  const setTheme = useSettings((state) => state.setTheme);
+  const toggleComponents = useSettings((state) => state.toggleComponents);
+
+  // world clock
+  const setWorldClock = useStore((state) => state.setWorldClock);
+  const worldClock = useStore((state) => state.worldClock);
+
+  // Local state
   const [countries, setCountries] = useState([]);
   const [currentTab, setCurrentTab] = useState(Object.keys(TABS)[0]);
   const [search, setSearch] = useState([]);
   const [searchValue, setSearchValue] = useState("");
-  const [placeValue, setPlaceValue] = useState(placeName?.name);
   const [errorMessage, setErrorMessage] = useState({
     displayed: false,
     message: "",
@@ -65,7 +71,7 @@ function SettingsModal({ closeModal }) {
     }, 3000);
   };
   const handleTimezone = (item) => {
-    const timezoneList = settings.time_zones || [];
+    const timezoneList = worldClock || [];
     if (
       timezoneList.findIndex((o) => o.timezone === item.obj.timezone) !== -1
     ) {
@@ -86,24 +92,23 @@ function SettingsModal({ closeModal }) {
           .join(" "),
         city: item.obj.name.split("_").join(" ").replace("\\\\", ""),
       });
-      setTimezone(timezoneList);
+      console.log(timezoneList);
+      setWorldClock(timezoneList);
       clearSearch();
     }
   };
 
   const removeTimezone = (index) => {
-    const timezonesData = [...settings.time_zones];
+    const timezonesData = [...worldClock];
     timezonesData.splice(index, 1);
-    setTimezone(timezonesData);
+    setWorldClock(timezonesData);
   };
 
   const clearSearch = () => {
     setSearch([]);
     setSearchValue("");
   };
-  const handleLocationSubmit = () => {
-    // fetchLocation(placeValue)
-  }
+
   useEffect(() => {
     fetch("../data/countries.json")
       .then((response) => response.json())
@@ -209,7 +214,11 @@ function SettingsModal({ closeModal }) {
               >
                 <span>{errorMessage.message}</span>
               </aside>
-              <div className={`settings-screen ${isActive(TABS.APPEARANCE) && "active"}`}>
+              <div
+                className={`settings-screen ${
+                  isActive(TABS.APPEARANCE) && "active"
+                }`}
+              >
                 <div className="settings-screen__group">
                   <div className="settings-screen__label">
                     <h3 className="settings-screen__title">Date Type</h3>
@@ -333,7 +342,11 @@ function SettingsModal({ closeModal }) {
                   </div>
                 </div>
               </div>
-              <div className={`settings-screen ${isActive(TABS.WIDGETS) && "active"}`}>
+              <div
+                className={`settings-screen ${
+                  isActive(TABS.WIDGETS) && "active"
+                }`}
+              >
                 <div className="settings-screen__group">
                   <div className="settings-screen__label">
                     <h3 className="settings-screen__title">Toggle Widgets</h3>
@@ -347,8 +360,13 @@ function SettingsModal({ closeModal }) {
                             type="checkbox"
                             role="switch"
                             id="date-toggle"
-                            defaultChecked={settings.components["date"]}
-                            onChange={() => toggleComponent("date")}
+                            defaultChecked={settings.components.date}
+                            onChange={(date) =>
+                              toggleComponents((state) => ({
+                                ...state.components,
+                                date: !settings.components.date,
+                              }))
+                            }
                           />
                           <label
                             className="form-check-label"
@@ -365,8 +383,13 @@ function SettingsModal({ closeModal }) {
                             type="checkbox"
                             role="switch"
                             id="weather-toggle"
-                            onChange={() => toggleComponent("weather")}
-                            defaultChecked={settings.components["weather"]}
+                            defaultChecked={settings.components.weather}
+                            onChange={() =>
+                              toggleComponents((state) => ({
+                                ...state.components,
+                                weather: !settings.components.weather,
+                              }))
+                            }
                           />
                           <label
                             className="form-check-label"
@@ -383,8 +406,13 @@ function SettingsModal({ closeModal }) {
                             type="checkbox"
                             role="switch"
                             id="quote-toggle"
-                            onChange={() => toggleComponent("quote")}
-                            defaultChecked={settings.components["quote"]}
+                            defaultChecked={settings.components.quote}
+                            onChange={(quote) =>
+                              toggleComponents((state) => ({
+                                ...state.components,
+                                quote: !settings.components.quote,
+                              }))
+                            }
                           />
                           <label
                             className="form-check-label"
@@ -401,8 +429,13 @@ function SettingsModal({ closeModal }) {
                             type="checkbox"
                             role="switch"
                             id="todo-toggle"
-                            onChange={() => toggleComponent("todo")}
-                            defaultChecked={settings.components["todo"]}
+                            defaultChecked={settings.components.todo}
+                            onChange={(todo) =>
+                              toggleComponents((state) => ({
+                                ...state.components,
+                                todo: !settings.components.todo,
+                              }))
+                            }
                           />
                           <label
                             className="form-check-label"
@@ -419,8 +452,13 @@ function SettingsModal({ closeModal }) {
                             type="checkbox"
                             role="switch"
                             id="timezone-toggle"
-                            onChange={() => toggleComponent("timezone")}
-                            defaultChecked={settings.components["timezone"]}
+                            defaultChecked={settings.components.timezone}
+                            onChange={(timezone) =>
+                              toggleComponents((state) => ({
+                                ...state.components,
+                                timezone: !settings.components.timezone,
+                              }))
+                            }
                           />
                           <label
                             className="form-check-label"
@@ -434,7 +472,11 @@ function SettingsModal({ closeModal }) {
                   </div>
                 </div>
               </div>
-              <div className={`settings-screen ${isActive(TABS.WORLD_CLOCK) && "active"}`}>
+              <div
+                className={`settings-screen ${
+                  isActive(TABS.WORLD_CLOCK) && "active"
+                }`}
+              >
                 <div className="settings-screen__group">
                   <div className="settings-screen__label">
                     <h3 className="settings-screen__title">Timezones</h3>
@@ -487,9 +529,9 @@ function SettingsModal({ closeModal }) {
                         })}
                       </ul>
                     </div>
-                    {settings.time_zones && (
+                    {worldClock && (
                       <ul className="timezone-list has-scroll">
-                        {settings.time_zones.map((item, index) => {
+                        {worldClock.map((item, index) => {
                           return (
                             <li key={index}>
                               {item.timezone} -{" "}
@@ -518,13 +560,17 @@ function SettingsModal({ closeModal }) {
                   </div>
                 </div>
               </div>
-              <div className={`settings-screen ${isActive(TABS.WEATHER) && "active"}`}>
+              <div
+                className={`settings-screen ${
+                  isActive(TABS.WEATHER) && "active"
+                }`}
+              >
                 <div className="settings-screen__group">
                   <div className="settings-screen__label">
                     <h3 className="settings-screen__title">Weather</h3>
                   </div>
                   <div className="settings-screen__input">
-                      <WeatherSearch />
+                    <WeatherSearch />
                   </div>
                 </div>
               </div>

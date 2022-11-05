@@ -1,16 +1,13 @@
 import React, { useEffect } from "react";
-import useLocalStorage from "../hooks/useLocalStorage";
 import { getUID } from "../utils/helpers.js";
 import api from "../utils/api";
+import { useStore } from '../stores/useStore'
 
 function Image() {
-  const [backgroundImage, setBackgroundImage] = useLocalStorage(
-    "stratus-background",
-    []
-  );
-  const [image, setImage] = useLocalStorage("stratus-image", false);
+  const backgroundImage = useStore((state) => state.backgroundImage);
+  const setBackgroundImage = useStore((state) => state.setBackgroundImage);
 
-  function getImage() {
+  const getImage = () => {
     fetch(api.BACKGROUND_API)
       .then((response) => response.json())
       .then((data) => {
@@ -34,40 +31,19 @@ function Image() {
       });
   }
 
-  const fetchImage = async (imageUrl) => {
-    if (!image) {
-      fetch(imageUrl)
-        .then((response) => response.blob())
-        .then(
-          (blob) =>
-            new Promise((resolve, reject) => {
-              const reader = new FileReader();
-              reader.onloadend = () => resolve(reader.result);
-              reader.onerror = reject;
-              reader.readAsDataURL(blob);
-            })
-        )
-        .then((data) => setImage(data));
-    }
-  };
-
   useEffect(() => {
     if (
       backgroundImage.lastUpdated == null ||
       backgroundImage.lastUpdated !== getUID()
     ) {
       getImage();
-    } else {
-      if (Object.keys(backgroundImage).length > 0) {
-        fetchImage(backgroundImage.image.urls.full);
-      }
     }
   });
   return (
     <>
-      {image && (
+      {Object.keys(backgroundImage).length > 0 && (
         <figure className="app-background fade-in">
-          <img src={image} alt="" />
+          <img src={backgroundImage.image.urls.full} alt="" />
         </figure>
       )}
     </>

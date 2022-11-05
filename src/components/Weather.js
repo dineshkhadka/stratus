@@ -1,24 +1,19 @@
-import React, { useEffect, useState } from "react";
-import useLocalStorage from "../hooks/useLocalStorage";
+import React, { useEffect } from "react";
 import { getUID, getDayFromEpoch } from "../utils/helpers.js";
-import { boundStore } from '../stores/useBoundStore'
+import { useStore } from '../stores/useStore'
 import {
   getPlaceNamefromCoordinates,
   getWeatherData,
 } from "../utils/getCurrentCoordinates";
 import WeatherSearch from "./weatherSearch";
 function Weather() {
-  // const [weatherDetails, setWeatherDetails] = useLocalStorage(
-  //   "stratus-weather",
-  //   []
-  // );
-
-  const weatherDetails = boundStore((state) => state.weatherDetails)
-  const setWeatherDetails = boundStore((state) => state.setWeatherDetails)
+  
+  const weatherDetails = useStore((state) => state.weatherDetails)
+  const setWeatherDetails = useStore((state) => state.setWeatherDetails)
 
 
-  const placeName = boundStore((state) => state.placeName)
-  const setPlaceName = boundStore((state) => state.setPlaceName)
+  const placeName = useStore((state) => state.placeName)
+  const setPlaceName = useStore((state) => state.setPlaceName)
 
   
   useEffect(() => {
@@ -33,7 +28,6 @@ function Weather() {
   }, []);
 
   const updateWeather = () => {
-    console.log(weatherDetails.data)
     if (weatherDetails.lat && weatherDetails.long) {
       fetchWeatherData({
         lat: weatherDetails.lat,

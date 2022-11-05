@@ -7,11 +7,11 @@ import Quote from "./components/Quote.js";
 import Image from "./components/Image.js";
 import Settings from "./components/Settings.js";
 import { isFreshDay } from "./utils/helpers.js";
-import { SettingsContext } from "./context/settingsContext.js";
+import { useSettings } from './stores/useSettings'
 import "./scss/style.scss";
 
 function App() {
-  const { settings } = React.useContext(SettingsContext);
+  const settings = useSettings((state) => state.config)
   useEffect(() => {
     isFreshDay();
   }, []);

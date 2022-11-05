@@ -7,6 +7,8 @@ import {
 } from "../utils/getCurrentdate";
 import calendar from "../utils/getNepaliName";
 import suffix from "../utils/getSuffix";
+import { useStore } from '../stores/useStore'
+import { useSettings } from '../stores/useSettings'
 
 const getTZTime = (tz) => {
   return new Date(Date.now()).toLocaleTimeString("en-US", {
@@ -18,6 +20,11 @@ const getTZTime = (tz) => {
 function Spotlight(props) {
   const [time, setTime] = useState(new Date());
   const [nepaliDate] = useState(NepaliDate.today());
+  const worldClock = useStore((state) => state.worldClock)
+
+
+  const settings = useSettings((state) => state.config)
+
   useEffect(() => {
     const id = setInterval(() => setTime(new Date()), 100);
     return () => {
@@ -35,7 +42,7 @@ function Spotlight(props) {
         <div className="current-date">
           <div className="current-date__top">
             <div className="current-date__primary">
-              {props.settings.date_type === "normal" && (
+              {settings.dateType === "normal" && (
                 <>
                   <h1 className="current-date__day">
                     {getCurrentDate()}
@@ -45,7 +52,7 @@ function Spotlight(props) {
                   <h2 className="current-date__month">{getCurrentMonth()}</h2>
                 </>
               )}
-              {props.settings.date_type === "nepali" && (
+              {settings.dateType === "nepali" && (
                 <>
                   <h1 className="current-date__day">
                     {nepaliDate.nepaliDay}
@@ -66,16 +73,16 @@ function Spotlight(props) {
                     minute: "2-digit",
                   })}
                 </div>
-                {props.settings.date_type === "nepali" && (
+                {settings.dateType === "nepali" && (
                   <div className="current-date__full">{getFullDate()}</div>
                 )}
               </div>
             </div>
           </div>
-          {props.settings.time_zones && props.settings.components["timezone"] && (
+          {worldClock && settings.components["timezone"] && (
             <div className="current-date__bottom">
               <div className="current-date__intl">
-                {props.settings.time_zones.map((item, index) => {
+                {worldClock.map((item, index) => {
                   return (
                     <div className="world-clock" key={index}>
                       <h3 className="world-clock__location">{item.location}</h3>

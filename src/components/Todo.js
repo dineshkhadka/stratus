@@ -1,5 +1,5 @@
-import React from "react";
-import useLocalStorage from "../hooks/useLocalStorage";
+import React, {useState} from "react";
+import { useTodo } from "../stores/useTodo";
 const TodoItem = ({ todo, index, toggleCompleted, removeTodo }) => {
   return (
     <li className="todo__item">
@@ -65,7 +65,7 @@ const TodoItem = ({ todo, index, toggleCompleted, removeTodo }) => {
 };
 
 const TodoForm = ({ addTodo }) => {
-  const [value, setValue] = useLocalStorage("");
+  const [value, setValue] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!value) return;
@@ -106,7 +106,9 @@ const TodoForm = ({ addTodo }) => {
 };
 
 function Todo() {
-  const [todo, setTodo] = useLocalStorage("stratus-todo", []);
+  const todo = useTodo((state) => state.todo);
+  const setTodo = useTodo((state) => state.setTodo);
+
 
   const toggleCompleted = (index) => {
     const newTodos = [...todo];

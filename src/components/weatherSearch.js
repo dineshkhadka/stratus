@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import useLocalStorage from "../hooks/useLocalStorage";
 import { getUID } from "../utils/helpers.js";
-import { boundStore } from '../stores/useBoundStore'
+import { useStore } from '../stores/useStore'
 import {
   getLocation,
   getPlaceNamefromCoordinates,
@@ -11,12 +10,11 @@ import {
 
 export default function WeatherSearch() {
 
-  const weatherDetails = boundStore((state) => state.weatherDetails);
-  const setWeatherDetails = boundStore((state) => state.setWeatherDetails);
+  const weatherDetails = useStore((state) => state.weatherDetails);
+  const setWeatherDetails = useStore((state) => state.setWeatherDetails);
 
 
-  const placeName = boundStore((state) => state.placeName)
-  const setPlaceName = boundStore((state) => state.setPlaceName)
+  const setPlaceName = useStore((state) => state.setPlaceName)
   
   
   const [city, setCity] = useState();
@@ -34,7 +32,6 @@ export default function WeatherSearch() {
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const updateWeather = () => {
-    console.log(weatherDetails.data);
     if (weatherDetails.lat && weatherDetails.long) {
       fetchWeatherData({
         lat: weatherDetails.lat,

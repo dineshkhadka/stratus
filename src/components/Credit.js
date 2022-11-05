@@ -1,8 +1,8 @@
 import React from "react";
-import useLocalStorage from "../hooks/useLocalStorage";
+import { useStore } from '../stores/useStore'
 
 function Credit() {
-  const [backgroundImage] = useLocalStorage("stratus-background", []);
+  const backgroundImage = useStore((state) => state.backgroundImage);
   return (
     <>
           {Object.keys(backgroundImage).length > 0 && (

@@ -1,11 +1,13 @@
 //
 import React, { useEffect } from "react";
-import useLocalStorage from "../hooks/useLocalStorage";
 import { getUID } from "../utils/helpers.js";
 import api from "../utils/api";
+import { useStore } from '../stores/useStore'
 
 function Quote() {
-  const [currentQuote, setcurrentQuote] = useLocalStorage("stratus-quote", []);
+  
+  const currentQuote = useStore((state) => state.currentQuote);
+  const setcurrentQuote = useStore((state) => state.setcurrentQuote);
   const fetchQuote = () => {
     fetch(api.QUOTES_API)
       .then((response) => response.json())
