@@ -16,12 +16,15 @@ body,
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  font-family: var(--primary-family);
-  background-color: var(--background-color);
   color: var(--font-color);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  font-family: var(--primary-family);
+}
+
+.App {
+  background-color: var(--background-color);
   background-size: cover;
   background-position: center;
   background-color: var(--background-color);
