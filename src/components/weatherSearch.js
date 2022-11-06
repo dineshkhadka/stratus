@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getUID } from "../utils/helpers.js";
-import { useStore } from '../stores/useStore'
+import { useStore } from "../stores/useStore";
 import {
   getLocation,
   getPlaceNamefromCoordinates,
@@ -9,14 +9,11 @@ import {
 } from "../utils/getCurrentCoordinates";
 
 export default function WeatherSearch() {
-
   const weatherDetails = useStore((state) => state.weatherDetails);
   const setWeatherDetails = useStore((state) => state.setWeatherDetails);
 
+  const setPlaceName = useStore((state) => state.setPlaceName);
 
-  const setPlaceName = useStore((state) => state.setPlaceName)
-  
-  
   const [city, setCity] = useState();
 
   const [errorMessage, setErrorMessage] = useState(false);
@@ -44,7 +41,6 @@ export default function WeatherSearch() {
     const weatherData = getWeatherData(args);
     weatherData
       .then((data) => {
-        console.log(data);
         setWeatherDetails({
           data: data,
           lat,
@@ -73,8 +69,11 @@ export default function WeatherSearch() {
     const location = getLocation(city);
     location
       .then((data) => {
-        console.log(data);
-        fetchWeatherData({ lat: data.lat, long: data.lon });
+        if (!data.status === "error") {
+          fetchWeatherData({ lat: data.lat, long: data.lon });
+        } else {
+          displayMessage();
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -108,20 +107,73 @@ export default function WeatherSearch() {
         console.error(err.message);
       });
   };
+  const displayMessage = () => {
+    setErrorMessage(true);
+    var timer = null;
+    if (timer) {
+      clearTimeout(timer); //cancel the previous timer.
+      timer = null;
+    }
+    timer = setTimeout(() => {
+      setErrorMessage(false);
+    }, 3000);
+  };
   return (
     <>
-      <div className="weather">
-        <form onSubmit={handleWeatherSubmit}>
+      <div className="weather-search">
+        <form onSubmit={handleWeatherSubmit} className="styled-input">
           <input
             type="text"
+            className="styled-input__input styled-input__input--front"
+            name="weather-search"
+            placeholder="Search a city..."
+            autoComplete="off"
             onChange={(e) => handlePlaceInput(e, e.target.value)}
           />
-          <button className="">Search</button>
-          <button className="" type="button" onClick={detectWeather}>
-            Detect
+          <label className="styled-input__label" htmlFor="weather-search">
+            <span className="sr-only">Search a city...</span>
+          </label>
+
+          <button
+            title="Search"
+            className="styled-input__reset styled-input__reset--front"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.35-4.35" />
+            </svg>
+          </button>
+          <button
+            title="Autodetect Location"
+            className="styled-input__reset styled-input__reset--alt"
+            type="button"
+            onClick={detectWeather}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+            >
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
           </button>
         </form>
-        {errorMessage && <div className="message">Location not found!</div>}
+        {errorMessage && (
+          <div className="location-error-message">Location not found!</div>
+        )}
       </div>
     </>
   );

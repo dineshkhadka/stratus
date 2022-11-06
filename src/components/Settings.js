@@ -233,7 +233,7 @@ function SettingsModal({ closeModal }) {
                         onChange={() => {
                           setDateType("normal");
                         }}
-                        defaultChecked={settings.date_type === "normal"}
+                        defaultChecked={settings.dateType === "normal"}
                       />
                       <label htmlFor="radio-one">Gregorian</label>
                       <input
@@ -244,7 +244,7 @@ function SettingsModal({ closeModal }) {
                         onChange={() => {
                           setDateType("nepali");
                         }}
-                        defaultChecked={settings.date_type === "nepali"}
+                        defaultChecked={settings.dateType === "nepali"}
                       />
                       <label htmlFor="radio-two">Nepali</label>
                     </div>
@@ -483,24 +483,25 @@ function SettingsModal({ closeModal }) {
                   </div>
                   <div className="settings-screen__input">
                     <div className="timezone-wrap">
-                      <div className="timezone-input">
+                      <div className="styled-input">
                         <input
                           type="text"
                           id="timezone"
-                          className="timezone-input__input"
+                          className="styled-input__input"
                           name="timezone-switcher"
                           placeholder="Search a city..."
                           value={searchValue}
+                          autoComplete="off"
                           onChange={(e) => searchItem(e.target.value)}
                         />
                         <label
-                          className="timezone-input__label"
-                          htmlFor="timezone"
+                          className="styled-input__label"
+                          htmlFor="timezone-switcher"
                         >
                           <span className="sr-only">Add new timezone</span>
                         </label>
                         <button
-                          className="timezone-input__reset"
+                          className="styled-input__reset"
                           onClick={clearSearch}
                         >
                           <svg
@@ -591,7 +592,11 @@ function Settings() {
     <>
       <aside className="settings" role="dialog" aria-modal="true">
         <div className="settings__inner">
-          <button className="settings__button btn-close" onClick={toggleModal}>
+          <button
+            className="settings__button btn-close"
+            onClick={toggleModal}
+            title="Open Settings"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

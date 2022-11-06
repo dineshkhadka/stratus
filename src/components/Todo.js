@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { useTodo } from "../stores/useTodo";
 const TodoItem = ({ todo, index, toggleCompleted, removeTodo }) => {
   return (
@@ -82,7 +82,6 @@ const TodoForm = ({ addTodo }) => {
       />
       <button
         type="button"
-        href="#"
         className="btn btn--clear"
         onClick={() => setValue("")}
       >
@@ -109,7 +108,6 @@ function Todo() {
   const todo = useTodo((state) => state.todo);
   const setTodo = useTodo((state) => state.setTodo);
 
-
   const toggleCompleted = (index) => {
     const newTodos = [...todo];
     newTodos[index].completed = !newTodos[index].completed;
@@ -128,10 +126,11 @@ function Todo() {
   return (
     <>
       <div className="todo">
-        {todo.length > 0 &&
-        <div className="todo__header">
-          <h2 className="primary-text">Stuff that needs to be done</h2>
-        </div> }
+        {todo.length > 0 && (
+          <div className="todo__header">
+            <h2 className="primary-text">Stuff that needs to be done</h2>
+          </div>
+        )}
 
         <ul className="todo__list">
           {todo.map((todo, index) => (

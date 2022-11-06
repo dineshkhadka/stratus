@@ -7,8 +7,8 @@ import {
 } from "../utils/getCurrentdate";
 import calendar from "../utils/getNepaliName";
 import suffix from "../utils/getSuffix";
-import { useStore } from '../stores/useStore'
-import { useSettings } from '../stores/useSettings'
+import { useStore } from "../stores/useStore";
+import { useSettings } from "../stores/useSettings";
 
 const getTZTime = (tz) => {
   return new Date(Date.now()).toLocaleTimeString("en-US", {
@@ -20,10 +20,9 @@ const getTZTime = (tz) => {
 function Spotlight(props) {
   const [time, setTime] = useState(new Date());
   const [nepaliDate] = useState(NepaliDate.today());
-  const worldClock = useStore((state) => state.worldClock)
+  const worldClock = useStore((state) => state.worldClock);
 
-
-  const settings = useSettings((state) => state.config)
+  const settings = useSettings((state) => state.config);
 
   useEffect(() => {
     const id = setInterval(() => setTime(new Date()), 100);
@@ -79,7 +78,7 @@ function Spotlight(props) {
               </div>
             </div>
           </div>
-          {worldClock && settings.components["timezone"] && (
+          {!!worldClock && settings.components["timezone"] && (
             <div className="current-date__bottom">
               <div className="current-date__intl">
                 {worldClock.map((item, index) => {
