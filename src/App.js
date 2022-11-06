@@ -7,11 +7,11 @@ import Quote from "./components/Quote.js";
 import Image from "./components/Image.js";
 import Settings from "./components/Settings.js";
 import { isFreshDay } from "./utils/helpers.js";
-import { useSettings } from './stores/useSettings'
+import { useSettings } from "./stores/useSettings";
 import "./scss/style.scss";
 
 function App() {
-  const settings = useSettings((state) => state.config)
+  const settings = useSettings((state) => state.config);
   useEffect(() => {
     isFreshDay();
   }, []);
@@ -20,13 +20,19 @@ function App() {
       {settings.theme === "background" && <Image />}
       <main className="app-shell has-scroll">
         <div className="app-primary">
-          <div className={`app-primary__wrap ${!settings.components["date"] ? 'app-primary__wrap--no-spotlight': ''}`}>
+          <div
+            className={`app-primary__wrap ${
+              !settings.components["date"]
+                ? "app-primary__wrap--no-spotlight"
+                : ""
+            }`}
+          >
             {settings.components["date"] && <Spotlight settings={settings} />}
 
             <footer className="footer">
               <div className="footer__inner">
-              {settings.components["quote"] && <Quote /> }
-              {settings.theme === "background" && <Credit /> }
+                {settings.components["quote"] && <Quote />}
+                {settings.theme === "background" && <Credit />}
               </div>
             </footer>
           </div>
