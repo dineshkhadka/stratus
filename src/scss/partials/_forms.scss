@@ -191,7 +191,7 @@
       color: var(--primary-light);
     }
     &::placeholder {
-      color: var(--primary-color);
+      color: var(--font-color);
       .settings-menu__main & {
         color: var(--primary-light);
       }

@@ -24,7 +24,7 @@ body,
   text-rendering: optimizeLegibility;
   background-size: cover;
   background-position: center;
-  background-color:var(--background-color);
+  background-color: var(--background-color);
   background-image: var(--background-gradient);
 }
 figure {
@@ -54,3 +54,36 @@ blockquote {
   margin: 0;
 }
 
+.error-alert {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  &__inner {
+    background-color: rgba(#000, 0.8);
+    border-radius: 8px;
+    padding: 24px;
+    width: 100%;
+    max-width: 720px;
+    a {
+      color: #fff;
+      text-decoration: underline;
+      &:hover,
+      &:focus,
+      &:active {
+        color: #fff;
+        text-decoration: none;
+      }
+    }
+  }
+  &__action {
+    margin-top: 30px;
+    > * {
+      margin: 0 12px !important;
+    }
+  }
+}

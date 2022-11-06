@@ -8,7 +8,6 @@
   }
 
   &--link {
-
     &:hover,
     &:focus,
     &:active {
@@ -16,7 +15,6 @@
     }
   }
   &-icon {
-
     all: unset;
     cursor: pointer;
     transition: all 1s var(--transition);
@@ -52,7 +50,7 @@
 
     &--light {
       color: var(--primary-light);
-      border: 1px solid rgba(#25242C, 0.2);
+      border: 1px solid rgba(#25242c, 0.2);
 
       &:hover,
       &:focus,
@@ -63,7 +61,7 @@
 
     &--dark {
       color: var(--primary-light);
-      border: 1px solid rgba(#FFF, 0.2);
+      border: 1px solid rgba(#fff, 0.2);
 
       &:hover,
       &:focus,
@@ -73,4 +71,29 @@
     }
   }
 
+  &-primary {
+    border: 1px solid var(--primary-light);
+    padding: 8px 16px;
+    border-radius: 8px;
+    display: inline-block;
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: var(--primary-light);
+      color: var(--primary-dark);
+    }
+  }
+
+  &-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: #fff;
+    &:hover,
+    &:focus,
+    &:active {
+      color: #fff;
+      background-color: #bd2130;
+      border-color: #bd2130;
+    }
+  }
 }
