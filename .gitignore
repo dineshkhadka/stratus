@@ -11,6 +11,9 @@
 # production
 /build
 
+# Pckaged extensions
+/extensions
+
 # misc
 .DS_Store
 .env

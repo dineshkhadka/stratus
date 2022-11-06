@@ -21,7 +21,7 @@ export async function getWeatherData(args) {
   return data;
 }
 
-export async function getNativeLocation(options) {
+export function getNativeLocation(options) {
   return new Promise(function (resolve, reject) {
     navigator.geolocation.getCurrentPosition(resolve, reject, options);
   });
