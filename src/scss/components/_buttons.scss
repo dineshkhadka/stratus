@@ -36,7 +36,7 @@
     width: 32px;
     height: 32px;
     border: 1px solid var(--border-color);
-
+    opacity: 0.5;
     svg {
       width: 18px;
       height: 18px;
@@ -45,6 +45,7 @@
     &:hover,
     &:focus,
     &:active {
+      opacity: 1;
       border-color: var(--secondary-color);
     }
 

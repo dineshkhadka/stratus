@@ -25,7 +25,7 @@ function Spotlight(props) {
   const settings = useSettings((state) => state.config);
 
   useEffect(() => {
-    const id = setInterval(() => setTime(new Date()), 100);
+    const id = setInterval(() => setTime(new Date()), 1000);
     return () => {
       clearInterval(id);
     };

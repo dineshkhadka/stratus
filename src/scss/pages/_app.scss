@@ -10,7 +10,7 @@
     overflow: auto;
     scroll-snap-type: both mandatory;
 
-    >* {
+    > * {
       scroll-snap-align: start;
     }
   }
@@ -30,8 +30,11 @@
     left: 0;
     bottom: 0;
     right: 0;
-    background-image:
-      radial-gradient(at 91% 87%, hsla(108, 0%, 0%, 0.2) 0px, transparent 50%),
+    background-image: radial-gradient(
+        at 91% 87%,
+        hsla(108, 0%, 0%, 0.2) 0px,
+        transparent 50%
+      ),
       radial-gradient(at 86% 30%, hsla(289, 0%, 0%, 0.41) 0px, transparent 50%),
       radial-gradient(at 11% 23%, hsla(289, 0%, 0%, 0.49) 0px, transparent 50%),
       radial-gradient(at 20% 84%, hsla(289, 0%, 0%, 0.46) 0px, transparent 50%);
@@ -44,8 +47,6 @@
     object-position: center;
   }
 }
-
-
 
 .app-primary {
   padding: 30px 60px 30px 100px;
@@ -92,7 +93,7 @@
 
 .app-secondary {
   height: inherit;
-  padding: 30px 50px;
+  padding: 100px 50px 30px;
 
   @media #{$mq-1400-up} {
     padding: 6vw 30px;
@@ -109,10 +110,9 @@
   background-color: rgba(0, 0, 0, 0.05);
 
   [data-theme="background"] & {
-    background-color: rgba(0, 0, 0, 0.30);
+    background-color: rgba(0, 0, 0, 0.3);
     // backdrop-filter: blur(40px);
   }
-
 
   [data-theme="dark"] & {
     background-color: rgba(0, 0, 0, 0.35);

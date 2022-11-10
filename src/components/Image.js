@@ -1,16 +1,18 @@
 import React, { useEffect } from "react";
 import { getUID } from "../utils/helpers.js";
 import api from "../utils/api";
-import { useStore } from '../stores/useStore'
+import { useStore } from "../stores/useStore";
 
 function Image() {
   const backgroundImage = useStore((state) => state.backgroundImage);
   const setBackgroundImage = useStore((state) => state.setBackgroundImage);
 
   const getImage = () => {
+    console.log("starting");
     fetch(api.BACKGROUND_API)
       .then((response) => response.json())
       .then((data) => {
+        console.log("logging");
         var item = data[Math.floor(Math.random() * data.length)];
 
         setBackgroundImage({
@@ -29,13 +31,15 @@ function Image() {
             });
           });
       });
-  }
+  };
 
   useEffect(() => {
     if (
       backgroundImage.lastUpdated == null ||
+      backgroundImage.length === 0 ||
       backgroundImage.lastUpdated !== getUID()
     ) {
+      console.log("should get");
       getImage();
     }
   });

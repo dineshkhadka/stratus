@@ -9,7 +9,6 @@ import {
 } from "../utils/getCurrentCoordinates";
 
 export default function WeatherSearch() {
-  const weatherDetails = useStore((state) => state.weatherDetails);
   const setWeatherDetails = useStore((state) => state.setWeatherDetails);
 
   const setPlaceName = useStore((state) => state.setPlaceName);
@@ -17,25 +16,6 @@ export default function WeatherSearch() {
   const [city, setCity] = useState();
 
   const [errorMessage, setErrorMessage] = useState(false);
-
-  useEffect(() => {
-    if (
-      weatherDetails.lastUpdated == null ||
-      weatherDetails.lastUpdated !== getUID()
-    ) {
-      updateWeather();
-    }
-    return () => {};
-    //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  const updateWeather = () => {
-    if (weatherDetails.lat && weatherDetails.long) {
-      fetchWeatherData({
-        lat: weatherDetails.lat,
-        long: weatherDetails.long,
-      });
-    }
-  };
   const fetchWeatherData = async (args) => {
     var { lat, long } = args;
     const weatherData = getWeatherData(args);
@@ -69,7 +49,7 @@ export default function WeatherSearch() {
     const location = getLocation(city);
     location
       .then((data) => {
-        if (!data.status === "error") {
+        if (data.status !== "error") {
           fetchWeatherData({ lat: data.lat, long: data.lon });
         } else {
           displayMessage();
