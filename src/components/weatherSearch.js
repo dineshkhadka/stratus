@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { getUID } from "../utils/helpers.js";
 import { useStore } from "../stores/useStore";
 import {
@@ -15,7 +15,10 @@ export default function WeatherSearch() {
 
   const [city, setCity] = useState();
 
-  const [errorMessage, setErrorMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState({
+    display: false,
+    message: "",
+  });
   const fetchWeatherData = async (args) => {
     var { lat, long } = args;
     const weatherData = getWeatherData(args);
@@ -30,12 +33,12 @@ export default function WeatherSearch() {
       })
       .catch((error) => {
         console.log(error);
+        displayMessage("Failed to get data!");
       });
 
     const placeNamefromCoordinates = getPlaceNamefromCoordinates(args);
     placeNamefromCoordinates
       .then((data) => {
-        console.log(data);
         setPlaceName({
           name: data.name,
           lastUpdated: getUID(),
@@ -43,6 +46,7 @@ export default function WeatherSearch() {
       })
       .catch((error) => {
         console.log(error);
+        displayMessage("Failed to get data!");
       });
   };
   const fetchLocation = async () => {
@@ -52,11 +56,12 @@ export default function WeatherSearch() {
         if (data.status !== "error") {
           fetchWeatherData({ lat: data.lat, long: data.lon });
         } else {
-          displayMessage();
+          displayMessage("Failed to get data!");
         }
       })
       .catch((error) => {
         console.log(error);
+        displayMessage("Failed to get data!");
       });
   };
   const handleWeatherSubmit = (e) => {
@@ -68,14 +73,14 @@ export default function WeatherSearch() {
   const handlePlaceInput = (e, value) => {
     e.preventDefault();
     setCity(value);
-    setErrorMessage(false);
+    setErrorMessage({ ...errorMessage, displayed: false });
   };
 
   const detectWeather = (e) => {
     const nativeLocation = getNativeLocation();
-    e.preventDefault();
     nativeLocation
       .then((location) => {
+        console.log(location);
         if (location) {
           fetchWeatherData({
             lat: location.coords.latitude,
@@ -85,17 +90,18 @@ export default function WeatherSearch() {
       })
       .catch((err) => {
         console.error(err.message);
+        displayMessage("Failed to get data!");
       });
   };
-  const displayMessage = () => {
-    setErrorMessage(true);
+  const displayMessage = (message) => {
+    setErrorMessage({ ...errorMessage, displayed: true, message: message });
     var timer = null;
     if (timer) {
       clearTimeout(timer); //cancel the previous timer.
       timer = null;
     }
     timer = setTimeout(() => {
-      setErrorMessage(false);
+      setErrorMessage({ ...errorMessage, displayed: false, message: message });
     }, 3000);
   };
   return (
@@ -151,8 +157,8 @@ export default function WeatherSearch() {
             </svg>
           </button>
         </form>
-        {errorMessage && (
-          <div className="location-error-message">Location not found!</div>
+        {errorMessage.displayed && (
+          <div className="location-error-message">{errorMessage.message}</div>
         )}
       </div>
     </>
