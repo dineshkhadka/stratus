@@ -1,8 +1,6 @@
 import create from "zustand";
 import { persist } from "zustand/middleware";
-
-const WIDGETS = "stratus-widgets";
-
+import { STORAGE } from "../constants";
 
 export const useStore = create(
   persist(
@@ -12,14 +10,17 @@ export const useStore = create(
       backgroundImage: [],
       currentQuote: [],
       worldClock: [],
-      setWeatherDetails: (weatherDetails) => set({ weatherDetails: { ...weatherDetails } }),
+      setWeatherDetails: (weatherDetails) =>
+        set({ weatherDetails: { ...weatherDetails } }),
       setPlaceName: (placeName) => set({ placeName: { ...placeName } }),
-      setBackgroundImage: (backgroundImage) => set({ backgroundImage: { ...backgroundImage } }),
-      setcurrentQuote: (currentQuote) => set({ currentQuote: { ...currentQuote } }),
-      setWorldClock: (worldClock) => set({ worldClock: [ ...worldClock ] })
+      setBackgroundImage: (backgroundImage) =>
+        set({ backgroundImage: { ...backgroundImage } }),
+      setcurrentQuote: (currentQuote) =>
+        set({ currentQuote: { ...currentQuote } }),
+      setWorldClock: (worldClock) => set({ worldClock: [...worldClock] }),
     }),
     {
-      name: WIDGETS,
+      name: STORAGE.WIDGETS,
     }
   )
 );

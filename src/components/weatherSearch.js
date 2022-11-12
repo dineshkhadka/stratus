@@ -11,8 +11,8 @@ import {
 export default function WeatherSearch() {
   const setWeatherDetails = useStore((state) => state.setWeatherDetails);
 
+  const placeName = useStore((state) => state.placeName);
   const setPlaceName = useStore((state) => state.setPlaceName);
-
   const [city, setCity] = useState();
 
   const [errorMessage, setErrorMessage] = useState({
@@ -80,7 +80,6 @@ export default function WeatherSearch() {
     const nativeLocation = getNativeLocation();
     nativeLocation
       .then((location) => {
-        console.log(location);
         if (location) {
           fetchWeatherData({
             lat: location.coords.latitude,
@@ -112,7 +111,11 @@ export default function WeatherSearch() {
             type="text"
             className="styled-input__input styled-input__input--front"
             name="weather-search"
-            placeholder="Search a city..."
+            placeholder={
+              !!placeName.name && placeName.name.length > 0
+                ? placeName.name
+                : "Search a city..."
+            }
             autoComplete="off"
             onChange={(e) => handlePlaceInput(e, e.target.value)}
           />

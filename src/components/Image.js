@@ -8,11 +8,9 @@ function Image() {
   const setBackgroundImage = useStore((state) => state.setBackgroundImage);
 
   const getImage = () => {
-    console.log("starting");
     fetch(api.BACKGROUND_API)
       .then((response) => response.json())
       .then((data) => {
-        console.log("logging");
         var item = data[Math.floor(Math.random() * data.length)];
 
         setBackgroundImage({
@@ -39,7 +37,6 @@ function Image() {
       backgroundImage.length === 0 ||
       backgroundImage.lastUpdated !== getUID()
     ) {
-      console.log("should get");
       getImage();
     }
   });

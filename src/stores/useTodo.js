@@ -1,16 +1,15 @@
 import create from "zustand";
 import { persist } from "zustand/middleware";
-
-const TODO = "stratus-todo";
+import { STORAGE } from "../constants";
 
 export const useTodo = create(
   persist(
     (set, get) => ({
       todo: [],
-      setTodo: (todo) => set({ todo: [ ...todo ] }),
+      setTodo: (todo) => set({ todo: [...todo] }),
     }),
     {
-      name: TODO,
+      name: STORAGE.TODO,
     }
   )
 );

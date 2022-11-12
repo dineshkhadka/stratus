@@ -2,16 +2,10 @@ import React, { useState, useEffect } from "react";
 import WeatherSearch from "./weatherSearch";
 import { useStore } from "../stores/useStore";
 import { useSettings } from "../stores/useSettings";
+import { TABS } from "../constants";
 import "../scss/style.scss";
 
 const fuzzysort = require("fuzzysort");
-
-const TABS = {
-  APPEARANCE: "APPEARANCE",
-  WIDGETS: "WIDGETS",
-  WORLD_CLOCK: "WORLD_CLOCK",
-  WEATHER: "WEATHER",
-};
 
 function SettingsModal({ closeModal }) {
   // Settings
@@ -92,7 +86,6 @@ function SettingsModal({ closeModal }) {
           .join(" "),
         city: item.obj.name.split("_").join(" ").replace("\\\\", ""),
       });
-      console.log(timezoneList);
       setWorldClock(timezoneList);
       clearSearch();
     }
@@ -109,6 +102,11 @@ function SettingsModal({ closeModal }) {
     setSearchValue("");
   };
 
+  const handleEscapeKey = (event) => {
+    if (event.code === "Escape") {
+      closeModal();
+    }
+  };
   useEffect(() => {
     fetch("../data/countries.json")
       .then((response) => response.json())
@@ -118,13 +116,20 @@ function SettingsModal({ closeModal }) {
       .catch((error) => {
         console.log(error);
       });
-    return () => {};
+
+    document.addEventListener("keydown", handleEscapeKey);
+    return () => document.removeEventListener("keydown", handleEscapeKey);
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>
-      <div className="settings-container" style={{ opacity: preview ? 0 : 1 }}>
-        <div className="settings-menu">
+      <div className="settings-container">
+        <div
+          className="settings-container__backdrop"
+          onClick={closeModal}
+          aria-hidden="true"
+        ></div>
+        <div className="settings-menu" style={{ opacity: preview ? 0 : 1 }}>
           <header className="settings-menu__header">
             <button
               className="btn-close btn-close--light"
@@ -246,7 +251,7 @@ function SettingsModal({ closeModal }) {
                         }}
                         defaultChecked={settings.dateType === "nepali"}
                       />
-                      <label htmlFor="radio-two">Nepali</label>
+                      <label htmlFor="radio-two">Bikram Sambat</label>
                     </div>
                   </div>
                 </div>

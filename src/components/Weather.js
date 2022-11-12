@@ -1,21 +1,18 @@
 import React, { useEffect } from "react";
 import { getUID, getDayFromEpoch } from "../utils/helpers.js";
-import { useStore } from '../stores/useStore'
+import { useStore } from "../stores/useStore";
 import {
   getPlaceNamefromCoordinates,
   getWeatherData,
 } from "../utils/getCurrentCoordinates";
 import WeatherSearch from "./weatherSearch";
 function Weather() {
-  
-  const weatherDetails = useStore((state) => state.weatherDetails)
-  const setWeatherDetails = useStore((state) => state.setWeatherDetails)
+  const weatherDetails = useStore((state) => state.weatherDetails);
+  const setWeatherDetails = useStore((state) => state.setWeatherDetails);
 
+  const placeName = useStore((state) => state.placeName);
+  const setPlaceName = useStore((state) => state.setPlaceName);
 
-  const placeName = useStore((state) => state.placeName)
-  const setPlaceName = useStore((state) => state.setPlaceName)
-
-  
   useEffect(() => {
     if (
       weatherDetails.lastUpdated == null ||
@@ -42,7 +39,6 @@ function Weather() {
 
     weatherData
       .then((data) => {
-        console.log(data);
         setWeatherDetails({
           data: data,
           lat,
@@ -57,7 +53,6 @@ function Weather() {
     const placeNamefromCoordinates = getPlaceNamefromCoordinates(args);
     placeNamefromCoordinates
       .then((data) => {
-        console.log(data);
         setPlaceName({
           name: data.name,
           lastUpdated: getUID(),
@@ -105,9 +100,7 @@ function Weather() {
           </div>
         </div>
       )}
-      {weatherDetails.length === 0 && (
-        <WeatherSearch />
-      )}
+      {weatherDetails.length === 0 && <WeatherSearch />}
     </>
   );
 }

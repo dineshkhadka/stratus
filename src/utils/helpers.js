@@ -17,6 +17,11 @@ export function isFreshDay() {
     }
   }
 }
+export function isFreshInstall() {
+  const STORAGE_NAME = "stratus-first-install";
+  var hasInstalled = localStorage.getItem(STORAGE_NAME);
+  return hasInstalled === null || hasInstalled === undefined;
+}
 
 export function getUID() {
   return UNIQUE_ID;
