@@ -1,11 +1,11 @@
 import create from "zustand";
 import { persist } from "zustand/middleware";
-import { STORAGE } from "../constants";
+import { STORAGE, COMPONENTS } from "../constants";
 
 const intialSettings = {
   dateType: "nepali",
   theme: "dark",
-  components: STORAGE.COMPONENTS,
+  components: COMPONENTS,
   setTheme: () => {},
   setDateType: () => {},
 };
