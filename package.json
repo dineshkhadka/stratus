@@ -35,8 +35,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prepare": "husky install",
-    "chrome": "cp manifest/chrome.json build/manifest.json && python scripts/build.py",
-    "firefox": "cp manifest/firefox.json build/manifest.json"
+    "chrome": "python build.py chrome",
+    "firefox": "python build.py firefox"
   },
   "eslintConfig": {
     "extends": "react-app"
