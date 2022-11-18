@@ -207,7 +207,7 @@ function SettingsModal({ closeModal }) {
                     }`}
                     onClick={() => displayTab(TABS.WEATHER)}
                   >
-                    Location
+                    Weather
                   </button>
                 </li>
               </ul>

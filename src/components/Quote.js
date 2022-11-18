@@ -2,10 +2,9 @@
 import React, { useEffect } from "react";
 import { getUID } from "../utils/helpers.js";
 import api from "../utils/api";
-import { useStore } from '../stores/useStore'
+import { useStore } from "../stores/useStore";
 
 function Quote() {
-  
   const currentQuote = useStore((state) => state.currentQuote);
   const setcurrentQuote = useStore((state) => state.setcurrentQuote);
   const fetchQuote = () => {
@@ -46,11 +45,11 @@ function Quote() {
       {Object.keys(currentQuote).length > 0 && (
         <figure className="quote">
           <blockquote className="quote__content">
-            <p>{currentQuote.quote}</p>
+            <p>
+              "{currentQuote.quote}" &mdash;{" "}
+              <strong>{currentQuote.author}</strong>
+            </p>
           </blockquote>
-          <figcaption className="quote__author">
-            {currentQuote.author}
-          </figcaption>
         </figure>
       )}
     </>

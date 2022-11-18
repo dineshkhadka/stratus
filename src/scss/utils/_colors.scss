@@ -1,5 +1,6 @@
 :root {
   --primary-light: #cfd7f3;
+  --primary-lighter: #9599a8;
   --primary-dark: #1f2136;
 }
 
@@ -10,15 +11,18 @@
   --border-color--lighter: rgba(31, 33, 54, 0.6);
   --background-color: rgba(207, 215, 243, 0.45);
   --background-color--light: rgba(207, 215, 243, 0.45);
-  --background-gradient:
-    radial-gradient(at 78% 92%, rgba(242, 245, 148, 0.753) 0px, transparent 50%),
+  --background-gradient: radial-gradient(
+      at 78% 92%,
+      rgba(242, 245, 148, 0.753) 0px,
+      transparent 50%
+    ),
     radial-gradient(at 11% 34%, hsla(266, 100%, 85%, 0.34) 0px, transparent 50%),
     radial-gradient(at 97% 93%, hsla(289, 36%, 20%, 0.45) 0px, transparent 50%),
     radial-gradient(at 0% 0%, hsla(226, 59%, 88%, 0.45) 0px, transparent 50%);
   --font-color: #1f2136;
+  --font-color-light: #545458;
   --font-color-dark: #cfd7f3;
 }
-
 
 @mixin dark-scheme {
   --primary-color: #1f2136;
@@ -27,10 +31,14 @@
   --border-color--lighter: rgba(207, 215, 243, 0.45);
   --background-color: rgba(31, 33, 54, 1);
   --background-color--light: rgba(41, 43, 70, 0.53);
-  --background-gradient:
-    radial-gradient(at 6% 10%, hsla(209, 62%, 42%, 0.2) 0px, transparent 50%),
+  --background-gradient: radial-gradient(
+      at 6% 10%,
+      hsla(209, 62%, 42%, 0.2) 0px,
+      transparent 50%
+    ),
     radial-gradient(at 92% 87%, hsla(289, 35%, 20%, 0.44) 0px, transparent 50%);
   --font-color: #cfd7f3;
+  --font-color-light: #5c5d5f;
   --font-color-dark: #4a5568;
 }
 
@@ -40,17 +48,17 @@
 
 [data-theme="background"] {
   --primary-color: #1f2136;
-  --secondary-color: #FFF;
+  --secondary-color: #fff;
   --border-color: rgba(255, 255, 255, 0.6);
   --border-color--lighter: rgba(255, 255, 255, 0.45);
   --background-color: rgba(31, 33, 54, 1);
-  --background-color--light: rgba(41, 43, 70, 0.40);
-  --font-color: #FFF;
+  --background-color--light: rgba(41, 43, 70, 0.4);
+  --font-color: #fff;
+  --font-color-light: #9a9b9e;
   --font-color-dark: #4a5568;
 }
 
 [data-theme="auto"] {
-
   @media (prefers-color-scheme: dark) {
     @include dark-scheme();
   }

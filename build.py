@@ -1,9 +1,15 @@
+# This scripts packs Extension according to the supplied browser arguments
+
 import os, sys, shutil
-cwd = os.getcwd()
 browser = sys.argv[1]
 
+
+# Color constants
 CGREEN = '\33[32m'
 CEND = '\33[0m'
+
+# Vars
+cwd = os.getcwd()
 ext_directory = os.path.join(cwd, 'extensions')
 
 def pack_extension(source):

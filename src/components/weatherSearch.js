@@ -14,12 +14,14 @@ export default function WeatherSearch() {
   const placeName = useStore((state) => state.placeName);
   const setPlaceName = useStore((state) => state.setPlaceName);
   const [city, setCity] = useState();
+  const [loading, setLoading] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState({
     display: false,
     message: "",
   });
   const fetchWeatherData = async (args) => {
+    setLoading(true);
     var { lat, long } = args;
     const weatherData = getWeatherData(args);
     weatherData
@@ -30,10 +32,12 @@ export default function WeatherSearch() {
           long,
           lastUpdated: getUID(),
         });
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
         displayMessage("Failed to get data!");
+        setLoading(false);
       });
 
     const placeNamefromCoordinates = getPlaceNamefromCoordinates(args);
@@ -93,6 +97,7 @@ export default function WeatherSearch() {
       });
   };
   const displayMessage = (message) => {
+    setLoading(false);
     setErrorMessage({ ...errorMessage, displayed: true, message: message });
     var timer = null;
     if (timer) {
@@ -161,7 +166,10 @@ export default function WeatherSearch() {
           </button>
         </form>
         {errorMessage.displayed && (
-          <div className="location-error-message">{errorMessage.message}</div>
+          <div className="location-message">{errorMessage.message}</div>
+        )}
+        {loading && (
+          <div className="location-message">Fetching weather data...</div>
         )}
       </div>
     </>
