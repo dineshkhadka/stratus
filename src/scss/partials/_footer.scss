@@ -1,11 +1,14 @@
 .footer {
-    display: flex;
-    align-items: flex-end;
-    align-content: flex-end;
-    &__inner {
-        width: 100%;
-        > * + * {
-            margin-top: 30px;
-        }
+  display: flex;
+  align-items: flex-end;
+  align-content: flex-end;
+  &__inner {
+    width: 100%;
+    > * + * {
+      margin-top: 30px;
     }
+  }
+  &__image-info {
+    text-shadow: 1px 0px 3px rgb(0 0 0 / 81%);
+  }
 }

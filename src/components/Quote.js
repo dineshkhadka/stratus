@@ -46,7 +46,7 @@ function Quote() {
         <figure className="quote">
           <blockquote className="quote__content">
             <p>
-              "{currentQuote.quote}" &mdash;{" "}
+              &ldquo;{currentQuote.quote}&rdquo; &mdash;{" "}
               <strong>{currentQuote.author}</strong>
             </p>
           </blockquote>

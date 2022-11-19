@@ -43,7 +43,8 @@ function Image() {
     ) {
       getImage();
     }
-  });
+    // eslint-disable-next-line
+  }, []);
   return (
     <>
       {Object.keys(backgroundImage).length > 0 && (
