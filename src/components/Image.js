@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { getUID } from "../utils/helpers.js";
 import api from "../utils/api";
 import { useStore } from "../stores/useStore";
@@ -7,7 +7,9 @@ function Image() {
   const backgroundImage = useStore((state) => state.backgroundImage);
   const setBackgroundImage = useStore((state) => state.setBackgroundImage);
 
+  const [loading, setLoading] = useState(false);
   const getImage = () => {
+    setLoading(true);
     fetch(api.BACKGROUND_API)
       .then((response) => response.json())
       .then((data) => {
@@ -17,6 +19,7 @@ function Image() {
           image: item,
           lastUpdated: getUID(),
         });
+        setLoading(false);
       })
       .catch((error) => {
         fetch("../data/images.json")
@@ -27,6 +30,7 @@ function Image() {
               image: item,
               lastUpdated: getUID(),
             });
+            setLoading(false);
           });
       });
   };
@@ -43,7 +47,11 @@ function Image() {
   return (
     <>
       {Object.keys(backgroundImage).length > 0 && (
-        <figure className="app-background fade-in">
+        <figure
+          className={`app-background ${
+            loading && "app-background--is-loading"
+          }`}
+        >
           <img src={backgroundImage.image.urls.full} alt="" />
         </figure>
       )}

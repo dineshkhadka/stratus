@@ -420,9 +420,13 @@
 .location-message {
   font-size: 14px;
   margin-top: 4px;
-  color: var(--primary-light);
+  color: var(--secondary-color);
   position: absolute;
   top: calc(100% + 8px);
+
+  .settings-menu__main & {
+    color: var(--primary-light);
+  }
 }
 
 .greeting {
