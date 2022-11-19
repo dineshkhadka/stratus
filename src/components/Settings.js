@@ -215,13 +215,15 @@ function SettingsModal({ closeModal }) {
 
             <div className="settings-menu__main has-scroll">
               <aside
-                className={`error-message ${errorMessage.displayed && "shown"}`}
+                className={`error-message ${
+                  errorMessage.displayed ? "shown" : ""
+                }`}
               >
                 <span>{errorMessage.message}</span>
               </aside>
               <div
                 className={`settings-screen ${
-                  isActive(TABS.APPEARANCE) && "active"
+                  isActive(TABS.APPEARANCE) ? "active" : ""
                 }`}
               >
                 <div className="settings-screen__group">
@@ -349,7 +351,7 @@ function SettingsModal({ closeModal }) {
               </div>
               <div
                 className={`settings-screen ${
-                  isActive(TABS.WIDGETS) && "active"
+                  isActive(TABS.WIDGETS) ? "active" : ""
                 }`}
               >
                 <div className="settings-screen__group">
@@ -479,7 +481,7 @@ function SettingsModal({ closeModal }) {
               </div>
               <div
                 className={`settings-screen ${
-                  isActive(TABS.WORLD_CLOCK) && "active"
+                  isActive(TABS.WORLD_CLOCK) ? "active" : ""
                 }`}
               >
                 <div className="settings-screen__group">
@@ -568,7 +570,7 @@ function SettingsModal({ closeModal }) {
               </div>
               <div
                 className={`settings-screen ${
-                  isActive(TABS.WEATHER) && "active"
+                  isActive(TABS.WEATHER) ? "active" : ""
                 }`}
               >
                 <div className="settings-screen__group">

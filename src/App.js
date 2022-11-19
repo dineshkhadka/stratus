@@ -23,7 +23,7 @@ function App() {
     <div className="App" data-theme={settings.theme}>
       {settings.theme === "background" && <Image />}
       <main className="app-shell has-scroll">
-        <div className="app-primary">
+        <div className="app-primary has-scroll">
           <div
             className={`app-primary__wrap ${
               !settings.components.date ? "app-primary__wrap--no-spotlight" : ""
@@ -40,8 +40,8 @@ function App() {
           </div>
         </div>
         {(settings.components.weather || settings.components.todo) && (
-          <div className="app-secondary">
-            <div className="app-secondary__wrap has-scroll">
+          <div className="app-secondary has-scroll">
+            <div className="app-secondary__wrap">
               {settings.components.weather && <Weather />}
               {settings.components.todo && <Todo />}
             </div>

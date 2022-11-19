@@ -1,14 +1,15 @@
 .app-shell {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
-  height: 100vh;
-  overflow: hidden;
+  grid-template-rows: 1fr;
+  height: 100%;
+  min-height: inherit;
   position: relative;
 
   @media #{$mq-760-down} {
-    grid-template-columns: 1fr;
     overflow: auto;
     scroll-snap-type: both mandatory;
+    display: block;
 
     > * {
       scroll-snap-align: start;
@@ -17,7 +18,7 @@
 }
 
 .app-background {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -57,7 +58,6 @@
 .app-primary {
   padding: 30px 60px 30px 100px;
   height: inherit;
-
   @media #{$mq-1400-up} {
     padding: 6vw 30px;
   }
@@ -98,19 +98,21 @@
 }
 
 .app-secondary {
-  height: inherit;
-  padding: 100px 50px 30px;
-
+  height: 100%;
+  padding: 90px 50px 30px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
   @media #{$mq-1400-up} {
     padding: 6vw 30px;
   }
 
   @media #{$mq-1000-down} {
-    padding: 30px;
+    padding: 100px 30px;
   }
 
   @media screen and (max-height: 500px) {
-    padding: 30px;
+    padding: 100px 30px;
   }
 
   background-color: rgba(0, 0, 0, 0.05);
@@ -127,13 +129,11 @@
   &__wrap {
     display: grid;
     grid-template-rows: repeat(2, auto);
+    width: 100%;
     max-width: 600px;
-    height: 100%;
     margin: 0 auto;
-    align-items: start;
-
     @media screen and (max-height: 550px) {
-      overflow: auto;
+      // overflow: auto;
     }
   }
 }

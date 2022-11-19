@@ -25,7 +25,7 @@ export default function ErrorFallback({ error, resetErrorBoundary }) {
               </span>{" "}
               Something went wrong:
             </h2>
-            <pre>{error.message}</pre>
+            <pre style={{ overflow: "auto" }}>{error.message}</pre>
             <p>
               If the problem persists we suggest resetting the application to
               default. However, doing so will clear everything including the

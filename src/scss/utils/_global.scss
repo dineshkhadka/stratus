@@ -1,6 +1,8 @@
 html {
   box-sizing: border-box;
   font-size: 100%;
+  overflow: hidden;
+  height: -webkit-fill-available;
 }
 
 *,
@@ -12,29 +14,32 @@ html {
 body,
 .App {
   font-size: 100%;
-  padding: 0;
   margin: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
   color: var(--font-color);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   font-family: var(--primary-family);
 }
-
 .App {
   background-color: var(--background-color);
   background-size: cover;
   background-position: center;
   background-color: var(--background-color);
   background-image: var(--background-gradient);
+  height: -webkit-fill-available;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
 }
+
 [data-theme="background"].App {
   background-image: none;
   background-color: rgb(10, 10, 10);
 }
+
 figure {
   padding: 0;
   margin: 0;
@@ -43,6 +48,7 @@ figure {
 a {
   text-decoration: none;
   color: var(--font-color);
+
   &:hover {
     color: var(--font-color);
     opacity: 0.9;
@@ -52,6 +58,7 @@ a {
 ul {
   padding: 0;
   margin: 0;
+
   li {
     list-style: none;
   }
@@ -64,22 +71,25 @@ blockquote {
 
 .error-alert {
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   text-align: center;
   color: #fff;
+
   &__inner {
     background-color: rgba(#000, 0.8);
     border-radius: 8px;
     padding: 24px;
     width: 100%;
     max-width: 720px;
+
     a {
       color: #fff;
       text-decoration: underline;
+
       &:hover,
       &:focus,
       &:active {
@@ -88,8 +98,10 @@ blockquote {
       }
     }
   }
+
   &__action {
     margin-top: 30px;
+
     > * {
       margin: 0 12px !important;
     }

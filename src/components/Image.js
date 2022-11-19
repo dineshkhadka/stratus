@@ -49,7 +49,7 @@ function Image() {
       {Object.keys(backgroundImage).length > 0 && (
         <figure
           className={`app-background ${
-            loading && "app-background--is-loading"
+            loading ? "app-background--is-loading" : ""
           }`}
         >
           <img src={backgroundImage.image.urls.full} alt="" />
