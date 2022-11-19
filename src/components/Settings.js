@@ -167,8 +167,8 @@ function SettingsModal({ closeModal }) {
               </svg>
             </button>
           </header>
-          <div className="settings-menu__inner has-scroll">
-            <aside className="settings-menu__sidebar">
+          <div className="settings-menu__inner">
+            <aside className="settings-menu__sidebar has-scroll">
               <ul className="settings-menu__list">
                 <li className="settings-menu__item">
                   <button
@@ -213,7 +213,7 @@ function SettingsModal({ closeModal }) {
               </ul>
             </aside>
 
-            <div className="settings-menu__main">
+            <div className="settings-menu__main has-scroll">
               <aside
                 className={`error-message ${errorMessage.displayed && "shown"}`}
               >
@@ -536,7 +536,7 @@ function SettingsModal({ closeModal }) {
                       </ul>
                     </div>
                     {worldClock && (
-                      <ul className="timezone-list has-scroll">
+                      <ul className="timezone-list">
                         {worldClock.map((item, index) => {
                           return (
                             <li key={index}>

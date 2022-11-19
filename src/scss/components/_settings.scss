@@ -15,8 +15,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  // background-color: rgba(0, 0, 0, 0.32);
-  // backdrop-filter: blur(3px);
+  padding: 30px;
   z-index: 50;
   display: flex;
   align-items: center;
@@ -36,9 +35,10 @@
 .settings-menu {
   padding: 15px 15px 30px;
   border-radius: 18px;
-  width: 95vw;
+  width: 100%;
   max-width: 800px;
-  height: 60vh;
+  max-height: 550px;
+  height: 100%;
   z-index: 15;
   display: flex;
   flex-direction: column;
@@ -46,13 +46,20 @@
   animation: modalShow 0.2s ease-in-out;
   transition: all 0.3s ease-in-out;
 
+  @media screen and (max-width: 620px) {
+    background-color: rgba(#25242c, 1);
+  }
+
   &--small {
     max-width: 720px;
-    height: 55vh;
   }
 
   [data-theme="dark"] & {
     background-color: rgba(#040206, 0.95);
+
+    @media screen and (max-width: 620px) {
+      background-color: rgba(#25242c, 1);
+    }
   }
 
   box-shadow: 2.8px 2.8px 2.2px rgba(0, 0, 0, 0.037),
@@ -63,18 +70,12 @@
     100px 100px 80px rgba(0, 0, 0, 0.13);
 
   &__inner {
-    display: grid;
-    grid-template-columns: 0.75fr 3fr;
-    flex-grow: 1;
-    overflow: auto;
-
-    &--full {
-      grid-template-columns: 1fr;
-    }
+    display: flex;
+    flex: 1;
+    min-height: 0;
 
     @media screen and (max-width: 620px) {
-      grid-template-columns: 1fr;
-      flex-grow: unset;
+      flex-direction: column;
     }
   }
 
@@ -94,25 +95,29 @@
 
   &__sidebar {
     padding-right: 30px;
+    display: flex;
+    width: 100%;
+    max-width: 150px;
+    flex-direction: column;
+    overflow: auto;
     border-right: 1px solid var(--background-color--light);
-  }
-
-  &__main {
-    padding-left: 30px;
     flex-grow: 1;
+    flex-shrink: 0;
     position: relative;
 
     @media screen and (max-width: 620px) {
-      padding-left: 0;
-      flex-grow: unset;
-      margin-top: 50px;
+      max-width: initial;
+      padding: 0 0 12px;
+      overflow-x: scroll;
+      flex-shrink: 0;
+      flex-grow: 0;
     }
   }
 
   &__list {
     @media screen and (max-width: 620px) {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       gap: 10px;
     }
 
@@ -121,7 +126,22 @@
 
       @media screen and (max-width: 620px) {
         margin-bottom: 0;
+        flex-shrink: 0;
+        flex-grow: 1;
       }
+    }
+  }
+
+  &__main {
+    padding-left: 30px;
+    flex-grow: 1;
+    position: relative;
+    overflow: auto;
+    padding-right: 15px;
+
+    @media screen and (max-width: 620px) {
+      padding-left: 0;
+      margin-top: 15px;
     }
   }
 
@@ -352,7 +372,6 @@
 .timezone-list {
   margin: 20px 0 0;
   padding: 0;
-  max-height: 300px;
 
   li {
     list-style: none;
@@ -364,6 +383,12 @@
     border: 2px solid rgba(#ccc, 0.2);
     border-radius: 4px;
     cursor: default;
+    @include fsz(16px);
+    line-height: 1.4;
+
+    @media screen and (max-width: 620px) {
+      @include fsz(14px);
+    }
 
     &:not(:last-child) {
       margin-bottom: 20px;
@@ -389,7 +414,7 @@
   font-size: 14px;
   font-weight: 500;
   color: var(--secondary-color);
-  padding: 14px 40px;
+  padding: 14px;
   background-color: var(--primary-color);
   border-radius: 24px;
   position: fixed;
@@ -397,6 +422,9 @@
   transform: translateX(-50%) translateZ(0);
   left: 50%;
   bottom: 50px;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
   box-shadow: 2.8px 2.8px 2.2px rgba(0, 0, 0, 0.02),
     6.7px 6.7px 5.3px rgba(0, 0, 0, 0.028),
     12.5px 12.5px 10px rgba(0, 0, 0, 0.035),
@@ -444,6 +472,7 @@
   &__subtitle {
     @include fsz(12px);
     display: block;
+    color: var(--primary-light);
   }
 }
 
@@ -475,24 +504,26 @@
 }
 
 .has-scroll {
-  &::-webkit-scrollbar {
-    background-color: transparent;
-    width: 8px;
-  }
+  @media screen and (min-width: 620px) {
+    &::-webkit-scrollbar {
+      background-color: transparent;
+      width: 8px;
+    }
 
-  /* background of the scrollbar except button or resizer */
-  &::-webkit-scrollbar-track {
-    background-color: rgba(#040206, 0.2);
-  }
+    /* background of the scrollbar except button or resizer */
+    &::-webkit-scrollbar-track {
+      background-color: rgba(#040206, 0.2);
+    }
 
-  /* scrollbar itself */
-  &::-webkit-scrollbar-thumb {
-    background-color: black;
-    border-radius: 8px;
-  }
+    /* scrollbar itself */
+    &::-webkit-scrollbar-thumb {
+      background-color: black;
+      border-radius: 8px;
+    }
 
-  /* set button(top and bottom of the scrollbar) */
-  &::-webkit-scrollbar-button {
-    display: none;
+    /* set button(top and bottom of the scrollbar) */
+    &::-webkit-scrollbar-button {
+      display: none;
+    }
   }
 }
