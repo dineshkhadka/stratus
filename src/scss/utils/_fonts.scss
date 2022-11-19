@@ -1,0 +1,16 @@
+@use "@fontsource/ibm-plex-sans/scss/mixins" as IBMPlexSans;
+
+$customFonts: 300 normal, 400 normal, 400 italic, 500 normal, 700 normal;
+
+@each $customWeight, $customStyle in $customFonts {
+  @include IBMPlexSans.fontFaceCustom(
+    $display: block,
+    $style: $customStyle,
+    $weight: $customWeight,
+    $woffPath:
+      "~@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-#{$customWeight}-#{$customStyle}.woff",
+    $woff2Path:
+      "~@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-#{$customWeight}-#{$customStyle}.woff2",
+    $unicodeRange: false
+  );
+}

@@ -10,11 +10,6 @@ import FirstInstall from "./components/FIrstInstall";
 import { isFreshDay } from "./utils/helpers";
 import { useSettings } from "./stores/useSettings";
 import { useFirstInstall } from "./stores/useFirstInstall";
-import "@fontsource/ibm-plex-sans";
-import "@fontsource/ibm-plex-sans/300.css";
-import "@fontsource/ibm-plex-sans/400-italic.css";
-import "@fontsource/ibm-plex-sans/500.css";
-import "@fontsource/ibm-plex-sans/700.css";
 
 import "./scss/style.scss";
 
