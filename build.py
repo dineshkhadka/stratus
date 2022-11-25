@@ -9,6 +9,7 @@ CGREEN = '\33[32m'
 CEND = '\33[0m'
 
 # Vars
+build_path = '/dist'
 cwd = os.getcwd()
 ext_directory = os.path.join(cwd, 'extensions')
 
@@ -24,7 +25,7 @@ def pack_extension(source):
     
 
     if (browser):
-        shutil.copy(jsonFile, cwd + '/build/manifest.json')
+        shutil.copy(jsonFile, cwd + build_path + '/manifest.json')
     else:
         print('❌ Please specify browser argument')
         return False
@@ -35,4 +36,4 @@ def pack_extension(source):
     print(CGREEN +'✅ Extension archive: \033[1m ' + browser + '.zip\033[0m '+ CGREEN +'created at '+ ext_directory + CEND)
 
 if __name__ == '__main__':
-    pack_extension( cwd + '/build')
+    pack_extension( cwd + build_path)
