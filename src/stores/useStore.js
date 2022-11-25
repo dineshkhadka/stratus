@@ -9,7 +9,6 @@ export const useStore = create(
       placeName: [],
       backgroundImage: [],
       currentQuote: [],
-      worldClock: [],
       setWeatherDetails: (weatherDetails) =>
         set({ weatherDetails: { ...weatherDetails } }),
       setPlaceName: (placeName) => set({ placeName: { ...placeName } }),
@@ -17,7 +16,6 @@ export const useStore = create(
         set({ backgroundImage: { ...backgroundImage } }),
       setcurrentQuote: (currentQuote) =>
         set({ currentQuote: { ...currentQuote } }),
-      setWorldClock: (worldClock) => set({ worldClock: [...worldClock] }),
     }),
     {
       name: STORAGE.WIDGETS,

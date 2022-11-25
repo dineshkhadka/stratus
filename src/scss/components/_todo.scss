@@ -3,12 +3,8 @@
   margin-top: 30px;
   &__list {
     height: 300px;
-    overflow-y: scroll;
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-    &::-webkit-scrollbar {
-      display: none;
-    }
+    overflow-y: auto;
+    padding-right: 8px;
     &,
     input[type="text"] {
       font-family: var(--primary-family);

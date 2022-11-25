@@ -1,6 +1,6 @@
 import create from "zustand";
 import { persist } from "zustand/middleware";
-import * as constants from "../constants";
+import { STORAGE } from "../constants";
 
 export const useFirstInstall = create(
   persist(
@@ -9,7 +9,7 @@ export const useFirstInstall = create(
       setHasInstalled: (hasInstalled) => set({ hasInstalled: hasInstalled }),
     }),
     {
-      name: constants.FIRST_INSTALL,
+      name: STORAGE.FIRST_INSTALL,
     }
   )
 );

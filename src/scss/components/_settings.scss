@@ -517,7 +517,7 @@
 
     /* scrollbar itself */
     &::-webkit-scrollbar-thumb {
-      background-color: #111;
+      background-color: var(--border-color);
       border-radius: 8px;
     }
 

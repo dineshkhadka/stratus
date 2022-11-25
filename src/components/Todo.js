@@ -132,7 +132,7 @@ function Todo() {
           </div>
         )}
 
-        <ul className="todo__list">
+        <ul className="todo__list has-scroll">
           {todo.map((todo, index) => (
             <TodoItem
               key={index}

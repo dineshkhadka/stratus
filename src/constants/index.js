@@ -1,13 +1,9 @@
-export const FIRST_INSTALL = "stratus-first-install";
-export const SETTINGS = "stratus-settings";
-export const WIDGETS = "stratus-widgets";
-export const TODO = "stratus-todo";
-
 export const STORAGE = {
   FIRST_INSTALL: "stratus-first-install",
   SETTINGS: "stratus-settings",
   WIDGETS: "stratus-widgets",
   TODO: "stratus-todo",
+  WORLD_CLOCK: "stratus-world-clock",
 };
 export const COMPONENTS = {
   date: true,

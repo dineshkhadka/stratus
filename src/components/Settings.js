@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import WeatherSearch from "./weatherSearch";
-import { useStore } from "../stores/useStore";
+import { useWorldClock } from "../stores/useWorldClock";
 import { useSettings } from "../stores/useSettings";
 import { TABS } from "../constants";
 import "../scss/style.scss";
@@ -15,8 +15,8 @@ function SettingsModal({ closeModal }) {
   const toggleComponents = useSettings((state) => state.toggleComponents);
 
   // world clock
-  const setWorldClock = useStore((state) => state.setWorldClock);
-  const worldClock = useStore((state) => state.worldClock);
+  const setWorldClock = useWorldClock((state) => state.setWorldClock);
+  const worldClock = useWorldClock((state) => state.worldClock);
 
   // Local state
   const [countries, setCountries] = useState([]);

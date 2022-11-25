@@ -7,7 +7,7 @@ import {
 } from "../utils/getCurrentdate";
 import calendar from "../utils/getNepaliName";
 import suffix from "../utils/getSuffix";
-import { useStore } from "../stores/useStore";
+import { useWorldClock } from "../stores/useWorldClock";
 import { useSettings } from "../stores/useSettings";
 
 const getTZTime = (tz) => {
@@ -20,7 +20,7 @@ const getTZTime = (tz) => {
 function Spotlight(props) {
   const [time, setTime] = useState(new Date());
   const [nepaliDate] = useState(NepaliDate.today());
-  const worldClock = useStore((state) => state.worldClock);
+  const worldClock = useWorldClock((state) => state.worldClock);
 
   const settings = useSettings((state) => state.config);
 
