@@ -20,4 +20,5 @@ export const TABS = {
   WIDGETS: "WIDGETS",
   WORLD_CLOCK: "WORLD_CLOCK",
   WEATHER: "WEATHER",
+  ABOUT: "ABOUT",
 };

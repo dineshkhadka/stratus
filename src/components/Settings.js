@@ -210,6 +210,16 @@ function SettingsModal({ closeModal }) {
                     Weather
                   </button>
                 </li>
+                <li className="settings-menu__item">
+                  <button
+                    className={`settings-menu__button ${
+                      isActive(TABS.ABOUT) ? "active" : ""
+                    }`}
+                    onClick={() => displayTab(TABS.ABOUT)}
+                  >
+                    About
+                  </button>
+                </li>
               </ul>
             </aside>
 
@@ -579,6 +589,109 @@ function SettingsModal({ closeModal }) {
                   </div>
                   <div className="settings-screen__input">
                     <WeatherSearch />
+                  </div>
+                </div>
+              </div>
+              <div
+                className={`settings-screen ${
+                  isActive(TABS.ABOUT) ? "active" : ""
+                }`}
+              >
+                <div className="settings-screen__group">
+                  <div className="settings-screen__content entry-content">
+                    <h2>Stratus</h2>
+
+                    <p>
+                      Thank you for trying out stratus. Stratus is a free and
+                      open-source extension made by Dinesh Khadka and the {""}
+                      <a
+                        href="https://github.com/dineshkhadka/stratus/graphs/contributors"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        contributors
+                      </a>
+                      .
+                    </p>
+                    <p>
+                      If you would like to contribute to the project, suggest
+                      new features or report any bugs. Please visit the
+                      project's{" "}
+                      <a
+                        href="https://github.com/dineshkhadka/stratus"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        Github
+                      </a>{" "}
+                      page
+                    </p>
+                    <h5>Links</h5>
+                    <ul className="social-list">
+                      <li>
+                        <a
+                          href="https://github.com/dineshkhadka/stratus"
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
+                          Github
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="https://twitter.com/dineshlakai"
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
+                          Twitter
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="mailto:bytepandaweb@gmail.com"
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
+                          Email
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="https://www.buymeacoffee.com/dineshlakai"
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
+                          Donation
+                        </a>
+                      </li>
+                    </ul>
+
+                    <h5>Resources</h5>
+                    <ul>
+                      <li>
+                        <a
+                          href="https://unsplash.com/collections/26321157/stratus"
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
+                          Unsplash Collection
+                        </a>{" "}
+                        used for Stratus
+                      </li>
+                      <li>
+                        <a
+                          href="https://www.lakai.dev/privacy"
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
+                          Privacy Policy
+                        </a>
+                      </li>
+                    </ul>
+                    <br />
+                    <p>
+                      <small>&copy; 2022 - Licenced in GNU GPLv3</small>
+                    </p>
                   </div>
                 </div>
               </div>
