@@ -1,6 +1,8 @@
 :root {
-  --primary-family: 'IBM Plex Sans', sans-serif;
-  --secondary-family: 'IBM Plex Sans', serif;
+  --primary-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Helvetica Neue", Arial, sans-serif;
+  --secondary-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Helvetica Neue", Arial, sans-serif;
   --transition: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
@@ -22,4 +24,3 @@ $mq-1300-down: "only screen and (max-width: 1300)";
 
 $mq-1400-up: "only screen and (min-width: 1400px)";
 $mq-1400-down: "only screen and (max-width: 1400px)";
-

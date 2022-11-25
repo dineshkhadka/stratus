@@ -4,8 +4,7 @@ import { useWorldClock } from "../stores/useWorldClock";
 import { useSettings } from "../stores/useSettings";
 import { TABS } from "../constants";
 import "../scss/style.scss";
-
-const fuzzysort = require("fuzzysort");
+import fuzzysort from "fuzzysort";
 
 function SettingsModal({ closeModal }) {
   // Settings
