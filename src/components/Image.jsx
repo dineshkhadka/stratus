@@ -34,6 +34,9 @@ function Image() {
           });
       });
   };
+  const resizeImage = (imageURL) => {
+    return imageURL.replace(/&w=(\d+)/, "&w=2000");
+  };
 
   useEffect(() => {
     if (
@@ -53,7 +56,7 @@ function Image() {
             loading ? "app-background--is-loading" : ""
           }`}
         >
-          <img src={backgroundImage.image.urls.full} alt="" />
+          <img src={resizeImage(backgroundImage.image.urls.regular)} alt="" />
         </figure>
       )}
     </>
