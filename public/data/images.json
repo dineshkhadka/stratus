@@ -11,7 +11,7 @@
     "description": "Lake Hauroko",
     "alt_description": "selective focus photography of mountain near water",
     "urls": {
-      "full": "../images/tyler-lastovich-VuRQP-kOYbc-unsplash.webp"
+      "regular": "../images/tyler-lastovich-VuRQP-kOYbc-unsplash.webp"
     },
     "links": {
       "self": "https://api.unsplash.com/photos/VuRQP-kOYbc",
@@ -75,7 +75,7 @@
     "description": "Check out more images from this shoot at my site. Link on profile!",
     "alt_description": "black and gray high-rise building",
     "urls": {
-      "full": "../images/scott-webb-68GdK1Aoc8g-unsplash.webp"
+      "regular": "../images/scott-webb-68GdK1Aoc8g-unsplash.webp"
     },
     "links": {
       "self": "https://api.unsplash.com/photos/68GdK1Aoc8g",
@@ -139,7 +139,7 @@
     "description": "Beautiful peak seen from Kyanjin Ghompa at sunrise",
     "alt_description": null,
     "urls": {
-      "full": "../images/paul-kapischka-A7pxKIXnMNw-unsplash.webp"
+      "regular": "../images/paul-kapischka-A7pxKIXnMNw-unsplash.webp"
     },
     "links": {
       "self": "https://api.unsplash.com/photos/A7pxKIXnMNw",

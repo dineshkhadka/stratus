@@ -19,7 +19,6 @@ function Image() {
           image: item,
           lastUpdated: getUID(),
         });
-        setLoading(false);
       })
       .catch((error) => {
         fetch("../data/images.json")
@@ -30,12 +29,15 @@ function Image() {
               image: item,
               lastUpdated: getUID(),
             });
-            setLoading(false);
           });
       });
   };
   const resizeImage = (imageURL) => {
-    return imageURL.replace(/&w=(\d+)/, "&w=2000");
+    if (typeof imageURL !== "undefined") {
+      return imageURL.replace(/&w=(\d+)/, "&w=2000");
+    } else {
+      return imageURL;
+    }
   };
 
   useEffect(() => {
@@ -56,7 +58,11 @@ function Image() {
             loading ? "app-background--is-loading" : ""
           }`}
         >
-          <img src={resizeImage(backgroundImage.image.urls.regular)} alt="" />
+          <img
+            src={resizeImage(backgroundImage.image.urls.regular)}
+            alt=""
+            onLoad={() => setLoading(false)}
+          />
         </figure>
       )}
     </>

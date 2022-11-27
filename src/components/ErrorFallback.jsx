@@ -1,8 +1,13 @@
 import React from "react";
-
+import { STORAGE } from "../constants";
 export default function ErrorFallback({ error, resetErrorBoundary }) {
   const [resetDialog, setResetDialog] = React.useState(false);
+  const [showAdvanced, setShowAdvanced] = React.useState(false);
   const clear = () => {
+    localStorage.removeItem(STORAGE.WIDGETS);
+    reloadApplication();
+  };
+  const clearEverything = () => {
     localStorage.clear();
     reloadApplication();
   };
@@ -41,7 +46,7 @@ export default function ErrorFallback({ error, resetErrorBoundary }) {
               Try again
             </button>
             <button className="btn btn-primary btn-danger" onClick={reset}>
-              Reset all Settings
+              Reset Settings
             </button>
           </div>
         </div>
@@ -63,9 +68,37 @@ export default function ErrorFallback({ error, resetErrorBoundary }) {
             <p>Are you sure to proceed?</p>
           </div>
           <div className="error-alert__action">
-            <button className="btn btn-primary btn-danger" onClick={clear}>
-              Yes, clear all saved items
+            <button className="btn btn-primary" onClick={clear}>
+              Yes, clear the widgets data
             </button>
+            <br />
+            <br />
+            <button
+              className="btn-link"
+              onClick={() => {
+                setShowAdvanced(!showAdvanced);
+              }}
+            >
+              <small>Not working? Try this</small>
+            </button>
+
+            {showAdvanced && (
+              <div className="danger-zone">
+                <div className="danger-zone__contents">
+                  <br />
+                  <small style={{ display: "block", marginBottom: 5 }}>
+                    Use only if this error keeps popping up
+                  </small>
+
+                  <button
+                    className="btn btn-primary btn-danger"
+                    onClick={clearEverything}
+                  >
+                    Reset the entire app
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}

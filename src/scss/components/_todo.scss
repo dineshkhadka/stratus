@@ -1,7 +1,6 @@
 .todo {
-  overflow: hidden;
   &__list {
-    height: 300px;
+    max-height: 300px;
     overflow-y: auto;
     padding-right: 8px;
     &,
@@ -13,6 +12,9 @@
       @media screen and (max-height: 600px), (max-width: 1280px) {
         font-size: 0.875rem;
       }
+    }
+    &--has-content {
+      min-height: 200px;
     }
   }
 
