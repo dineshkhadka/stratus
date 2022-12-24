@@ -42,12 +42,12 @@
   z-index: 15;
   display: flex;
   flex-direction: column;
-  background-color: rgba(#25242c, 0.95);
+  background-color: var(--settings-background);
   animation: modalShow 0.2s ease-in-out;
   transition: all 0.3s ease-in-out;
 
   @media screen and (max-width: 620px) {
-    background-color: rgba(#25242c, 1);
+    background-color: var(--settings-background);
   }
 
   &--small {
@@ -55,10 +55,8 @@
   }
 
   [data-theme="dark"] & {
-    background-color: rgba(#040206, 0.95);
-
     @media screen and (max-width: 620px) {
-      background-color: rgba(#25242c, 1);
+      background-color: var(--settings-background);
     }
   }
 
@@ -73,6 +71,12 @@
     display: flex;
     flex: 1;
     min-height: 0;
+
+    .has-scroll {
+      &::-webkit-scrollbar-thumb {
+        background-color: var(--primary-light);
+      }
+    }
 
     @media screen and (max-width: 620px) {
       flex-direction: column;
@@ -174,20 +178,22 @@
 }
 
 .settings-screen {
+  height: 100%;
   &:not(.active) {
     display: none;
   }
-
   &__group {
     display: flex;
     justify-content: space-between;
-
     @media #{$mq-760-down} {
       flex-wrap: wrap;
     }
 
     &:not(:last-child) {
       margin-bottom: 40px;
+    }
+    &--full-height {
+      height: 100%;
     }
   }
 
@@ -208,6 +214,7 @@
       margin-top: 15px;
     }
   }
+
   &__content {
     padding-bottom: 30px;
   }
@@ -402,13 +409,6 @@
       right: 12px;
       top: 50%;
       transform: translateY(-50%);
-      width: 30px;
-      height: 30px;
-
-      svg {
-        width: 12px;
-        height: 12px;
-      }
     }
   }
 }

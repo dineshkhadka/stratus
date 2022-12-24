@@ -1,7 +1,15 @@
-.footer {
+.app-info {
   display: flex;
   align-items: flex-end;
   align-content: flex-end;
+  &__inner {
+    width: 100%;
+    > * + * {
+      margin-top: 90px;
+    }
+  }
+}
+.credit {
   &__inner {
     width: 100%;
     > * + * {

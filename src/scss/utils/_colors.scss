@@ -11,6 +11,8 @@
   --border-color--lighter: rgba(31, 33, 54, 0.6);
   --background-color: rgba(207, 215, 243, 0.45);
   --background-color--light: rgba(207, 215, 243, 0.45);
+  --background-color--alt: rgba(31, 33, 54, 1);
+  --settings-background: rgba(37, 36, 44, 0.95);
   --background-gradient: radial-gradient(
       at 78% 92%,
       rgba(242, 245, 148, 0.753) 0px,
@@ -19,6 +21,7 @@
     radial-gradient(at 11% 34%, hsla(266, 100%, 85%, 0.34) 0px, transparent 50%),
     radial-gradient(at 97% 93%, hsla(289, 36%, 20%, 0.45) 0px, transparent 50%),
     radial-gradient(at 0% 0%, hsla(226, 59%, 88%, 0.45) 0px, transparent 50%);
+  --secondary-background-color: rgba(0, 0, 0, 0.05);
   --font-color: #1f2136;
   --font-color-light: #545458;
   --font-color-dark: #cfd7f3;
@@ -31,12 +34,15 @@
   --border-color--lighter: rgba(207, 215, 243, 0.45);
   --background-color: rgba(31, 33, 54, 1);
   --background-color--light: rgba(41, 43, 70, 0.53);
+  --background-color--alt: rgba(255, 255, 255, 0.808);
+  --settings-background: rgba(4, 2, 6, 0.95);
   --background-gradient: radial-gradient(
       at 6% 10%,
       hsla(209, 62%, 42%, 0.2) 0px,
       transparent 50%
     ),
     radial-gradient(at 92% 87%, hsla(289, 35%, 20%, 0.44) 0px, transparent 50%);
+  --secondary-background-color: rgba(0, 0, 0, 0.3);
   --font-color: #cfd7f3;
   --font-color-light: #5c5d5f;
   --font-color-dark: #4a5568;
@@ -53,12 +59,15 @@
   --border-color--lighter: rgba(255, 255, 255, 0.45);
   --background-color: rgba(31, 33, 54, 1);
   --background-color--light: rgba(41, 43, 70, 0.4);
+  --background-color--alt: rgba(255, 255, 255, 0.808);
+  --secondary-background-color: rgba(0, 0, 0, 0.3);
   --font-color: #fff;
   --font-color-light: #9a9b9e;
   --font-color-dark: #4a5568;
 }
 
 [data-theme="auto"] {
+  @include dark-scheme();
   @media (prefers-color-scheme: dark) {
     @include dark-scheme();
   }

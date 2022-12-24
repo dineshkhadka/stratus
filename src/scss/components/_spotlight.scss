@@ -66,10 +66,10 @@
   }
   &__intl {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 30px;
     @media screen and (max-width: 620px) {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 }
@@ -81,6 +81,10 @@
     font-size: 12px;
     font-weight: 400;
     margin: 0;
+    word-break: break-word;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   &__time {

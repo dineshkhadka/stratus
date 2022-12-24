@@ -176,13 +176,14 @@
 
 .styled-input {
   position: relative;
+
   &__input {
     width: 100%;
     appearance: none;
     background-color: transparent;
-    padding: 8px 15px 8px 0;
-    border: 0;
-    border-bottom: 1px solid var(--border-color);
+    padding: 12px 15px 12px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
     box-shadow: none;
     color: var(--font-color);
 
@@ -190,8 +191,10 @@
       border-color: rgba(#fff, 0.4);
       color: var(--primary-light);
     }
+
     &::placeholder {
       color: var(--font-color-light);
+
       .settings-menu__main & {
         color: var(--primary-lighter);
       }
@@ -201,8 +204,8 @@
     &:active,
     &:focus-visible {
       outline: none;
-      border: 0;
-      border-bottom: 1px solid var(--secondary-color);
+      border: 1px solid var(--secondary-color);
+
       .settings-menu__main & {
         border-color: rgba(#fff, 1);
       }
@@ -227,25 +230,84 @@
     border-radius: 50%;
     opacity: 0.4;
     cursor: pointer;
+
     .settings-menu__main & {
       color: var(--primary-light);
     }
+
     svg {
       opacity: 1;
       width: 18px;
       height: 18px;
     }
+
     &--alt {
-      right: 0;
+      right: 12px;
       justify-content: right;
     }
+
     &--front {
       left: 0;
       right: unset;
     }
   }
+
+  &__label {
+    @include fsz(12px);
+    font-weight: 800;
+    color: var(--primary-light);
+    display: block;
+    margin-bottom: 8px;
+  }
+}
+
+.styled-input + .styled-input {
+  margin-top: 30px;
 }
 
 .timezone-wrap {
   position: relative;
+}
+
+.custom-radio {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  left: 4px;
+  pointer-events: none;
+  opacity: 0;
+}
+.default-check {
+  color: var(--primary-light);
+  position: relative;
+  padding-left: 35px;
+}
+.default-check__input {
+  appearance: none;
+  vertical-align: middle;
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  opacity: 0;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  ~ svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  ~ svg.unchecked {
+    opacity: 1;
+  }
+
+  &:checked {
+    ~ svg.checked {
+      opacity: 1;
+    }
+
+    ~ svg.unchecked {
+      opacity: 0;
+    }
+  }
 }

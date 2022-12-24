@@ -25,6 +25,7 @@ export const useSettings = create(
     }),
     {
       name: STORAGE.SETTINGS,
+      version: 1,
     }
   )
 );

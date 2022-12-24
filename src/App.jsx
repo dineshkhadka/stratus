@@ -10,6 +10,7 @@ import FirstInstall from "./components/FIrstInstall";
 import { isFreshDay } from "./utils/helpers";
 import { useSettings } from "./stores/useSettings";
 import { useFirstInstall } from "./stores/useFirstInstall";
+import LinkCard from "./components/LinkCard";
 
 import "./scss/style.scss";
 
@@ -30,13 +31,17 @@ function App() {
             }`}
           >
             {settings.components.date && <Spotlight settings={settings} />}
-
-            <footer className="footer">
-              <div className="footer__inner">
-                {settings.components.quote && <Quote />}
-                {settings.theme === "background" && <Credit />}
+            <aside className="app-info">
+              <div className="app-info__inner">
+                {settings.components.links && <LinkCard />}
+                <div className="credit">
+                  <div className="credit__inner">
+                    {settings.components.quote && <Quote />}
+                    {settings.theme === "background" && <Credit />}
+                  </div>
+                </div>
               </div>
-            </footer>
+            </aside>
           </div>
         </div>
         {(settings.components.weather || settings.components.todo) && (

@@ -134,13 +134,14 @@
 
   &__new {
     position: relative;
-    padding-left: 45px;
-    padding-top: 30px;
     .btn {
       position: absolute;
       width: 20px;
       height: 20px;
-      left: 4px;
+      left: 15px;
+      top: 50%;
+      transform-origin: center;
+      transform: translateY(-50%);
       transition: all 0.5s var(--transition);
       padding: 0;
       border: 0;
@@ -150,13 +151,18 @@
     }
     input[type="text"] {
       color: var(--font-color);
+      border: 1px dashed var(--border-color);
+      border-radius: 4px;
+      background-color: rgba(#000, 0.1);
+      padding: 15px 15px 15px 50px;
+      width: 100%;
       &::placeholder {
-        color: var(--border-color);
+        color: var(--primary-colo);
       }
       &:focus {
         opacity: 1;
         ~ .btn {
-          transform: rotate(-45deg);
+          transform: translateY(-50%) rotate(-45deg);
           opacity: 1;
           color: var(--font-color);
         }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import WeatherSearch from "./weatherSearch";
+import LinksEdit from "./EditLinkCard";
 import { useWorldClock } from "../stores/useWorldClock";
 import { useSettings } from "../stores/useSettings";
 import { TABS } from "../constants";
@@ -207,6 +208,16 @@ function SettingsModal({ closeModal }) {
                     onClick={() => displayTab(TABS.WEATHER)}
                   >
                     Weather
+                  </button>
+                </li>
+                <li className="settings-menu__item">
+                  <button
+                    className={`settings-menu__button ${
+                      isActive(TABS.LINKS) ? "active" : ""
+                    }`}
+                    onClick={() => displayTab(TABS.LINKS)}
+                  >
+                    Quick Links
                   </button>
                 </li>
                 <li className="settings-menu__item">
@@ -484,6 +495,29 @@ function SettingsModal({ closeModal }) {
                           </label>
                         </div>
                       </div>
+                      <div className="component-toggle__item">
+                        <div className="form-check form-switch">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            role="switch"
+                            id="links-toggle"
+                            defaultChecked={settings.components.links}
+                            onChange={(links) =>
+                              toggleComponents((state) => ({
+                                ...state.components,
+                                links: !settings.components.links,
+                              }))
+                            }
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="links-toggle"
+                          >
+                            Quick Links
+                          </label>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -588,6 +622,22 @@ function SettingsModal({ closeModal }) {
                   </div>
                   <div className="settings-screen__input">
                     <WeatherSearch />
+                  </div>
+                </div>
+              </div>
+              <div
+                className={`settings-screen ${
+                  isActive(TABS.LINKS) ? "active" : ""
+                }`}
+              >
+                <div className="settings-screen__group settings-screen__group--full-height">
+                  <div className="settings-screen__label">
+                    <h3 className="settings-screen__title">Quick Links</h3>
+                  </div>
+                  <div className="settings-screen__input">
+                    <div className="quick-links-screen">
+                      <LinksEdit />
+                    </div>
                   </div>
                 </div>
               </div>

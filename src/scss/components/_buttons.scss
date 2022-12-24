@@ -1,6 +1,11 @@
 .btn {
-  all: unset;
+  appearance: none;
+  background: none;
+  box-shadow: none;
+  font-size: 100%;
   cursor: pointer;
+  border: none;
+  padding: 0;
   transition: all 1s var(--transition);
 
   svg {
@@ -23,6 +28,56 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 30px;
+    height: 30px;
+    transform-origin: center;
+    svg {
+      width: 12px;
+      height: 12px;
+    }
+    &--light {
+      border: 1px solid var(--primary-light);
+      color: var(--primary-light);
+      &:hover,
+      &:focus,
+      &:active {
+        background-color: var(--primary-light);
+        color: var(--primary-dark);
+      }
+    }
+    &--disabled {
+      opacity: 0.2;
+      cursor: not-allowed;
+      &:hover,
+      &:focus,
+      &:active {
+        background-color: transparent;
+        color: var(--primary-light);
+      }
+    }
+    &--strike {
+      opacity: 0.7;
+      &:after {
+        content: "";
+        width: 1px;
+        height: 80%;
+        background-color: currentColor;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+      &:hover,
+      &:focus,
+      &:active {
+        background-color: transparent;
+        color: var(--primary-light);
+      }
+    }
+
+    &--flipped {
+      transform: rotate(-180deg);
+    }
   }
   &-close {
     all: unset;
@@ -98,10 +153,22 @@
       border-color: #bd2130;
     }
   }
+  &-filled {
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+    &:hover,
+    &:focus,
+    &:active {
+      opacity: 0.7;
+    }
+  }
 }
 
 .btn-link {
-  all: unset;
+  appearance: none;
+  background: none;
+  box-shadow: none;
+  font-size: 100%;
   display: inline-block;
   cursor: pointer;
   transition: ease 0.3s;

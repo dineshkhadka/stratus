@@ -34,12 +34,12 @@
     right: 0;
     background-image: radial-gradient(
         at 91% 87%,
-        hsla(108, 0%, 0%, 0.2) 0px,
+        hsl(0deg 0% 0% / 0%) 0px,
         transparent 50%
       ),
-      radial-gradient(at 86% 30%, hsla(289, 0%, 0%, 0.41) 0px, transparent 50%),
-      radial-gradient(at 11% 23%, hsla(289, 0%, 0%, 0.49) 0px, transparent 50%),
-      radial-gradient(at 20% 84%, hsla(289, 0%, 0%, 0.46) 0px, transparent 50%);
+      radial-gradient(at 86% 30%, rgba(0, 0, 0, 0.041) 0px, transparent 50%),
+      radial-gradient(at 11% 23%, hsl(0deg 0% 0% / 22%) 0px, transparent 50%),
+      radial-gradient(at 20% 84%, hsl(0deg 0% 0% / 0%) 0px, transparent 50%);
   }
 
   img {
@@ -57,11 +57,12 @@
 
 .app-primary {
   padding: 30px 60px 30px 100px;
-  height: inherit;
-
+  height: 100%;
+  overflow: auto;
   @media #{$mq-1400-up} {
     padding: 5vw 30px 50px;
   }
+
   @media #{$mq-2000-up} {
     padding: 5vw 30px;
   }
@@ -91,7 +92,7 @@
     grid-template-rows: repeat(2, auto);
     max-width: 720px;
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     margin: 0 auto;
 
     &--no-spotlight {
@@ -111,6 +112,7 @@
   @media #{$mq-1400-up} {
     padding: 5vw 50px 50px;
   }
+
   @media #{$mq-2000-up} {
     padding: 5vw 50px;
   }
@@ -123,15 +125,7 @@
     padding: 100px 50px;
   }
 
-  background-color: rgba(0, 0, 0, 0.05);
-
-  [data-theme="background"] & {
-    background-color: rgba(0, 0, 0, 0.3);
-  }
-
-  [data-theme="dark"] & {
-    background-color: rgba(0, 0, 0, 0.35);
-  }
+  background-color: var(--secondary-background-color);
 
   &__wrap {
     display: flex;

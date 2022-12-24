@@ -4,6 +4,7 @@ export const STORAGE = {
   WIDGETS: "stratus-widgets",
   TODO: "stratus-todo",
   WORLD_CLOCK: "stratus-world-clock",
+  QUICK_LINKS: "stratus-quick-links",
 };
 export const COMPONENTS = {
   date: true,
@@ -14,6 +15,7 @@ export const COMPONENTS = {
   todo: true,
   credit: true,
   timezone: true,
+  links: true,
 };
 export const TABS = {
   APPEARANCE: "APPEARANCE",
@@ -21,4 +23,5 @@ export const TABS = {
   WORLD_CLOCK: "WORLD_CLOCK",
   WEATHER: "WEATHER",
   ABOUT: "ABOUT",
+  LINKS: "LINKS",
 };
