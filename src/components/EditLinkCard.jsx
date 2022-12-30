@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
+import { useToast } from "./Toast";
 import { useQuickLinks } from "../stores/useQuickLinks";
 
 function EditLinkCard({
@@ -58,7 +59,7 @@ function EditLinkCard({
             type="checkbox"
             className="default-check__input"
             id={`blank-open-${linkData.id}`}
-            defaultChecked={linkData.self}
+            defaultChecked={!linkData.self}
             onChange={(e) => {
               changeLink(linkData.id, "self", !linkData.self);
             }}
@@ -192,19 +193,25 @@ export default function LinksEdit() {
   const [added, setAdded] = useState(false);
   const linkref = useRef(null);
 
+  const toast = useToast();
+
+  const MAX_LINKS = 8;
   const changeLink = (id, name, value) => {
     updateQuickLinks(id, { [name]: value });
   };
 
   const addNewLink = () => {
-    if (quickLinks.length > 9) return false;
+    if (quickLinks.length >= MAX_LINKS) {
+      toast.open(`Maximum links of ${MAX_LINKS} reached`);
+      return false;
+    }
     const newTodos = [
       ...quickLinks,
       {
         id: (Math.random() + 1).toString(36).substring(10),
         title: "",
         url: "",
-        self: false,
+        self: true,
         visible: true,
       },
     ];
@@ -249,7 +256,7 @@ export default function LinksEdit() {
       <div className="quick-links-new">
         <button
           className={`btn btn-quick-link ${
-            quickLinks.length > 9 ? "btn-quick-link--disabled" : ""
+            quickLinks.length >= MAX_LINKS ? "btn-quick-link--disabled" : ""
           }`}
           onClick={addNewLink}
         >

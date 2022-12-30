@@ -12,7 +12,6 @@
     "react-dom": "^17.0.2",
     "react-error-boundary": "^3.1.4",
     "react-scripts": "3.4.1",
-    "react-tiny-dnd": "^1.2.3",
     "sass": "^1.51.0",
     "zustand": "^4.1.4"
   },
@@ -28,8 +27,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "prepare": "husky install",
-    "chrome": "python build.py chrome",
-    "firefox": "python build.py firefox"
+    "chrome": "vite build && python build.py chrome",
+    "firefox": "vite build && python build.py firefox"
   },
   "eslintConfig": {
     "extends": "react-app"

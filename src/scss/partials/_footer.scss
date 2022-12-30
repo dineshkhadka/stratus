@@ -5,7 +5,10 @@
   &__inner {
     width: 100%;
     > * + * {
-      margin-top: 90px;
+      margin-top: 50px;
+      @media screen and (max-height: 700px) {
+        margin-top: 30px;
+      }
     }
   }
 }

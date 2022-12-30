@@ -9684,11 +9684,6 @@ react-scripts@3.4.1:
   optionalDependencies:
     fsevents "2.1.2"
 
-react-tiny-dnd@^1.2.3:
-  version "1.2.3"
-  resolved "https://registry.npmjs.org/react-tiny-dnd/-/react-tiny-dnd-1.2.3.tgz"
-  integrity sha512-teBmN87VaWEMf3MfEC4mrLZd7Yu2Xlxif4aK5gmLb1sXlj0jXIdphL/HGfczEKnGmN2ZeoI+3fqEEHK8E87xIw==
-
 react@^17.0.2:
   version "17.0.2"
   resolved "https://registry.npmjs.org/react/-/react-17.0.2.tgz"

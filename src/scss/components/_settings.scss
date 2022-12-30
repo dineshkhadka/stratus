@@ -6,6 +6,8 @@
     position: fixed;
     top: 20px;
     right: 20px;
+    background-color: var(--background-color--lighter);
+    opacity: 0.9;
   }
 }
 
@@ -155,7 +157,6 @@
     font-weight: 700;
     @include fsz(14px);
     line-height: 1.25;
-    color: var(--primary-light);
     margin-bottom: 0;
     padding: 12px;
     border-radius: 9px;
@@ -413,8 +414,8 @@
   }
 }
 
-.error-message {
-  font-size: 14px;
+.toast-message {
+  @include fsz(14px);
   font-weight: 500;
   color: var(--secondary-color);
   padding: 14px;
@@ -424,24 +425,21 @@
   width: auto;
   transform: translateX(-50%) translateZ(0);
   left: 50%;
+  opacity: 1;
+  font-weight: 700;
   bottom: 50px;
   width: 100%;
   max-width: 300px;
   text-align: center;
+  z-index: 100;
+  animation: toastShow 0.2s ease-in-out;
+  transition: all 0.3s ease-in-out;
   box-shadow: 2.8px 2.8px 2.2px rgba(0, 0, 0, 0.02),
     6.7px 6.7px 5.3px rgba(0, 0, 0, 0.028),
     12.5px 12.5px 10px rgba(0, 0, 0, 0.035),
     22.3px 22.3px 17.9px rgba(0, 0, 0, 0.042),
     41.8px 41.8px 33.4px rgba(0, 0, 0, 0.05),
     100px 100px 80px rgba(0, 0, 0, 0.07);
-  transition: all 0.3s ease-in-out;
-  bottom: -300px;
-  opacity: 0;
-
-  &.shown {
-    bottom: 50px;
-    opacity: 1;
-  }
 }
 
 .weather-search {
@@ -492,20 +490,6 @@
   background-clip: text;
 }
 
-@keyframes modalShow {
-  from {
-    opacity: 0;
-    -webkit-transform: scale(1.05);
-    transform: scale(1.05);
-  }
-
-  to {
-    opacity: 1;
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
-}
-
 .has-scroll {
   @media screen and (pointer: fine) {
     &::-webkit-scrollbar {
@@ -528,5 +512,30 @@
     &::-webkit-scrollbar-button {
       display: none;
     }
+  }
+}
+
+@keyframes modalShow {
+  from {
+    opacity: 0;
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@keyframes toastShow {
+  from {
+    opacity: 0;
+    bottom: -300px;
+  }
+
+  to {
+    opacity: 1;
+    bottom: 50px;
   }
 }

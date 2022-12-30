@@ -34,12 +34,12 @@
     right: 0;
     background-image: radial-gradient(
         at 91% 87%,
-        hsl(0deg 0% 0% / 0%) 0px,
+        hsla(0deg, 0%, 0%, 0) 0px,
         transparent 50%
       ),
-      radial-gradient(at 86% 30%, rgba(0, 0, 0, 0.041) 0px, transparent 50%),
-      radial-gradient(at 11% 23%, hsl(0deg 0% 0% / 22%) 0px, transparent 50%),
-      radial-gradient(at 20% 84%, hsl(0deg 0% 0% / 0%) 0px, transparent 50%);
+      radial-gradient(at 86% 30%, rgba(0, 0, 0, 0.041) 0px, #00000017 50%),
+      radial-gradient(at 36% 32%, hsla(0deg, 0%, 0%, 0.22) 0px, transparent 50%),
+      radial-gradient(at 20% 84%, hsla(0deg, 0%, 0%, 0) 0px, transparent 50%);
   }
 
   img {
@@ -59,6 +59,7 @@
   padding: 30px 60px 30px 100px;
   height: 100%;
   overflow: auto;
+
   @media #{$mq-1400-up} {
     padding: 5vw 30px 50px;
   }

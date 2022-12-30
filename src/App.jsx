@@ -56,6 +56,8 @@ function App() {
         <Settings />
         {!hasInstalled && <FirstInstall />}
       </main>
+
+      {/* <Toast show={errorMessage.displayed}>{errorMessage.message}</Toast> */}
     </div>
   );
 }

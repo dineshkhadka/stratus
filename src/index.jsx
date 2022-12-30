@@ -4,11 +4,14 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "./components/ErrorFallback";
+import { ToastProvider } from "./components/Toast";
 
 ReactDOM.render(
   <React.StrictMode>
     <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <App />
+      <ToastProvider>
+        <App />
+      </ToastProvider>
     </ErrorBoundary>
   </React.StrictMode>,
   document.getElementById("root")

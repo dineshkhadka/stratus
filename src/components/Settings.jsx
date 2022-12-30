@@ -4,6 +4,7 @@ import LinksEdit from "./EditLinkCard";
 import { useWorldClock } from "../stores/useWorldClock";
 import { useSettings } from "../stores/useSettings";
 import { TABS } from "../constants";
+import { useToast } from "./Toast";
 import "../scss/style.scss";
 import fuzzysort from "fuzzysort";
 
@@ -18,16 +19,13 @@ function SettingsModal({ closeModal }) {
   const setWorldClock = useWorldClock((state) => state.setWorldClock);
   const worldClock = useWorldClock((state) => state.worldClock);
 
+  const toast = useToast();
+
   // Local state
   const [countries, setCountries] = useState([]);
   const [currentTab, setCurrentTab] = useState(Object.keys(TABS)[0]);
   const [search, setSearch] = useState([]);
   const [searchValue, setSearchValue] = useState("");
-  const [errorMessage, setErrorMessage] = useState({
-    displayed: false,
-    message: "",
-    type: "alert",
-  });
 
   const [preview, setPreview] = useState(0);
 
@@ -53,19 +51,13 @@ function SettingsModal({ closeModal }) {
       setSearch([]);
     }
   };
+
   const displayMessage = (message) => {
-    setErrorMessage({ ...errorMessage, displayed: true, message: message });
-    var timer = null;
-    if (timer) {
-      clearTimeout(timer); //cancel the previous timer.
-      timer = null;
-    }
-    timer = setTimeout(() => {
-      setErrorMessage({ ...errorMessage, displayed: false, message: message });
-    }, 3000);
+    toast.open(message);
   };
   const handleTimezone = (item) => {
     const timezoneList = worldClock || [];
+    const MAX_TIMEZONES = 4;
     if (
       timezoneList.findIndex((o) => o.timezone === item.obj.timezone) !== -1
     ) {
@@ -73,8 +65,8 @@ function SettingsModal({ closeModal }) {
       clearSearch();
       return false;
     }
-    if (timezoneList.length > 3) {
-      displayMessage("A maximum of 4 timezones allowed!");
+    if (timezoneList.length >= MAX_TIMEZONES) {
+      displayMessage(`A maximum of ${MAX_TIMEZONES} timezones allowed!`);
       clearSearch();
     } else {
       timezoneList.push({
@@ -234,13 +226,6 @@ function SettingsModal({ closeModal }) {
             </aside>
 
             <div className="settings-menu__main has-scroll">
-              <aside
-                className={`error-message ${
-                  errorMessage.displayed ? "shown" : ""
-                }`}
-              >
-                <span>{errorMessage.message}</span>
-              </aside>
               <div
                 className={`settings-screen ${
                   isActive(TABS.APPEARANCE) ? "active" : ""
