@@ -14,7 +14,11 @@
 .quick-links {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 20px;
+  gap: 15px;
+
+  &--three-col {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 
   > li {
     position: relative;
@@ -36,6 +40,7 @@
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
+      text-align: center;
       background-color: var(--background-color--lighter);
 
       @media screen and (max-height: 700px) {

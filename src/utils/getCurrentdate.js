@@ -8,7 +8,14 @@ export const getFullDate = () => {
   )} ${today.toLocaleDateString("default", {
     month: "long",
   })}, ${today.getFullYear()}`;
-  return date;
+  return {
+    date: today.getDate(),
+    dateSuffix: suffix(today.getDate()),
+    month: today.toLocaleDateString("default", {
+      month: "long",
+    }),
+    year: today.getFullYear(),
+  };
 };
 export const getCurrentDate = () => {
   const date = today.getDate();

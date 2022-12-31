@@ -2,9 +2,17 @@ import React from "react";
 import { useQuickLinks } from "../stores/useQuickLinks";
 
 export default function LinkCard() {
+  const MAX_ITEMS_FOR_THREE_COL = 6;
   const quickLinks = useQuickLinks((state) => state.quickLinks);
   return (
-    <ul className="quick-links">
+    <ul
+      className={`quick-links ${
+        quickLinks.filter((x) => x.visible && x.url).length <=
+        MAX_ITEMS_FOR_THREE_COL
+          ? "quick-links--three-col"
+          : ""
+      }`}
+    >
       {quickLinks.map((item) => {
         return (
           item.url &&

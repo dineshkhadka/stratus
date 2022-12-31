@@ -381,7 +381,6 @@
 }
 
 .timezone-list {
-  margin: 20px 0 0;
   padding: 0;
 
   li {
@@ -411,6 +410,14 @@
       top: 50%;
       transform: translateY(-50%);
     }
+  }
+}
+
+.timezone-list-wrap {
+  margin-top: 35px;
+  &__title {
+    margin: 0 0 15px;
+    color: var(--primary-light);
   }
 }
 

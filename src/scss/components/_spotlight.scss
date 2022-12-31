@@ -1,3 +1,29 @@
+[data-theme="background"] {
+  .spotlight {
+    text-shadow: 1px 1px 1px rgb(131, 130, 130);
+
+    &__inner {
+      position: relative;
+      z-index: 1;
+
+      &:after {
+        content: "";
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.12);
+        filter: blur(40px);
+        z-index: -1;
+        pointer-events: none;
+      }
+    }
+  }
+}
+
 .current-date {
   &__day,
   &__month {
@@ -7,12 +33,15 @@
     line-height: 1.12;
     color: var(--font-color);
     margin-bottom: 0;
+
     sup {
       font-size: 1.5rem;
     }
+
     @media screen and (max-height: 600px), (max-width: 1400px) {
       font-size: 3.475rem;
     }
+
     @media screen and (max-height: 600px), (max-width: 1200px) {
       font-size: 2.475rem;
     }
@@ -24,16 +53,23 @@
 
   &__time {
     text-align: right;
+    [data-theme="background"] & {
+      text-shadow: 1px 1px 20px rgb(70 70 70 / 66%);
+    }
+
     @media #{$mq-760-down} {
       text-align: left;
       margin-top: 10px;
     }
+
     > * + * {
       margin-top: 10px;
     }
+
     span {
       position: relative;
       z-index: 1;
+
       &:after {
         [data-theme="background"] & {
           content: "";
@@ -56,18 +92,22 @@
     grid-template-columns: 2fr 1fr;
     align-items: flex-end;
     padding-bottom: 15px;
+
     @media #{$mq-760-down} {
       grid-template-columns: 1fr;
     }
   }
+
   &__bottom {
     border-top: 1px solid var(--border-color);
     padding: 15px 0;
   }
+
   &__intl {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 30px;
+
     @media screen and (max-width: 620px) {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -76,6 +116,9 @@
 
 .world-clock {
   text-align: center;
+  [data-theme="background"] & {
+    text-shadow: 1px 1px 20px rgb(70 70 70 / 50%);
+  }
   &__location,
   &__date {
     font-size: 12px;
@@ -89,6 +132,7 @@
 
   &__time {
     font-size: 20px;
+
     @media #{$mq-1000-down} {
       font-size: 1rem;
     }
