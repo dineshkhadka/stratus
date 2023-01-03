@@ -77,12 +77,16 @@ function Spotlight(props) {
                       minute: "2-digit",
                     })}
                   </div>
-                  {settings.dateType === "nepali" && (
-                    <div className="current-date__full">
-                      {getFullDate().date} <sup>{getFullDate().dateSuffix}</sup>{" "}
-                      of {getFullDate().month}, {getFullDate().year}
-                    </div>
-                  )}
+                  <div className="current-date__full">
+                    {getFullDate().day}{" "}
+                    {settings.dateType === "nepali" && (
+                      <>
+                        , {getFullDate().date}
+                        <sup>{getFullDate().dateSuffix}</sup> of{" "}
+                        {getFullDate().month}
+                      </>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

@@ -1,5 +1,5 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "Stratus - New Tab page",
   "description": "A clean and fast new tab page",
   "version": "1.0.7",
