@@ -36,8 +36,8 @@ function Spotlight(props) {
         <h2 className="primary-text">
           Good{" "}
           {time.getHours() < 12
-            ? "Morning"
-            : time < 18
+            ? "morning"
+            : time.getHours() < 18
             ? "afternoon"
             : "evening"}
           , today is
