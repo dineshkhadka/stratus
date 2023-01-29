@@ -12,6 +12,7 @@ function SettingsModal({ closeModal }) {
   // Settings
   const settings = useSettings((state) => state.config);
   const setDateType = useSettings((state) => state.setDateType);
+  const setTemperatureUnit = useSettings((state) => state.setTemperatureUnit);
   const setTheme = useSettings((state) => state.setTheme);
   const toggleComponents = useSettings((state) => state.toggleComponents);
 
@@ -613,6 +614,40 @@ function SettingsModal({ closeModal }) {
                   </div>
                   <div className="settings-screen__input">
                     <WeatherSearch />
+                  </div>
+                </div>
+
+                <div className="settings-screen__group">
+                  <div className="settings-screen__label">
+                    <h3 className="settings-screen__title">Temperature Unit</h3>
+                  </div>
+                  <div className="settings-screen__input">
+                    <div className="switch-field switch-field--light">
+                      <input
+                        type="radio"
+                        id="temp-celcius"
+                        name="temperature-unit"
+                        value="yes"
+                        onChange={() => {
+                          setTemperatureUnit("celcius");
+                        }}
+                        defaultChecked={settings.temperatureUnit === "celcius"}
+                      />
+                      <label htmlFor="temp-celcius">Celcius</label>
+                      <input
+                        type="radio"
+                        id="temp-fahrenheit"
+                        name="temperature-unit"
+                        value="no"
+                        onChange={() => {
+                          setTemperatureUnit("fahrenheit");
+                        }}
+                        defaultChecked={
+                          settings.temperatureUnit === "fahrenheit"
+                        }
+                      />
+                      <label htmlFor="temp-fahrenheit">Fahrenheit</label>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -31,7 +31,11 @@ export async function getPlaceNamefromCoordinates(args) {
 
 export async function getWeatherData(args) {
   var { lat, long } = args;
-  const res = await fetch(`${api.WEATHER_API}?lat=${lat}&long=${long}`);
+  const res = await fetch(
+    `${api.WEATHER_API}?lat=${lat}&long=${long}&timezone=${
+      Intl.DateTimeFormat().resolvedOptions().timeZone
+    }`
+  );
 
   if (!res.ok) {
     const error = new Error("An error occurred while fetching the data.");

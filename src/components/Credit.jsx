@@ -19,8 +19,9 @@ function Credit() {
             href={backgroundImage.image.user.links.html}
             target="_blank"
             rel="noopener noreferrer"
+            className="footer__author"
           >
-            {backgroundImage.image.user.name}
+            {backgroundImage.image.user.name.toLowerCase()}
           </a>
         </div>
       )}

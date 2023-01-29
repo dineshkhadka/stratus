@@ -78,7 +78,7 @@ function Spotlight(props) {
                     })}
                   </div>
                   <div className="current-date__full">
-                    {getFullDate().day}{" "}
+                    {getFullDate().day}
                     {settings.dateType === "nepali" && (
                       <>
                         , {getFullDate().date}

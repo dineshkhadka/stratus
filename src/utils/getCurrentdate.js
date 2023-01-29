@@ -31,3 +31,8 @@ export const getCurrentYear = () => {
   const date = today.getFullYear();
   return date;
 };
+
+export const getCurrentHour = () => {
+  const date = today.getHours();
+  return date;
+};
