@@ -106,7 +106,7 @@ function Weather() {
           </div>
           <div className="weather__forcast">
             <div className="weather__forcast-item">
-              <span className="weather__forcast-day">Tommorrow</span>
+              <span className="weather__forcast-day">Tomorrow</span>
               <h4 className="weather__forcast-title">
                 {Math.round(allWeatherData()[1])}
                 <sup>
