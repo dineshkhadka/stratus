@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Stratus - New Tab page",
   "description": "A clean and fast new tab page",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "homepage_url": "https://github.com/dineshkhadka/stratus",
   "chrome_url_overrides": {
     "newtab": "index.html"
