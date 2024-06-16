@@ -50,3 +50,7 @@ yarn dev
 - Website: https://lakai.dev
 - Twitter: [@dineshlakai](https://twitter.com/dineshlakai)
 - Github: [@dineshkhadka](https://github.com/dineshkhadka)
+
+## Acknowledgements
+
+- Nepali Date function adapted from [leapfrogtechnology/nepali-date-picker](https://github.com/leapfrogtechnology/nepali-date-picker)
