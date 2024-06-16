@@ -3,7 +3,7 @@
   "offline_enabled": true,
   "name": "Stratus - New Tab page",
   "description": "A clean and fast new tab page",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "homepage_url": "https://github.com/dineshkhadka/stratus",
   "chrome_url_overrides": {
     "newtab": "index.html"
