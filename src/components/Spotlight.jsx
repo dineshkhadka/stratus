@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import NepaliDate from "../libs/NepaliDate";
+import calendarFunctions from "../libs/NepaliDate";
 import {
   getFullDate,
   getCurrentMonth,
@@ -19,7 +19,7 @@ const getTZTime = (tz) => {
 };
 function Spotlight(props) {
   const [time, setTime] = useState(new Date());
-  const [nepaliDate] = useState(NepaliDate.today());
+  const [nepaliDate] = useState(calendarFunctions.today());
   const worldClock = useWorldClock((state) => state.worldClock);
 
   const settings = useSettings((state) => state.config);
@@ -59,12 +59,12 @@ function Spotlight(props) {
                 {settings.dateType === "nepali" && (
                   <>
                     <h1 className="current-date__day">
-                      {nepaliDate.nepaliDay}
-                      <sup>{suffix(nepaliDate.nepaliDay)}</sup>
+                      {nepaliDate.bsDate}
+                      <sup>{suffix(nepaliDate.bsDate)}</sup>
                     </h1>
 
                     <h2 className="current-date__month">
-                      {calendar.month.en.long[nepaliDate.nepaliMonth - 1]}
+                      {calendar.month.en.long[nepaliDate.bsMonth - 1]}
                     </h2>
                   </>
                 )}

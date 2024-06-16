@@ -1,256 +1,661 @@
-/* eslint-disable */
-// Code from https://github.com/lohanidamodar/react-nepali-date-picker
-/* Length of Gregroian months in a non-leap year */
-const GregorianMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+/*
+ * @fileOverview NepaliDatePicker - jQuery Plugin
+ * @version 2.0.1
+ *
+ * @author Sanish Maharjan https://github.com/sanishmaharjan
+ * @see https://github.com/sanishmaharjan/
+ */
 
-const NepaliMonthData = {
-  /*
-	 In the following table we map the dates:
-	 The year is the nepali year
-	 The entries in the array are the nepali Day for the Gregorian 1st of the month
-	 So first entry is 1st May  i.e. the day in baisakh which is the first of May.
-	 second entry is 1st June
-	 third entry is 1st July
-	 fourth entry is 1st August
-	 fifth entry is 1st September
-	 sixth entry is 1st October
-	 seventh entry is 1st November
-	 eighth entry is 1st December
-	 ninth entry is 1st January
-	 tenth entry is 1st February
-	 eleventh entry is 1st March
-	 twelfth entry is 1st April
-	 */
-
-  // this data are based on http://www.ashesh.com.np
-  1970: [19, 19, 18, 17, 17, 16, 16, 16, 18, 19, 18, 19],
-  1971: [19, 19, 18, 17, 17, 15, 16, 16, 18, 19, 18, 19],
-  1972: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 19, 19],
-  1973: [19, 20, 18, 18, 17, 16, 17, 17, 18, 20, 18, 20],
-  1974: [19, 19, 18, 17, 17, 16, 16, 16, 18, 19, 18, 19],
-  1975: [19, 19, 18, 17, 16, 16, 16, 16, 18, 19, 18, 19],
-  1976: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 19, 20],
-  1977: [19, 20, 18, 18, 17, 16, 16, 17, 18, 20, 18, 20],
-  1978: [19, 19, 18, 17, 17, 16, 16, 16, 18, 19, 18, 19],
-  1979: [19, 19, 18, 17, 16, 15, 16, 16, 18, 19, 18, 19],
-  1980: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 19, 20],
-  1981: [19, 19, 18, 18, 17, 16, 16, 17, 18, 19, 18, 19],
-  1982: [19, 19, 18, 17, 17, 16, 16, 16, 18, 19, 18, 19],
-  1983: [19, 19, 18, 17, 16, 15, 16, 16, 18, 19, 18, 19],
-  1984: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 19, 20],
-  1985: [19, 19, 18, 18, 17, 16, 16, 17, 18, 19, 18, 19],
-  1986: [19, 19, 18, 17, 17, 16, 16, 16, 18, 19, 18, 19],
-  1987: [19, 19, 17, 17, 16, 15, 16, 16, 18, 19, 18, 19],
-  1988: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 19, 20],
-  1989: [19, 19, 18, 18, 17, 16, 16, 16, 18, 19, 18, 19],
-  1990: [19, 19, 18, 17, 17, 16, 16, 16, 18, 19, 18, 19],
-  1991: [19, 19, 17, 17, 16, 15, 16, 16, 18, 19, 18, 19],
-
-  // this data based on http://nepalicalendar.rat32.com/index.php
-  1992: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 18, 20],
-  1993: [19, 19, 18, 18, 17, 16, 16, 16, 18, 19, 18, 19],
-  1994: [19, 19, 18, 17, 17, 16, 16, 16, 18, 19, 18, 19],
-  1995: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 18, 19],
-  1996: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 18, 20],
-  1997: [19, 19, 18, 17, 17, 16, 16, 16, 18, 19, 18, 19],
-  1998: [19, 19, 18, 17, 17, 16, 16, 16, 18, 19, 18, 19],
-  1999: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 18, 19],
-  2000: [18, 19, 17, 17, 16, 15, 16, 16, 17, 19, 18, 20],
-  2001: [19, 19, 18, 17, 17, 16, 16, 16, 18, 19, 18, 19],
-  2002: [19, 19, 18, 17, 16, 15, 16, 16, 18, 19, 18, 19],
-  2003: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 18, 19],
-  2004: [18, 19, 17, 17, 16, 15, 16, 16, 17, 19, 18, 20],
-  2005: [19, 19, 18, 17, 17, 16, 16, 16, 18, 19, 18, 19],
-  2006: [19, 19, 18, 17, 16, 15, 16, 16, 18, 19, 18, 19],
-  2007: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 18, 19],
-  2008: [18, 18, 17, 17, 16, 15, 15, 16, 17, 18, 18, 20],
-  2009: [19, 19, 18, 17, 17, 16, 16, 16, 18, 19, 18, 19],
-  2010: [19, 19, 18, 17, 16, 15, 16, 16, 18, 19, 18, 19],
-  2011: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 18, 19],
-  2012: [18, 18, 17, 17, 16, 15, 15, 16, 17, 18, 18, 19],
-  2013: [19, 19, 18, 17, 17, 16, 16, 16, 18, 19, 18, 19],
-  2014: [19, 19, 18, 17, 16, 15, 16, 16, 18, 19, 18, 19],
-  2015: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 18, 19],
-  2016: [18, 18, 17, 17, 16, 15, 15, 16, 17, 18, 18, 19],
-  2017: [19, 19, 18, 17, 17, 16, 16, 16, 18, 19, 18, 19],
-  2018: [19, 19, 17, 17, 16, 15, 16, 16, 18, 19, 18, 19],
-  2019: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 17, 19],
-  2020: [18, 18, 17, 17, 16, 15, 15, 15, 17, 18, 18, 19],
-  2021: [19, 19, 18, 17, 17, 16, 16, 16, 18, 19, 18, 19],
-  2022: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 18, 19],
-  2023: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 17, 19],
-  2024: [18, 18, 17, 17, 16, 15, 15, 15, 17, 18, 18, 19],
-  2025: [19, 19, 18, 17, 17, 16, 16, 16, 18, 19, 18, 19],
-  2026: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 18, 19],
-  2027: [18, 19, 17, 17, 16, 15, 16, 16, 17, 19, 17, 19],
-  2028: [18, 18, 17, 16, 16, 15, 15, 15, 17, 18, 18, 19],
-  2029: [19, 19, 18, 17, 17, 15, 16, 16, 18, 19, 18, 19],
-  2030: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 18, 19],
-  2031: [18, 19, 17, 17, 16, 15, 16, 16, 17, 19, 17, 19],
-  2032: [18, 18, 17, 16, 16, 15, 15, 15, 17, 18, 18, 19],
-  2033: [19, 19, 18, 17, 16, 15, 16, 16, 18, 19, 18, 19],
-  2034: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 18, 19],
-  2035: [18, 19, 17, 17, 16, 15, 15, 16, 17, 18, 17, 19],
-  2036: [18, 18, 17, 16, 16, 15, 15, 15, 17, 18, 18, 19],
-  2037: [19, 19, 18, 17, 16, 15, 16, 16, 18, 19, 18, 19],
-  2038: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 18, 19],
-  2039: [18, 18, 17, 17, 16, 15, 15, 16, 17, 18, 17, 18],
-  2040: [18, 18, 17, 16, 16, 15, 15, 15, 17, 18, 18, 19],
-  2041: [19, 19, 18, 17, 16, 15, 16, 16, 18, 19, 18, 19],
-  2042: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 18, 19],
-  2043: [18, 18, 17, 17, 16, 15, 15, 16, 17, 18, 17, 18],
-  2044: [18, 18, 17, 16, 16, 15, 15, 15, 17, 18, 18, 19],
-  2045: [19, 19, 17, 17, 16, 15, 16, 16, 18, 19, 18, 19],
-  2046: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 18, 19],
-  2047: [18, 18, 17, 17, 16, 15, 15, 15, 17, 18, 17, 18],
-  2048: [18, 18, 17, 16, 16, 15, 15, 15, 17, 18, 18, 19],
-  2049: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 18, 19],
-  2050: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 17, 19],
-  2051: [18, 18, 17, 17, 16, 15, 15, 15, 17, 18, 17, 18],
-  2052: [18, 18, 17, 16, 16, 15, 15, 15, 17, 18, 18, 19],
-  2053: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 18, 19],
-  2054: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 17, 19],
-  2055: [18, 18, 17, 16, 16, 15, 15, 15, 17, 18, 17, 18],
-  2056: [18, 18, 17, 16, 16, 14, 15, 15, 17, 18, 18, 19],
-  2057: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 18, 19],
-  2058: [18, 19, 17, 17, 16, 15, 16, 16, 17, 19, 17, 19],
-  2059: [18, 18, 17, 16, 16, 15, 15, 15, 17, 18, 17, 18],
-  2060: [18, 18, 17, 16, 15, 14, 15, 15, 17, 18, 18, 19],
-  2061: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 18, 19],
-  2062: [18, 18, 17, 17, 16, 15, 15, 16, 17, 19, 17, 19],
-  2063: [18, 18, 17, 16, 16, 15, 15, 15, 17, 18, 17, 18],
-  2064: [18, 18, 17, 16, 15, 14, 15, 15, 17, 18, 18, 19],
-  2065: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 18, 19],
-  2066: [18, 18, 17, 17, 16, 15, 15, 16, 17, 18, 17, 19],
-  2067: [18, 18, 17, 16, 16, 15, 15, 15, 17, 18, 17, 18],
-  2068: [18, 18, 17, 16, 15, 14, 15, 15, 17, 18, 18, 19],
-  2069: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 18, 19],
-  2070: [18, 18, 17, 17, 16, 15, 15, 16, 17, 18, 17, 18],
-  2071: [18, 18, 17, 16, 16, 15, 15, 15, 17, 18, 17, 18],
-  2072: [18, 18, 16, 16, 15, 14, 15, 15, 17, 18, 18, 19],
-  2073: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 18, 19],
-  2074: [18, 18, 17, 17, 16, 15, 15, 15, 17, 18, 17, 18],
-  2075: [18, 18, 17, 16, 16, 15, 15, 15, 17, 18, 17, 18],
-  2076: [18, 18, 16, 16, 15, 14, 15, 15, 16, 18, 18, 19],
-  2077: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 17, 19],
-  2078: [18, 18, 17, 17, 16, 15, 15, 15, 17, 18, 17, 18],
-  2079: [18, 18, 17, 16, 16, 15, 15, 15, 17, 18, 17, 18],
-  2080: [18, 18, 16, 16, 15, 14, 15, 15, 16, 18, 18, 19],
-
-  // this data based on http://www.ashesh.com.np/nepali-calendar/
-  2081: [19, 19, 18, 17, 16, 15, 16, 16, 17, 19, 17, 18],
-  2082: [18, 19, 17, 17, 16, 15, 16, 16, 17, 19, 17, 18],
-  2083: [18, 18, 17, 16, 16, 15, 16, 16, 17, 19, 17, 18],
-  2084: [18, 18, 17, 16, 16, 15, 16, 16, 17, 19, 18, 19],
-  2085: [19, 19, 17, 17, 16, 16, 16, 16, 17, 19, 17, 18],
-  2086: [18, 19, 17, 17, 16, 15, 16, 16, 17, 19, 17, 18],
-  2087: [18, 18, 17, 16, 16, 15, 15, 15, 17, 18, 16, 17],
-  2088: [17, 18, 17, 16, 15, 15, 15, 15, 16, 18, 17, 18],
-  2089: [18, 19, 17, 17, 16, 15, 16, 16, 17, 19, 17, 18],
-  2090: [18, 19, 17, 17, 16, 15, 16, 16, 17, 19, 17, 18],
-  2091: [18, 18, 17, 16, 16, 15, 15, 15, 16, 18, 16, 17],
-  2092: [17, 18, 17, 16, 15, 14, 15, 15, 16, 18, 17, 18],
-  2093: [18, 19, 17, 17, 16, 15, 16, 16, 17, 19, 17, 18],
-  2094: [18, 18, 17, 16, 16, 15, 16, 16, 17, 19, 17, 18],
-  2095: [18, 18, 17, 16, 16, 15, 15, 15, 17, 18, 16, 17],
-  2096: [17, 18, 17, 16, 15, 14, 15, 15, 17, 18, 18, 19],
-  2097: [19, 19, 17, 17, 16, 15, 16, 16, 17, 19, 17, 18],
-  2098: [18, 18, 17, 16, 16, 15, 15, 16, 17, 19, 17, 19],
-  2099: [18, 18, 17, 16, 16, 15, 15, 15, 17, 19, 17, 18],
-  2100: [18, 18, 16, 16, 15, 15, 15, 15, 17, 18, 18, 19],
+const calendarData = {
+  bsMonths: [
+    "बैशाख",
+    "जेठ",
+    "असार",
+    "साउन",
+    "भदौ",
+    "असोज",
+    "कार्तिक",
+    "मंसिर",
+    "पौष",
+    "माघ",
+    "फागुन",
+    "चैत",
+  ],
+  bsDays: ["आइत", "सोम", "मंगल", "बुध", "बिही", "शुक्र", "शनि"],
+  nepaliNumbers: ["०", "१", "२", "३", "४", "५", "६", "७", "८", "९"],
+  bsMonthUpperDays: [
+    [30, 31],
+    [31, 32],
+    [31, 32],
+    [31, 32],
+    [31, 32],
+    [30, 31],
+    [29, 30],
+    [29, 30],
+    [29, 30],
+    [29, 30],
+    [29, 30],
+    [30, 31],
+  ],
+  extractedBsMonthData: [
+    [
+      0, 1, 1, 22, 1, 3, 1, 1, 1, 3, 1, 22, 1, 3, 1, 3, 1, 22, 1, 3, 1, 19, 1,
+      3, 1, 1, 3, 1, 2, 2, 1, 3, 1,
+    ],
+    [
+      1, 2, 2, 2, 2, 2, 2, 1, 3, 1, 3, 1, 2, 2, 2, 3, 2, 2, 2, 1, 3, 1, 3, 1, 2,
+      2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 3, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1,
+      3, 1, 2, 2, 2, 2, 2, 1, 1, 1, 2, 2, 2, 2, 2, 1, 3, 1, 1, 2,
+    ],
+    [
+      0, 1, 2, 1, 3, 1, 3, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2,
+      1, 3, 1, 3, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 3, 1, 3, 1, 2, 2, 2, 2, 2, 2,
+      2, 2, 2, 1, 3, 1, 3, 1, 1, 1, 1, 2, 2, 2, 2, 2, 1, 3, 1, 1, 2,
+    ],
+    [
+      1, 2, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1,
+      3, 1, 3, 1, 2, 2, 2, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 2, 2, 2, 1, 3, 1, 3,
+      1, 3, 1, 3, 1, 3, 1, 3, 2, 2, 1, 3, 1, 2, 2, 2, 1, 2,
+    ],
+    [59, 1, 26, 1, 28, 1, 2, 1, 12],
+    [
+      0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 3, 1, 3, 1, 3, 1, 2, 2, 2, 2, 2,
+      2, 2, 2, 2, 2, 2, 1, 3, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 3, 1, 2, 2,
+      2, 2, 2, 2, 2, 2, 2, 2, 5, 1, 1, 2, 2, 1, 3, 1, 2, 1, 2,
+    ],
+    [
+      0, 12, 1, 3, 1, 3, 1, 5, 1, 11, 1, 3, 1, 3, 1, 18, 1, 3, 1, 3, 1, 18, 1,
+      3, 1, 3, 1, 27, 1, 2,
+    ],
+    [
+      1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 3, 1, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+      1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+      2, 2, 2, 1, 2, 2, 2, 15, 2, 4,
+    ],
+    [
+      0, 1, 2, 2, 2, 2, 1, 3, 1, 3, 1, 3, 1, 2, 2, 2, 3, 2, 2, 2, 1, 3, 1, 3, 1,
+      3, 1, 2, 2, 2, 2, 2, 2, 2, 1, 3, 1, 3, 1, 3, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+      1, 3, 1, 3, 1, 2, 2, 2, 15, 2, 4,
+    ],
+    [
+      1, 1, 3, 1, 3, 1, 14, 1, 3, 1, 1, 1, 3, 1, 14, 1, 3, 1, 3, 1, 3, 1, 18, 1,
+      3, 1, 3, 1, 3, 1, 14, 1, 3, 15, 1, 2, 1, 1,
+    ],
+    [
+      0, 1, 1, 3, 1, 3, 1, 10, 1, 3, 1, 3, 1, 1, 1, 3, 1, 3, 1, 10, 1, 3, 1, 3,
+      1, 3, 1, 3, 1, 14, 1, 3, 1, 3, 1, 3, 1, 3, 1, 10, 1, 20, 1, 1, 1,
+    ],
+    [
+      1, 2, 2, 1, 3, 1, 3, 1, 3, 1, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2, 2, 1, 3, 1, 3,
+      1, 3, 1, 2, 2, 2, 2, 2, 2, 2, 1, 3, 1, 3, 1, 3, 1, 3, 1, 2, 2, 2, 2, 2, 2,
+      2, 1, 3, 1, 3, 1, 20, 3,
+    ],
+  ],
+  minBsYear: 1970,
+  maxBsYear: 2100,
+  minAdDateEqBsDate: {
+    ad: {
+      year: 1913,
+      month: 3,
+      date: 13,
+    },
+    bs: {
+      year: 1970,
+      month: 1,
+      date: 1,
+    },
+  },
 };
 
-class NepaliDate {
-  constructor(year, month, day) {
-    this.nepaliYear = year;
-    this.nepaliMonth = month;
-    this.nepaliDay = day;
-  }
-
-  /* Create a NepaliDate object from a JS Date object. */
-  static fromgregorian(date) {
-    if (!date) {
-      return undefined;
-    }
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const day = date.getDate();
-
-    let nepaliYear = year + 56;
-    let nepaliMonth = month + 8;
-    if (nepaliMonth >= 12) {
-      nepaliMonth -= 12;
-      nepaliYear += 1;
-    }
-    let nepaliDay = day + NepaliMonthData[nepaliYear][nepaliMonth] - 1;
-    let otherDay = day - GregorianMonths[month];
-    let otherMonth = nepaliMonth + 1;
-    let otherYear = nepaliYear;
-    if (otherMonth >= 12) {
-      otherMonth -= 12;
-      otherYear += 1;
-    }
-    if (
-      month === 2 &&
-      year % 4 === 0 &&
-      (year % 100 !== 0 || year % 400 === 0)
-    ) {
-      otherDay += 1;
-    }
-    otherDay = otherDay + NepaliMonthData[otherYear][otherMonth] - 1;
-    if (otherDay > 0) {
-      nepaliYear = otherYear;
-      nepaliMonth = otherMonth;
-      nepaliDay = otherDay;
-    }
-    return new NepaliDate(nepaliYear, nepaliMonth + 1, nepaliDay);
-  }
-
-  /* Create a NepaliDate object for the current date */
-  static today() {
-    return NepaliDate.fromgregorian(new Date());
-  }
-
-  /* Return a String representing the nepali date */
-  toDateString() {
-    return `${this.nepaliYear.toString()}/${this.nepaliMonth}/${
-      this.nepaliDay
-    }`;
-  }
-
-  /* Return a JS Date object for the NepaliDate date. */
-  gregorian() {
-    let y = this.nepaliYear;
-    let m = this.nepaliMonth - 1;
-    let d = this.nepaliDay;
-    d -= NepaliMonthData[y][m] - 1;
-    m -= 8;
-    y -= 56;
-    return new Date(y, m, d);
-  }
-
-  /* Create a NepaliDate object from a string in the form YYYY/MM/DD
-	 Also accepted YYYY/M/DD, YYYY/M/D, YYYY/MM/D
-	 and forms with out a year.
-	 The forms without a year are treated as being in the past year.
-	 */
-  static fromPartialString(v) {
-    let match = /^(\d{4})\/(\d{1,2})\/(\d{1,2})$/.exec(v);
-    if (match) {
-      return new NepaliDate(match[1], match[2], match[3]);
-    }
-    match = /^(\d{1,2})\/(\d{1,2})$/.exec(v);
-    if (match) {
-      const nd = NepaliDate.today();
-      let y = nd.nepaliYear;
-      const m = match[1];
-      const d = match[2];
-      if (m > nd.nepaliMonth || (m === nd.nepaliMonth && d > nd.nepaliDay)) {
-        y -= 1;
+const validationFunctions = {
+  validateRequiredParameters: function (requiredParameters) {
+    for (const [key, value] of Object.entries(requiredParameters)) {
+      if (typeof value === "undefined" || value === null) {
+        throw new ReferenceError(
+          "Missing required parameters: " +
+            Object.keys(requiredParameters).join(", ")
+        );
       }
-      return new NepaliDate(y, m, d);
     }
-  }
-}
+  },
+  validateBsYear: function (bsYear) {
+    if (typeof bsYear !== "number" || bsYear === null) {
+      throw new TypeError("Invalid parameter bsYear value");
+    } else if (
+      bsYear < calendarData.minBsYear ||
+      bsYear > calendarData.maxBsYear
+    ) {
+      throw new RangeError(
+        "Parameter bsYear value should be in range of " +
+          calendarData.minBsYear +
+          " to " +
+          calendarData.maxBsYear
+      );
+    }
+  },
+  validateAdYear: function (adYear) {
+    if (typeof adYear !== "number" || adYear === null) {
+      throw new TypeError("Invalid parameter adYear value");
+    } else if (
+      adYear < calendarData.minBsYear - 57 ||
+      adYear > calendarData.maxBsYear - 57
+    ) {
+      throw new RangeError(
+        "Parameter adYear value should be in range of " +
+          (calendarData.minBsYear - 57) +
+          " to " +
+          (calendarData.maxBsYear - 57)
+      );
+    }
+  },
+  validateBsMonth: function (bsMonth) {
+    if (typeof bsMonth !== "number" || bsMonth === null) {
+      throw new TypeError("Invalid parameter bsMonth value");
+    } else if (bsMonth < 1 || bsMonth > 12) {
+      throw new RangeError(
+        "Parameter bsMonth value should be in range of 1 to 12"
+      );
+    }
+  },
+  validateAdMonth: function (adMonth) {
+    if (typeof adMonth !== "number" || adMonth === null) {
+      throw new TypeError("Invalid parameter adMonth value");
+    } else if (adMonth < 1 || adMonth > 12) {
+      throw new RangeError(
+        "Parameter adMonth value should be in range of 1 to 12"
+      );
+    }
+  },
+  validateBsDate: function (bsDate) {
+    if (typeof bsDate !== "number" || bsDate === null) {
+      throw new TypeError("Invalid parameter bsDate value");
+    } else if (bsDate < 1 || bsDate > 32) {
+      throw new RangeError(
+        "Parameter bsDate value should be in range of 1 to 32"
+      );
+    }
+  },
+  validateAdDate: function (adDate) {
+    if (typeof adDate !== "number" || adDate === null) {
+      throw new TypeError("Invalid parameter adDate value");
+    } else if (adDate < 1 || adDate > 31) {
+      throw new RangeError(
+        "Parameter adDate value should be in range of 1 to 31"
+      );
+    }
+  },
+  validatePositiveNumber: function (numberParameters) {
+    for (const [key, value] of Object.entries(numberParameters)) {
+      if (typeof value !== "number" || value === null || value < 0) {
+        throw new ReferenceError(
+          "Invalid parameters: " + Object.keys(numberParameters).join(", ")
+        );
+      } else if (
+        key === "yearDiff" &&
+        value > calendarData.maxBsYear - calendarData.minBsYear + 1
+      ) {
+        throw new RangeError(
+          "Parameter yearDiff value should be in range of 0 to " +
+            (calendarData.maxBsYear - calendarData.minBsYear + 1)
+        );
+      }
+    }
+  },
+};
+const calendarFunctions = {
+  today: function () {
+    // Get the current date
+    const currentDate = new Date();
+    const adYear = currentDate.getFullYear();
+    const adMonth = currentDate.getMonth() + 1; // getMonth() returns 0-11
+    const adDay = currentDate.getDate();
 
-export default NepaliDate;
+    // Assume calendarFunctions.getBsDateByAdDate is available
+    const bsDate = calendarFunctions.getBsDateByAdDate(adYear, adMonth, adDay);
+
+    return bsDate;
+  },
+  /**
+   * Return equivalent number in nepaliNumber
+   * @param {Number} number
+   * @returns {String} nepaliNumber
+   */
+  getNepaliNumber: function (number) {
+    if (typeof number === "undefined") {
+      throw new Error("Parameter number is required");
+    } else if (typeof number != "number" || number < 0) {
+      throw new Error("Number should be positive integer");
+    }
+
+    var prefixNum = Math.floor(number / 10);
+    var suffixNum = number % 10;
+    if (prefixNum !== 0) {
+      return (
+        calendarFunctions.getNepaliNumber(prefixNum) +
+        calendarData.nepaliNumbers[suffixNum]
+      );
+    } else {
+      return calendarData.nepaliNumbers[suffixNum];
+    }
+  },
+  /**
+   * Return equivalent number from nepaliNumber
+   * @param {String} nepaliNumber
+   * @returns {Number} number
+   */
+  getNumberByNepaliNumber: function (nepaliNumber) {
+    if (typeof nepaliNumber === "undefined") {
+      throw new Error("Parameter nepaliNumber is required");
+    } else if (typeof nepaliNumber !== "string") {
+      throw new Error("Parameter nepaliNumber should be in string");
+    }
+
+    var number = 0;
+    for (var i = 0; i < nepaliNumber.length; i++) {
+      var numIndex = calendarData.nepaliNumbers.indexOf(nepaliNumber.charAt(i));
+      if (numIndex === -1) {
+        throw new Error("Invalid nepali number");
+      }
+      number = number * 10 + numIndex;
+    }
+
+    return number;
+  },
+  getBsMonthInfoByBsDate: function (
+    bsYear,
+    bsMonth,
+    bsDate,
+    dateFormatPattern
+  ) {
+    validationFunctions.validateRequiredParameters({
+      bsYear: bsYear,
+      bsMonth: bsMonth,
+      bsDate: bsDate,
+    });
+    validationFunctions.validateBsYear(bsYear);
+    validationFunctions.validateBsMonth(bsMonth);
+    validationFunctions.validateBsDate(bsDate);
+    if (dateFormatPattern === null) {
+      dateFormatPattern = "%D, %M %d, %y";
+    } else if (typeof dateFormatPattern != "string") {
+      throw new TypeError("Invalid parameter dateFormatPattern value");
+    }
+
+    var daysNumFromMinBsYear = calendarFunctions.getTotalDaysNumFromMinBsYear(
+      bsYear,
+      bsMonth,
+      bsDate
+    );
+    var adDate = new Date(
+      calendarData.minAdDateEqBsDate.ad.year,
+      calendarData.minAdDateEqBsDate.ad.month,
+      calendarData.minAdDateEqBsDate.ad.date - 1
+    );
+    adDate.setDate(adDate.getDate() + daysNumFromMinBsYear);
+
+    var bsMonthFirstAdDate = calendarFunctions.getAdDateByBsDate(
+      bsYear,
+      bsMonth,
+      1
+    );
+    var bsMonthDays = calendarFunctions.getBsMonthDays(bsYear, bsMonth);
+    bsDate = bsDate > bsMonthDays ? bsMonthDays : bsDate;
+    var eqAdDate = calendarFunctions.getAdDateByBsDate(bsYear, bsMonth, bsDate);
+    var weekDay = eqAdDate.getDay() + 1;
+    var formattedDate = calendarFunctions.bsDateFormat(
+      dateFormatPattern,
+      bsYear,
+      bsMonth,
+      bsDate
+    );
+    return {
+      bsYear: bsYear,
+      bsMonth: bsMonth,
+      bsDate: bsDate,
+      weekDay: weekDay,
+      formattedDate: formattedDate,
+      adDate: eqAdDate,
+      bsMonthFirstAdDate: bsMonthFirstAdDate,
+      bsMonthDays: bsMonthDays,
+    };
+  },
+  getAdDateByBsDate: function (bsYear, bsMonth, bsDate) {
+    validationFunctions.validateRequiredParameters({
+      bsYear: bsYear,
+      bsMonth: bsMonth,
+      bsDate: bsDate,
+    });
+    validationFunctions.validateBsYear(bsYear);
+    validationFunctions.validateBsMonth(bsMonth);
+    validationFunctions.validateBsDate(bsDate);
+    var daysNumFromMinBsYear = calendarFunctions.getTotalDaysNumFromMinBsYear(
+      bsYear,
+      bsMonth,
+      bsDate
+    );
+    var adDate = new Date(
+      calendarData.minAdDateEqBsDate.ad.year,
+      calendarData.minAdDateEqBsDate.ad.month,
+      calendarData.minAdDateEqBsDate.ad.date - 1
+    );
+    adDate.setDate(adDate.getDate() + daysNumFromMinBsYear);
+    return adDate;
+  },
+  getTotalDaysNumFromMinBsYear: function (bsYear, bsMonth, bsDate) {
+    validationFunctions.validateRequiredParameters({
+      bsYear: bsYear,
+      bsMonth: bsMonth,
+      bsDate: bsDate,
+    });
+    validationFunctions.validateBsYear(bsYear);
+    validationFunctions.validateBsMonth(bsMonth);
+    validationFunctions.validateBsDate(bsDate);
+
+    if (bsYear < calendarData.minBsYear || bsYear > calendarData.maxBsYear) {
+      return null;
+    }
+
+    var daysNumFromMinBsYear = 0;
+    var diffYears = bsYear - calendarData.minBsYear;
+    for (var month = 1; month <= 12; month++) {
+      if (month < bsMonth) {
+        daysNumFromMinBsYear += calendarFunctions.getMonthDaysNumFormMinBsYear(
+          month,
+          diffYears + 1
+        );
+      } else {
+        daysNumFromMinBsYear += calendarFunctions.getMonthDaysNumFormMinBsYear(
+          month,
+          diffYears
+        );
+      }
+    }
+
+    if (bsYear > 2085 && bsYear < 2088) {
+      daysNumFromMinBsYear += bsDate - 2;
+    } else if (bsYear === 2085 && bsMonth > 5) {
+      daysNumFromMinBsYear += bsDate - 2;
+    } else if (bsYear === 2081 && bsMonth === 3) {
+      daysNumFromMinBsYear += bsDate + 1;
+    } else if (bsYear === 2081 && bsMonth === 12) {
+      daysNumFromMinBsYear += bsDate - 1;
+    } else if (bsYear > 2088) {
+      daysNumFromMinBsYear += bsDate - 4;
+    } else if (bsYear === 2088 && bsMonth > 5) {
+      daysNumFromMinBsYear += bsDate - 4;
+    } else {
+      daysNumFromMinBsYear += bsDate;
+    }
+
+    return daysNumFromMinBsYear;
+  },
+  /**
+   * Return total number of bsMonth days from minYear
+   * @param {int} bsMonth
+   * @param {int} yearDiff
+   * @returns {int}
+   */
+  getMonthDaysNumFormMinBsYear: function (bsMonth, yearDiff) {
+    validationFunctions.validateRequiredParameters({
+      bsMonth: bsMonth,
+      yearDiff: yearDiff,
+    });
+    validationFunctions.validateBsMonth(bsMonth);
+    validationFunctions.validatePositiveNumber({ yearDiff: yearDiff });
+
+    var yearCount = 0;
+    var monthDaysFromMinBsYear = 0;
+    if (yearDiff === 0) {
+      return 0;
+    }
+
+    var bsMonthData = calendarData.extractedBsMonthData[bsMonth - 1];
+    for (var i = 0; i < bsMonthData.length; i++) {
+      if (bsMonthData[i] === 0) {
+        continue;
+      }
+
+      var bsMonthUpperDaysIndex = i % 2;
+      if (yearDiff > yearCount + bsMonthData[i]) {
+        yearCount += bsMonthData[i];
+        monthDaysFromMinBsYear +=
+          calendarData.bsMonthUpperDays[bsMonth - 1][bsMonthUpperDaysIndex] *
+          bsMonthData[i];
+      } else {
+        monthDaysFromMinBsYear +=
+          calendarData.bsMonthUpperDays[bsMonth - 1][bsMonthUpperDaysIndex] *
+          (yearDiff - yearCount);
+        yearCount = yearDiff - yearCount;
+        break;
+      }
+    }
+
+    return monthDaysFromMinBsYear;
+  },
+  /**
+   * Return number of bsMonth days
+   * @param {int} bsYear
+   * @param {int} bsMonth
+   * @returns {int} days
+   */
+  getBsMonthDays: function (bsYear, bsMonth) {
+    validationFunctions.validateRequiredParameters({
+      bsYear: bsYear,
+      bsMonth: bsMonth,
+    });
+    validationFunctions.validateBsYear(bsYear);
+    validationFunctions.validateBsMonth(bsMonth);
+
+    var yearCount = 0;
+    var totalYears = bsYear + 1 - calendarData.minBsYear;
+    var bsMonthData = calendarData.extractedBsMonthData[bsMonth - 1];
+    for (var i = 0; i < bsMonthData.length; i++) {
+      if (bsMonthData[i] === 0) {
+        continue;
+      }
+
+      var bsMonthUpperDaysIndex = i % 2;
+      yearCount += bsMonthData[i];
+      if (totalYears <= yearCount) {
+        if (
+          (bsYear === 2085 && bsMonth === 5) ||
+          (bsYear === 2088 && bsMonth === 5)
+        ) {
+          return (
+            calendarData.bsMonthUpperDays[bsMonth - 1][bsMonthUpperDaysIndex] -
+            2
+          );
+        } else if (bsYear === 2081 && bsMonth === 2) {
+          return calendarData.bsMonthUpperDays[bsMonth - 1][
+            bsMonthUpperDaysIndex + 1
+          ];
+        } else if (bsYear === 2081 && bsMonth === 3) {
+          return calendarData.bsMonthUpperDays[bsMonth - 1][
+            bsMonthUpperDaysIndex - 1
+          ];
+        } else if (bsYear === 2081 && bsMonth === 11) {
+          return (
+            calendarData.bsMonthUpperDays[bsMonth - 1][bsMonthUpperDaysIndex] -
+            1
+          );
+        } else if (bsYear === 2081 && bsMonth === 12) {
+          return (
+            calendarData.bsMonthUpperDays[bsMonth - 1][bsMonthUpperDaysIndex] +
+            1
+          );
+        } else {
+          return calendarData.bsMonthUpperDays[bsMonth - 1][
+            bsMonthUpperDaysIndex
+          ];
+        }
+      }
+    }
+
+    return null;
+  },
+  getBsDateByAdDate: function (adYear, adMonth, adDate) {
+    validationFunctions.validateRequiredParameters({
+      adYear: adYear,
+      adMonth: adMonth,
+      adDate: adDate,
+    });
+    validationFunctions.validateAdYear(adYear);
+    validationFunctions.validateAdMonth(adMonth);
+    validationFunctions.validateAdDate(adDate);
+
+    var bsYear = adYear + 57;
+    var bsMonth = (adMonth + 9) % 12;
+    bsMonth = bsMonth === 0 ? 12 : bsMonth;
+    var bsDate = 1;
+
+    if (adMonth < 4) {
+      bsYear -= 1;
+    } else if (adMonth === 4) {
+      var bsYearFirstAdDate = calendarFunctions.getAdDateByBsDate(bsYear, 1, 1);
+      if (adDate < bsYearFirstAdDate.getDate()) {
+        bsYear -= 1;
+      }
+    }
+
+    var bsMonthFirstAdDate = calendarFunctions.getAdDateByBsDate(
+      bsYear,
+      bsMonth,
+      1
+    );
+    if (adDate >= 1 && adDate < bsMonthFirstAdDate.getDate()) {
+      bsMonth = bsMonth !== 1 ? bsMonth - 1 : 12;
+      var bsMonthDays = calendarFunctions.getBsMonthDays(bsYear, bsMonth);
+      bsDate = bsMonthDays - (bsMonthFirstAdDate.getDate() - adDate) + 1;
+    } else {
+      bsDate = adDate - bsMonthFirstAdDate.getDate() + 1;
+    }
+
+    return {
+      bsYear: bsYear,
+      bsMonth: bsMonth,
+      bsDate: bsDate,
+    };
+  },
+  getBsYearByAdDate: function (adYear, adMonth, adDate) {
+    validationFunctions.validateRequiredParameters({
+      adYear: adYear,
+      adMonth: adMonth,
+      adDate: adDate,
+    });
+    validationFunctions.validateAdYear(adYear);
+    validationFunctions.validateAdMonth(adMonth);
+    validationFunctions.validateAdDate(adDate);
+
+    var bsDate = calendarFunctions.getBsDateByAdDate(adYear, adMonth, adDate);
+    return bsDate.bsYear;
+  },
+  getBsMonthByAdDate: function (adYear, adMonth, adDate) {
+    validationFunctions.validateRequiredParameters({
+      adYear: adYear,
+      adMonth: adMonth,
+      adDate: adDate,
+    });
+    validationFunctions.validateAdYear(adYear);
+    validationFunctions.validateAdMonth(adMonth);
+    validationFunctions.validateAdDate(adDate);
+
+    var bsDate = calendarFunctions.getBsDateByAdDate(adYear, adMonth, adDate);
+    return bsDate.bsMonth;
+  },
+  bsDateFormat: function (dateFormatPattern, bsYear, bsMonth, bsDate) {
+    validationFunctions.validateRequiredParameters({
+      dateFormatPattern: dateFormatPattern,
+      bsYear: bsYear,
+      bsMonth: bsMonth,
+      bsDate: bsDate,
+    });
+    validationFunctions.validateBsYear(bsYear);
+    validationFunctions.validateBsMonth(bsMonth);
+    validationFunctions.validateBsDate(bsDate);
+
+    var eqAdDate = calendarFunctions.getAdDateByBsDate(bsYear, bsMonth, bsDate);
+    var weekDay = eqAdDate.getDay() + 1;
+    var formattedDate = dateFormatPattern;
+    formattedDate = formattedDate.replace(
+      /%d/g,
+      calendarFunctions.getNepaliNumber(bsDate)
+    );
+    formattedDate = formattedDate.replace(
+      /%y/g,
+      calendarFunctions.getNepaliNumber(bsYear)
+    );
+    formattedDate = formattedDate.replace(
+      /%m/g,
+      calendarFunctions.getNepaliNumber(bsMonth)
+    );
+    formattedDate = formattedDate.replace(
+      /%M/g,
+      calendarData.bsMonths[bsMonth - 1]
+    );
+    formattedDate = formattedDate.replace(
+      /%D/g,
+      calendarData.bsDays[weekDay - 1]
+    );
+    return formattedDate;
+  },
+  parseFormattedBsDate: function (dateFormat, dateFormattedText) {
+    validationFunctions.validateRequiredParameters({
+      dateFormat: dateFormat,
+      dateFormattedText: dateFormattedText,
+    });
+
+    var diffTextNum = 0;
+    var extractedFormattedBsDate = {
+      bsYear: null,
+      bsMonth: null,
+      bsDate: null,
+      bsDay: null,
+    };
+
+    for (var i = 0; i < dateFormat.length; i++) {
+      if (dateFormat.charAt(i) === "%") {
+        var valueOf = dateFormat.substring(i, i + 2);
+        var endChar = dateFormat.charAt(i + 2);
+        var tempText = dateFormattedText.substring(i + diffTextNum);
+        var endIndex =
+          endChar !== "" ? tempText.indexOf(endChar) : tempText.length;
+        var value = tempText.substring(0, endIndex);
+
+        if (valueOf === "%y") {
+          extractedFormattedBsDate.bsYear =
+            calendarFunctions.getNumberByNepaliNumber(value);
+          diffTextNum += value.length - 2;
+        } else if (valueOf === "%d") {
+          extractedFormattedBsDate.bsDate =
+            calendarFunctions.getNumberByNepaliNumber(value);
+          diffTextNum += value.length - 2;
+        } else if (valueOf === "%D") {
+          extractedFormattedBsDate.bsDay =
+            calendarData.bsDays.indexOf(value) + 1;
+          diffTextNum += value.length - 2;
+        } else if (valueOf === "%m") {
+          extractedFormattedBsDate.bsMonth =
+            calendarFunctions.getNumberByNepaliNumber(value);
+          diffTextNum += value.length - 2;
+        } else if (valueOf === "%M") {
+          extractedFormattedBsDate.bsMonth =
+            calendarData.bsMonths.indexOf(value) + 1;
+          diffTextNum += value.length - 2;
+        }
+      }
+    }
+
+    if (!extractedFormattedBsDate.bsDay) {
+      var eqAdDate = calendarFunctions.getAdDateByBsDate(
+        extractedFormattedBsDate.bsYear,
+        extractedFormattedBsDate.bsMonth,
+        extractedFormattedBsDate.bsDate
+      );
+      extractedFormattedBsDate.bsDay = eqAdDate.getDay() + 1;
+    }
+
+    return extractedFormattedBsDate;
+  },
+};
+
+export default calendarFunctions;
