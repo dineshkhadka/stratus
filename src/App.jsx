@@ -11,6 +11,7 @@ import { isFreshDay } from "./utils/helpers";
 import { useSettings } from "./stores/useSettings";
 import { useFirstInstall } from "./stores/useFirstInstall";
 import LinkCard from "./components/LinkCard";
+import Search from "./components/Search";
 
 import "./scss/style.scss";
 
@@ -30,6 +31,7 @@ function App() {
               !settings.components.date ? "app-primary__wrap--no-spotlight" : ""
             }`}
           >
+            {settings.components.search && <Search />}
             {settings.components.date && <Spotlight settings={settings} />}
             <aside className="app-info">
               <div className="app-info__inner">

@@ -16,6 +16,7 @@ export const COMPONENTS = {
   credit: true,
   timezone: true,
   links: true,
+  search: false,
 };
 export const TABS = {
   APPEARANCE: "APPEARANCE",

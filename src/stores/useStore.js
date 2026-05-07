@@ -9,6 +9,7 @@ export const useStore = create(
       placeName: [],
       backgroundImage: [],
       currentQuote: [],
+      selectedSearchEngine: "duckduckgo",
       setWeatherDetails: (weatherDetails) =>
         set({ weatherDetails: { ...weatherDetails } }),
       setPlaceName: (placeName) => set({ placeName: { ...placeName } }),
@@ -16,6 +17,8 @@ export const useStore = create(
         set({ backgroundImage: { ...backgroundImage } }),
       setcurrentQuote: (currentQuote) =>
         set({ currentQuote: { ...currentQuote } }),
+      setSelectedSearchEngine: (engine) =>
+        set({ selectedSearchEngine: engine }),
     }),
     {
       name: STORAGE.WIDGETS,

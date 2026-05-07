@@ -711,6 +711,29 @@ function SettingsModal({ closeModal }) {
                           </label>
                         </div>
                       </div>
+                      <div className="component-toggle__item">
+                        <div className="form-check form-switch">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            role="switch"
+                            id="search-toggle"
+                            defaultChecked={settings.components.search}
+                            onChange={() =>
+                              toggleComponents((state) => ({
+                                ...state.components,
+                                search: !settings.components.search,
+                              }))
+                            }
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="search-toggle"
+                          >
+                            Search Bar
+                          </label>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
