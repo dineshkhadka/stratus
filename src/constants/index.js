@@ -24,4 +24,5 @@ export const TABS = {
   WEATHER: "WEATHER",
   ABOUT: "ABOUT",
   LINKS: "LINKS",
+  BACKGROUND: "BACKGROUND",
 };

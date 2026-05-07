@@ -1,7 +1,7 @@
 let URL = "https://stratus-server.vercel.app";
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
-  // URL = 'http://localhost:5000'
+  URL = "http://localhost:5000";
 }
 export default {
   BACKGROUND_API: `${URL}/api/background`,

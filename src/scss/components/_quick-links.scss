@@ -188,4 +188,17 @@
       color: var(--primary-light);
     }
   }
+
+  &--solid {
+    border: 1px solid rgba(#fff, 0.3);
+    background-color: rgba(#fff, 0.1);
+    color: var(--primary-light);
+
+    &:focus,
+    &:active,
+    &:hover {
+      background-color: rgba(#fff, 0.15);
+      border-color: rgba(#fff, 0.4);
+    }
+  }
 }

@@ -7,6 +7,10 @@ const intialSettings = {
   theme: "dark",
   temperatureUnit: "celcius",
   components: COMPONENTS,
+  backgroundCollections: [
+    { id: "default", name: "Default", collectionId: null },
+  ],
+  selectedCollection: "default",
   setTheme: () => {},
   setDateType: () => {},
   setTemperatureUnit: () => {},
@@ -26,10 +30,37 @@ export const useSettings = create(
         set((state) => ({
           config: { ...state.config, components: callback(state.config) },
         })),
+      addBackgroundCollection: (collection) =>
+        set((state) => ({
+          config: {
+            ...state.config,
+            backgroundCollections: [
+              ...state.config.backgroundCollections,
+              collection,
+            ],
+          },
+        })),
+      removeBackgroundCollection: (id) =>
+        set((state) => ({
+          config: {
+            ...state.config,
+            backgroundCollections: state.config.backgroundCollections.filter(
+              (c) => c.id !== id
+            ),
+            selectedCollection:
+              state.config.selectedCollection === id
+                ? "default"
+                : state.config.selectedCollection,
+          },
+        })),
+      setSelectedCollection: (id) =>
+        set((state) => ({
+          config: { ...state.config, selectedCollection: id },
+        })),
     }),
     {
       name: STORAGE.SETTINGS,
-      version: 1,
+      version: 2,
     }
   )
 );

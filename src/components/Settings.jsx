@@ -15,6 +15,15 @@ function SettingsModal({ closeModal }) {
   const setTemperatureUnit = useSettings((state) => state.setTemperatureUnit);
   const setTheme = useSettings((state) => state.setTheme);
   const toggleComponents = useSettings((state) => state.toggleComponents);
+  const addBackgroundCollection = useSettings(
+    (state) => state.addBackgroundCollection
+  );
+  const removeBackgroundCollection = useSettings(
+    (state) => state.removeBackgroundCollection
+  );
+  const setSelectedCollection = useSettings(
+    (state) => state.setSelectedCollection
+  );
 
   // world clock
   const setWorldClock = useWorldClock((state) => state.setWorldClock);
@@ -216,6 +225,16 @@ function SettingsModal({ closeModal }) {
                 <li className="settings-menu__item">
                   <button
                     className={`settings-menu__button ${
+                      isActive(TABS.BACKGROUND) ? "active" : ""
+                    }`}
+                    onClick={() => displayTab(TABS.BACKGROUND)}
+                  >
+                    Background
+                  </button>
+                </li>
+                <li className="settings-menu__item">
+                  <button
+                    className={`settings-menu__button ${
                       isActive(TABS.ABOUT) ? "active" : ""
                     }`}
                     onClick={() => displayTab(TABS.ABOUT)}
@@ -352,6 +371,194 @@ function SettingsModal({ closeModal }) {
                         </div>
                       </li>
                     </ul>
+                  </div>
+                </div>
+              </div>
+              <div
+                className={`settings-screen ${
+                  isActive(TABS.BACKGROUND) ? "active" : ""
+                }`}
+              >
+                <div className="settings-screen__group">
+                  <div className="settings-screen__label">
+                    <h3 className="settings-screen__title">
+                      Background Collections
+                    </h3>
+                  </div>
+                  <div className="settings-screen__input">
+                    <div className="collection-manager">
+                      <div className="timezone-list-wrap">
+                        <h4 className="timezone-list-wrap__title">
+                          Background Collections
+                        </h4>
+                        <ul className="timezone-list">
+                          {settings.backgroundCollections.map((collection) => (
+                            <li key={collection.id}>
+                              <input
+                                type="radio"
+                                id={`collection-radio-${collection.id}`}
+                                name="selected-collection"
+                                checked={
+                                  settings.selectedCollection === collection.id
+                                }
+                                onChange={() =>
+                                  setSelectedCollection(collection.id)
+                                }
+                                className="default-check__input"
+                              />
+                              <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="custom-radio checked"
+                              >
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <circle cx="12" cy="12" r="5"></circle>
+                              </svg>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="custom-radio unchecked"
+                              >
+                                <circle cx="12" cy="12" r="10"></circle>
+                              </svg>
+                              <label
+                                htmlFor={`collection-radio-${collection.id}`}
+                              >
+                                <span>{collection.name}</span>
+                              </label>
+                              {collection.id !== "default" && (
+                                <button
+                                  onClick={() =>
+                                    removeBackgroundCollection(collection.id)
+                                  }
+                                  className="btn-icon btn-icon--light"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                  >
+                                    <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                                  </svg>
+                                </button>
+                              )}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="add-collection">
+                        <div className="edit-links__two-col">
+                          <div className="styled-input">
+                            <label
+                              className="styled-input__label styled-input__label--small"
+                              htmlFor="collection-name"
+                            >
+                              <span>Collection Name</span>
+                            </label>
+                            <input
+                              type="text"
+                              id="collection-name"
+                              className="styled-input__input"
+                              name="collection-name"
+                              autoComplete="off"
+                              placeholder="Collection Name"
+                            />
+                          </div>
+                          <div className="styled-input">
+                            <label
+                              className="styled-input__label styled-input__label--small"
+                              htmlFor="collection-url"
+                            >
+                              <span>Collection URL or ID</span>
+                            </label>
+                            <input
+                              type="text"
+                              id="collection-url"
+                              className="styled-input__input"
+                              name="collection-url"
+                              autoComplete="off"
+                              placeholder="e.g., https://unsplash.com/collections/abc123 or abc123"
+                            />
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => {
+                            const name = document
+                              .getElementById("collection-name")
+                              .value.trim();
+                            const urlOrId = document
+                              .getElementById("collection-url")
+                              .value.trim();
+                            if (name && urlOrId) {
+                              let collectionId = null;
+                              if (urlOrId.match(/^[a-zA-Z0-9_-]+$/)) {
+                                // It's alphanumeric, assume it's the ID
+                                collectionId = urlOrId;
+                              } else if (
+                                urlOrId.includes("unsplash.com/collections/")
+                              ) {
+                                // Extract ID from URL
+                                const match = urlOrId.match(
+                                  /unsplash\.com\/collections\/([a-zA-Z0-9_-]+)/
+                                );
+                                if (match) {
+                                  collectionId = match[1];
+                                }
+                              }
+                              if (!collectionId) {
+                                displayMessage(
+                                  "Invalid URL or ID. Please enter a valid Unsplash collection URL or just the alphanumeric ID."
+                                );
+                                return;
+                              }
+                              const existing =
+                                settings.backgroundCollections.find(
+                                  (c) => c.collectionId === collectionId
+                                );
+                              if (existing) {
+                                displayMessage(
+                                  "This collection is already added."
+                                );
+                                return;
+                              }
+                              const newCollection = {
+                                id: `custom-${Date.now()}`,
+                                name,
+                                collectionId,
+                              };
+                              addBackgroundCollection(newCollection);
+                              document.getElementById("collection-name").value =
+                                "";
+                              document.getElementById("collection-url").value =
+                                "";
+                              displayMessage("Collection added successfully!");
+                            } else {
+                              displayMessage(
+                                "Please enter both name and URL/ID."
+                              );
+                            }
+                          }}
+                          className="btn btn-quick-link btn-quick-link--solid"
+                        >
+                          Add Collection
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
